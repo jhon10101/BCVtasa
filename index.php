@@ -40,7 +40,7 @@
                                                             
                                                                 <div class="col-md-3 col-6 px-1 pt-2 text-center text-success">
                                                                     <div>Proximo:</div>
-                                                                    <span class="m-1 px-3">USD:</span></br><h4><span id="valor-next" class="m-1 px-3 text-light">0</span></h4>
+                                                                    <span class="m-1 px-3">USD</span></br><h4><span id="valor-next" class="m-1 px-3 text-light">0</span></h4>
                                                                         
                                                                         <span id="fecha-next" class="px-1"></span>
                                                                 </div>

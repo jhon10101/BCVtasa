@@ -5,8 +5,13 @@ $(function() {
         document.getElementById("montoText").addEventListener("input", myFunction);
          usdToday ="1";
          document.getElementById("montoText").focus();
-
     };
+
+    function round(num) {
+        var m = Number((Math.abs(num) * 100).toPrecision(15));
+        return Math.round(m) / 100 * Math.sign(num);
+    }
+    
 
     function updateTasa() {
 
@@ -35,7 +40,7 @@ $(function() {
       
       textValores = parseFloat(textValores);
 
-        textValores = textValores.toFixed(2);
+        textValores = round(textValores);
 
         let conversion = document.getElementById("valorText").innerHTML = textValores;
 
@@ -50,7 +55,8 @@ $(function() {
        }else{
             total = conversion * usdToday;    
        }
-        total = total.toFixed(2);
+       total = round(total);
+       // total = total.toFixed(2);
 
         $('#valorTotal').html(total);
     }
