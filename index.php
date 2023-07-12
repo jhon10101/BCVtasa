@@ -15,23 +15,23 @@
   ///
 ?>
 
-                        <div class="container">
+                        <div class=""> <!-- container -->
                             <div class="d-flex justify-content-center">
-                                <div class="px-1 col-md-6 col-12 bg-primary text-light">
+                                <div class="col-md-6 col-12 bg-primary text-light">
                                    
                                                 <div id="tasks" class="container">
                                                     
                                                     <div class="d-flex justify-content-center">
-                                                    <div class="row p-2 updateTasaBCV">
+                                                    <div class="row px-1 pb-1 updateTasaBCV">
                                                         <div class="col-md-4 col-9 pt-1 bg-dark rounded">
-                                                            <div class="m-3"><i class="fa fa-calculator fa-2x" aria-hidden="true"></i><span class="m-2 text-warning h1 text-start">BCV dolar</span></div>
+                                                            <div class="m-3"><i class="fa fa-calculator fa-2x" aria-hidden="true"></i><span class="m-1 text-warning h2 text-start">BCV dolar</span></div>
                                                         </div>
                                                         <div id="" class="col-md-1 col-3">
                                                                 <a class="btn btn-lg text-warning btn-floating m-1 col-3 p-2" role="button"
                                                                         ><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></a>
                                                         </div>
 
-                                                                <div class="col-md-4 col-6 px-1 pt-2 text-center">
+                                                                <div class="col-md-4 col-6 px-1 pt-1 text-center">
                                                                     <h4><div>Vigente:</div>
                                                                     <span class="m-1 p-3">USD<i class="fa fa-usd" aria-hidden="true"></i></span></h4><h1><span id="valor-vigente" class="text-center text-warning">0</span></h1>
 
@@ -54,18 +54,18 @@
                                 </div>
                             </div>
                         </div>   
-                        <div class="container">
+                        <div class=""> 
                             <div class="d-flex justify-content-center">
-                                <div class="col-md-6 col-12 bg-dark text-light rounded-bottom">
-                                        <div class="row h4 p-1 align-items-center text-center">
-                                            <div class="col-4 px-6 currency1">
+                                <div class="col-md-6 col-12 bg-dark text-light">
+                                        <div class="row align-items-center text-center">
+                                            <div class="col-4 px-6 h4 currency1">
                                                     Bolivar
                                             </div>
                                             <div class="col-4">
-                                                <a class="btn btn-lg btn-outline-warning btn-floating m-1 col-12 p-1 BtnExchange" role="button"
+                                                <a class="btn btn-lg btn-outline-warning btn-floating m-1 col-12 p-1 BtnExchange" data-toggle="tooltip" data-placement="top" data-original-title="Cambiar Moneda" role="button"
                                                 ><i class="fa fa-exchange" aria-hidden="true"></i></a>
                                             </div>
-                                            <div class="col-4 px-6 currency2">
+                                            <div class="col-4 px-6 h4 currency2">
                                                     Dolar
                                             </div>
                                         </div>
@@ -73,7 +73,7 @@
                                         <input disabled type="text" inputmode="decimal" step="0.01" id ="montoText" class="form-control form-control-lg me-sm-2 text-center">
                                     </form>
                                     <div class="container">
-                                        <div class="row d-flex pt-2 bg-primary">
+                                        <div class="row d-flex pt-1 bg-primary">
                                                 <div class="col-5 px-2 text-end">
                                                     <div id="valorText" class="h3">0</div><div class="h5 m-1 currency1">Bolivar</div>
                                                 </div>
@@ -86,10 +86,10 @@
                                             </div>
                                     </div>
 
-                                    <div class="container p-2 pb-0">
+                                    <div class="container p-0 pb-0">
                                         <div class="d-grid text-center">
                                             <!-- Section: teclado numerico -->
-                                            <div class="mb-4">
+                                            <div class="mb-2">
 
                                             <!-- clear -->
                                             <button type="button" value="clear" class="btn btn-lg btn-outline-warning btn-floating m-1 col-6 p-2 Btnclear">
@@ -100,52 +100,52 @@
                                                     <i class="fa-solid fa-delete-left fa-1x"></i></button>
 
                                             <!-- 1 -->
-                                                <button type="button" value="1" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                                <button type="button" value="1" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-1 fa-2x"></i></button>
 
                                             <!-- 2 -->
-                                            <button type="button" value="2" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="2" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-2 fa-2x"></i></button>
 
                                             <!-- 3 -->
-                                            <button type="button" value="3" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="3" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-3 fa-2x"></i></button>
 
                                             <!-- 4 -->
-                                            <button type="button" value="4" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="4" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-4 fa-2x"></i></button>
 
                                             <!-- 5 -->
-                                            <button type="button" value="5" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="5" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-5 fa-2x"></i></button>
 
                                             <!-- 6 -->
-                                            <button type="button" value="6" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="6" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-6 fa-2x"></i></button>
 
                                             <!-- 7 -->
-                                            <button type="button" value="7" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="7" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-7 fa-2x"></i></button>
 
                                             <!-- 8 -->
-                                            <button type="button" value="8" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="8" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-8 fa-2x"></i></button>
 
                                             <!-- 9 -->
-                                            <button type="button" value="9" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="9" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-9 fa-2x"></i></button>
 
                                             <!-- diseable -->
-                                            <button disabled type="button" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3">
+                                            <button disabled type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3">
                                                     <i class="fa-solid fa fa-2x"></i></button>
 
                                             <!-- 0 -->
-                                            <button type="button" value="0" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-3 Btncalculator">
+                                            <button type="button" value="0" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-0 fa-2x"></i></button>
 
                                             <!-- comma -->
-                                            <button type="button" value="." class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-2 Btncalculator">
-                                                    <i class="fa-2x"><b>,</b></i></button>
+                                            <button type="button" value="." class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 py-0 Btncalculator">
+                                                    <i class="fa-2x">,</i></button>
                                                     
 
 
