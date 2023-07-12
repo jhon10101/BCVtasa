@@ -86,7 +86,7 @@
                                             </div>
                                     </div>
 
-                                    <div class="container p-0 pb-0">
+                                    <div class="container bg-primary h-100 p-0 pb-0">
                                         <div class="d-grid text-center">
                                             <!-- Section: teclado numerico -->
                                             <div class="mb-2">
@@ -144,7 +144,7 @@
                                                     <i class="fa-sharp fa-light fa-0 fa-2x"></i></button>
 
                                             <!-- comma -->
-                                            <button type="button" value="." class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 py-0 Btncalculator">
+                                            <button type="button" value="." class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 py-0 Btncalculator">
                                                     <i class="fa-2x">,</i></button>
                                                     
 
