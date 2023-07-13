@@ -46,7 +46,7 @@ $(function() {
 
         moneda = document.getElementsByClassName("currency1")[0].innerHTML;
         moneda = moneda.replace(/\s+/g, '');
-        console.log(conversion);
+       // console.log(conversion);
 
         
 

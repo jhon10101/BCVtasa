@@ -59,14 +59,14 @@
                                 <div class="col-md-6 col-12 bg-dark text-light">
                                         <div class="row align-items-center text-center">
                                             <div class="col-4 px-6 h4 currency1">
-                                                    Bolivar
+                                                    Dolar
                                             </div>
                                             <div class="col-4">
                                                 <a class="btn btn-lg btn-outline-warning btn-floating m-1 col-12 p-1 BtnExchange" data-toggle="tooltip" data-placement="top" data-original-title="Cambiar Moneda" role="button"
                                                 ><i class="fa fa-exchange" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="col-4 px-6 h4 currency2">
-                                                    Dolar
+                                                    Bolivar
                                             </div>
                                         </div>
                                     <form id="search" class="d-flex px-5 justify-content-center">
@@ -75,13 +75,13 @@
                                     <div class="container">
                                         <div class="row d-flex pt-1 bg-primary">
                                                 <div class="col-5 px-2 text-end">
-                                                    <div id="valorText" class="h3">0</div><div class="h5 m-1 currency1">Bolivar</div>
+                                                    <div id="valorText" class="h3">0</div><div class="h5 m-1 currency1">Dolar</div>
                                                 </div>
                                                 <div class="col-2 text-center ">
                                                 <i class="fa fa-angle-double-right fa-shake fa-1x fa-2x" aria-hidden="true"></i><i class="fa fa-angle-double-right fa-shake fa-2x" aria-hidden="true"></i>
                                                 </div>
                                                 <div class="col-5 px-2 text-warning text-start">
-                                                    <div id="valorTotal" class="h3">0</div><div class="h5 m-1 currency2">Dolar</div>
+                                                    <div id="valorTotal" class="h3">0</div><div class="h5 m-1 currency2">Bolivar</div>
                                                 </div>
                                             </div>
                                     </div>
