@@ -4,8 +4,7 @@ $(function() {
         updateTasa();
         document.getElementById("montoText").addEventListener("input", myFunction);
          usdToday ="1";
-         document.getElementById("montoText").focus();
-         document.querySelector('#proximo').style.display = 'none';
+         document.getElementById("montoText").focus(); 
     };
 
     function round(num) {
@@ -15,11 +14,12 @@ $(function() {
     
 
     function updateTasa() {
-
+        $("#proximo").hide();
         let category = 0;
         $('#valor-vigente').html(0);
         $('#valor-next').html(0);
         $('#fecha-next').html("");
+
 
         $.post('api/data.php', {category}, function (response) {
             let tasks = JSON.parse(response);
@@ -31,22 +31,22 @@ $(function() {
             //  $('#fecha-vigente').html(dateToday);
                 $('#fecha-next').html(dateNext);
                // $("#proximo").hide();
-               document.querySelector('#proximo').style.display = 'none';
+             //  document.querySelector('#proximo').style.display = 'none';
 
                if ((tasks.DateToday2)==(tasks.DateNext2)) {
-                    document.querySelector('#proximo').style.display = 'none';
+                    $("#proximo").hide();
                     $("#vigente").addClass("col-12");
                     $("#vigente").removeClass("col-6");
                     //   console.log(usdToday);
                } else {
                     if ((tasks.DateNow)==(tasks.DateNext2)) {
-                        document.querySelector('#proximo').style.display = 'none';
+                      $("#proximo").hide();
                         $("#vigente").addClass("col-12");
                         $("#vigente").removeClass("col-6");
                         usdToday = usdNext;
                      //   console.log(usdToday);
                     } else {
-                        document.querySelector('#proximo').style.display = 'block';
+                        $("#proximo").show();
                         $("#vigente").addClass("col-6");
                         $("#vigente").removeClass("col-12");
                     }
@@ -59,6 +59,9 @@ $(function() {
 
     function myFunction() {
         var textValores = document.getElementById("montoText").value;
+        if (textValores == "") {
+            textValores = 0;
+        }
       
       textValores = parseFloat(textValores);
 
@@ -110,7 +113,7 @@ $(function() {
     $(document).on('click', '.BtnDelete', function () {               
 
         PrevioText = document.getElementById("montoText").value;
-        console.log(PrevioText.length);
+        // console.log(PrevioText.length);
         if ((PrevioText.length) > 0) {
             if ((PrevioText.length) == 1) {
                 myFunction();

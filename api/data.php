@@ -75,7 +75,7 @@ foreach( $divs as $div ){
 
      $M_es = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
      $M_en = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-     $D_es = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernas", "Sábado", "Domingo");
+     $D_es = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
      $D_en = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
      setlocale(LC_TIME,"es_ES");
      $fechaval02 = ucwords($fechaval);
@@ -87,7 +87,7 @@ foreach( $divs as $div ){
       $fechabcv02 = str_replace($D_es,"",$fechabcv02);
        $fechabcv02 = str_replace($M_es,$M_en,$fechabcv02);
        $fechabcv02 = strftime('%d-%m-%Y', strtotime($fechabcv02));
-       
+
        date_default_timezone_set('America/Caracas');
        $fechaActual = date("d-m-Y");
 
