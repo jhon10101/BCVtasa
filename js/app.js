@@ -5,6 +5,7 @@ $(function() {
         document.getElementById("montoText").addEventListener("input", myFunction);
          usdToday ="1";
          document.getElementById("montoText").focus();
+         document.querySelector('#proximo').style.display = 'none';
     };
 
     function round(num) {
@@ -23,14 +24,35 @@ $(function() {
         $.post('api/data.php', {category}, function (response) {
             let tasks = JSON.parse(response);
                 usdToday = parseFloat(tasks.USDToday);
-                var usdNext = parseFloat(tasks.USDNext);
-                $('#valor-vigente').html(usdToday);
-                $('#valor-next').html(usdNext);
+                usdNext = parseFloat(tasks.USDNext);
+
                 var dateToday = (tasks.DateToday);
                 var dateNext = (tasks.DateNext);
             //  $('#fecha-vigente').html(dateToday);
                 $('#fecha-next').html(dateNext);
-            
+               // $("#proximo").hide();
+               document.querySelector('#proximo').style.display = 'none';
+
+               if ((tasks.DateToday2)==(tasks.DateNext2)) {
+                    document.querySelector('#proximo').style.display = 'none';
+                    $("#vigente").addClass("col-12");
+                    $("#vigente").removeClass("col-6");
+                    //   console.log(usdToday);
+               } else {
+                    if ((tasks.DateNow)==(tasks.DateNext2)) {
+                        document.querySelector('#proximo').style.display = 'none';
+                        $("#vigente").addClass("col-12");
+                        $("#vigente").removeClass("col-6");
+                        usdToday = usdNext;
+                     //   console.log(usdToday);
+                    } else {
+                        document.querySelector('#proximo').style.display = 'block';
+                        $("#vigente").addClass("col-6");
+                        $("#vigente").removeClass("col-12");
+                    }
+               }
+               $('#valor-vigente').html(usdToday);
+               $('#valor-next').html(usdNext);
         });
 
     }

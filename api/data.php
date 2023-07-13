@@ -72,8 +72,31 @@ foreach( $divs as $div ){
 
    $next = round($next,2);
 
-     $json = array("USDToday"=>$today,"DateToday"=>$fechaval,"USDNext"=>$next,"DateNext"=>$fechabcv);
-     $json_data = json_encode($json);
-     echo $json_data;
+
+     $M_es = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+     $M_en = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+     $D_es = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernas", "Sábado", "Domingo");
+     $D_en = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+     setlocale(LC_TIME,"es_ES");
+     $fechaval02 = ucwords($fechaval);
+     $fechaval02 = str_replace($D_es,"",$fechaval02);
+      $fechaval02 = str_replace($M_es,$M_en,$fechaval02);
+      $fechaval02 = strftime('%d-%m-%Y', strtotime($fechaval02));
+
+      $fechabcv02 = ucwords($fechabcv);
+      $fechabcv02 = str_replace($D_es,"",$fechabcv02);
+       $fechabcv02 = str_replace($M_es,$M_en,$fechabcv02);
+       $fechabcv02 = strftime('%d-%m-%Y', strtotime($fechabcv02));
+       
+       date_default_timezone_set('America/Caracas');
+       $fechaActual = date("d-m-Y");
+
+   //  echo strftime('%d-%m-%Y', strtotime($fechabcv));
+    // echo strftime('%F', strtotime("10 September 2000"));
+
+    $json = array("USDToday"=>$today,"DateToday"=>$fechaval,"DateToday2"=>$fechaval02,"USDNext"=>$next,"DateNext"=>$fechabcv,"DateNext2"=>$fechabcv02,"DateNow"=>$fechaActual);
+    $json_data = json_encode($json);
+    echo $json_data;
+    
 
  ?>

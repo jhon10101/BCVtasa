@@ -31,17 +31,15 @@
                                                                         ><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></a>
                                                         </div>
 
-                                                                <div class="col-md-4 col-6 px-1 pt-1 text-center">
+                                                                <div id="vigente" class="col-md-4 col-6 px-1 pt-2 text-center">
                                                                     <h4><div>Vigente:</div>
-                                                                    <span class="m-1 p-3">USD<i class="fa fa-usd" aria-hidden="true"></i></span></h4><h1><span id="valor-vigente" class="text-center text-warning">0</span></h1>
-
-                                                                        <span id="fecha-vigente" class="m-3 px-1"></span>
+                                                                    <span class="m-1 p-3">USD<i class="fa fa-usd" aria-hidden="true"></i></span></h4><span id="valor-vigente" class="h1 text-center text-warning">0</span>
                                                                 </div>
                                                             
-                                                                <div class="col-md-3 col-6 px-1 pt-2 text-center text-success">
+                                                                <div id="proximo" class="col-md-3 col-6 px-1 pt-1 text-center text-success">
                                                                     <div>Proximo:</div>
-                                                                    <span class="m-1 px-3">USD</span></br><h4><span id="valor-next" class="m-1 px-3 text-light">0</span></h4>
-                                                                        
+                                                                    <span class="m-1 px-3">USD</span><br><span id="valor-next" class="h4 m-1 px-3 text-light">0</span>
+                                                                    <br>
                                                                         <span id="fecha-next" class="px-1"></span>
                                                                 </div>
                                                       </div>
