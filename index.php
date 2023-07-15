@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                     <form id="search" class="d-flex px-5 justify-content-center">
-                                        <input disabled type="text" inputmode="decimal" step="0.01" id ="montoText" class="form-control form-control-lg me-sm-2 text-center">
+                                        <input disabled type="text" inputmode="decimal" step="0.01" id ="montoText" class="form-control form-control-lg me-sm-2 text-center target">
                                     </form>
                                     <div class="container">
                                         <div class="row d-flex pt-1 bg-primary">
@@ -78,9 +78,9 @@
                                                 <div class="col-2 text-center ">
                                                 <i class="fa fa-angle-double-right fa-shake fa-1x fa-2x" aria-hidden="true"></i><i class="fa fa-angle-double-right fa-shake fa-2x" aria-hidden="true"></i>
                                                 </div>
-                                                <div class="col-5 px-2 text-warning text-start">
+                                                <div class="col-4 px-2 text-warning text-start copiado" data-clipboard-target="#valorTotal">
                                                     <div id="valorTotal" class="h3">0</div><div class="h5 m-1 currency2">Bolivar</div>
-                                                </div>
+                                                </div><div class="col-1 p-0 align-middle copiado"  data-clipboard-target="#valorTotal"><i class="fa-solid fa-copy fa-lg"></i></div>
                                             </div>
                                     </div>
 
@@ -134,8 +134,8 @@
                                                     <i class="fa-sharp fa-light fa-9 fa-2x"></i></button>
 
                                             <!-- diseable -->
-                                            <button disabled type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3">
-                                                    <i class="fa-solid fa fa-2x"></i></button>
+                                            <button type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 py-0 pegar">
+                                                    <i class="fa-thin fa-paste fa"></i><div>Pegar</div></button>
 
                                             <!-- 0 -->
                                             <button type="button" value="0" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
@@ -167,4 +167,5 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"></script>
         <script src="js/app.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </html>

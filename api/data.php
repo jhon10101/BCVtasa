@@ -33,7 +33,7 @@ foreach( $divs as $div ){
 
  $today = (string)$today;
  $today = str_replace(',','.',$today);
- 
+ $today = (floatval($today));
  $today = round($today,2);
 
     setlocale(LC_TIME,"es_ES");
@@ -69,7 +69,7 @@ foreach( $divs as $div ){
    $fechabcv = str_replace('  ',' ',$fechabcv);
    $next = (string)$next;
    $next = str_replace(',','.',$next);
-
+   $next = (floatval($next));
    $next = round($next,2);
 
 
@@ -81,12 +81,13 @@ foreach( $divs as $div ){
      $fechaval02 = ucwords($fechaval);
      $fechaval02 = str_replace($D_es,"",$fechaval02);
       $fechaval02 = str_replace($M_es,$M_en,$fechaval02);
-      $fechaval02 = strftime('%d-%m-%Y', strtotime($fechaval02));
+     // $fechaval02 = strftime('%d-%m-%Y', strtotime($fechaval02));
+      $fechaval02 = date('d-m-Y', strtotime($fechaval02));
 
       $fechabcv02 = ucwords($fechabcv);
       $fechabcv02 = str_replace($D_es,"",$fechabcv02);
        $fechabcv02 = str_replace($M_es,$M_en,$fechabcv02);
-       $fechabcv02 = strftime('%d-%m-%Y', strtotime($fechabcv02));
+       $fechabcv02 = date('d-m-Y', strtotime($fechabcv02));
 
        date_default_timezone_set('America/Caracas');
        $fechaActual = date("d-m-Y");
