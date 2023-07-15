@@ -133,9 +133,9 @@
                                             <button type="button" value="9" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-9 fa-2x"></i></button>
 
-                                            <!-- Pegar -->
-                                            <button type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 pegar">
-                                                    <i class="fa-thin fa-paste fa fa-2x"></i><div></div></button>
+                                            <!-- Disabled -->
+                                            <button disabled type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 pegar">
+                                                    <i class="fa fa-2x"></i><div></div></button>
 
                                             <!-- 0 -->
                                             <button type="button" value="0" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">

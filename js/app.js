@@ -5,29 +5,8 @@ $(function() {
         document.getElementById("montoText").addEventListener("input", myFunction);
          usdToday ="1";
          document.getElementById("montoText").focus();
-         /*
-         const target = document.querySelector("input.target");
-
-            target.addEventListener("onchange", (event) => {
-                event.preventDefault();
-
-                let paste = (event.clipboardData || window.clipboardData).getData("text");
-                paste = paste.toUpperCase();
-                const selection = window.getSelection();
-                if (!selection.rangeCount) return;
-                selection.deleteFromDocument();
-                selection.getRangeAt(0).insertNode(document.createTextNode(paste));
-                selection.collapseToEnd();
-                console.log(paste);
-            });
-           
-            if(navigator.clipboard){
-                console.log("paste");
-              }else{
-                //No soporta la API, tenemos que usar viejos métodos
-              }
-         */
     };
+
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
         clipPromise.then(function(clipText){
@@ -39,31 +18,25 @@ $(function() {
           }
 
         });
-        
-        
     }
+
     $(".pegar").click(function(){
         readClipText();
-
-      //  myFunction();
     });
     
     var clipboard = new ClipboardJS('.copiado');
     clipboard.on('success', function(e) {
-     //  console.info('Action:', e.action);
-     //  console.info('Text:', e.text);
-     //  console.info('Trigger:', e.trigger);
-         console.info(e.text);
-        let valTemp = document.getElementById("valorTotal").innerHTML;
-        $('#valorTotal').html("Copiado!");
-        $("#valorTotal").addClass("text-success");
+            // console.info(e.text);
+            let valTemp = document.getElementById("valorTotal").innerHTML;
+            $('#valorTotal').html("Copiado!");
+            $("#valorTotal").addClass("text-success");
 
-        e.clearSelection();
-        setTimeout(function(){
-            document.getElementById("valorTotal").innerHTML = valTemp;
-            $("#valorTotal").removeClass("text-success");
-        }, 1200)
-   });
+            e.clearSelection();
+            setTimeout(function(){
+                document.getElementById("valorTotal").innerHTML = valTemp;
+                $("#valorTotal").removeClass("text-success");
+            }, 1200)
+     });
 
     function round(num) {
         var m = Number((Math.abs(num) * 100).toPrecision(15));
