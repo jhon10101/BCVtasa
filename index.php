@@ -90,7 +90,7 @@
                                             <div class="mb-2">
 
                                             <!-- clear -->
-                                            <button type="button" value="clear" class="btn btn-lg btn-outline-warning btn-floating m-1 col-6 p-2 Btnclear">
+                                            <button type="button" value="clear" class="btn btn-lg btn-outline-warning btn-floating m-0 col-6 p-2 Btnclear">
                                             <i class="fa-1x">Limpiar</i></button>
 
                                             <!-- delete -->
