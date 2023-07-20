@@ -87,25 +87,25 @@ $(function() {
                 var dateNext = (tasks.DateNext);
             //  $('#fecha-vigente').html(dateToday);
                 $('#fecha-next').html(dateNext);
-               // $("#proximo").hide();
+                $("#proximo").hide();
+                $("#vigente").addClass("col-12");
+                $("#vigente").removeClass("col-6");
              //  document.querySelector('#proximo').style.display = 'none';
 
                if ((tasks.DateToday2)==(tasks.DateNext2)) {
                     $("#proximo").hide();
-                    $("#vigente").addClass("col-12");
-                    $("#vigente").removeClass("col-6");
                     //   console.log(usdToday);
                } else {
                     if ((tasks.DateNow)==(tasks.DateNext2)) {
                       $("#proximo").hide();
-                        $("#vigente").addClass("col-12");
-                        $("#vigente").removeClass("col-6");
                         usdToday = usdNext;
                      //   console.log(usdToday);
                     } else {
-                        $("#proximo").show();
-                        $("#vigente").addClass("col-6");
-                        $("#vigente").removeClass("col-12");
+                        if ((tasks.DateNext2) != "0") {
+                            $("#proximo").show();
+                            $("#vigente").addClass("col-6");
+                            $("#vigente").removeClass("col-12");      
+                        }
                     }
                }
                $('#valor-vigente').html(usdToday);

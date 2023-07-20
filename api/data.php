@@ -1,38 +1,68 @@
 <?php
-$today = 0;
-$next = 0;
-$fechaval = '0';
-$fechabcv = '0';
+    $today = 0;
+    $next = 0;
+    $fechaval = '0';
+    $fechabcv = '0';
+    $fechaval02 = '0';
+    $fechabcv02 = '0';
 
- $url = file_get_contents('https://www.banesco.com/personas/sistema-mercado-cambiario-personas/sistema-de-mercado-cambiario');
- 
- 
-//creamos nuevo DOMDocument y cargamos la url
-$dom = new DOMDocument();
-@$dom->loadHTML($url);
- 
-//obtenemos todos los div de la url
-$ps = $dom->getElementsByTagName( 'p' );
-$divs = $dom->getElementsByTagName( 'table' );
- 
-//recorremos los divs
-foreach( $ps as $p ){
-    //
-    if( $p->getAttribute( 'class' ) === 'fecha-valor' ){
-        $fechaval = $p->nodeValue;
-        $fechaval =str_replace('Fecha Valor: ', '', $fechaval);
-        $fechaval =str_replace(' de ', ' ', $fechaval);
-            break;
-    }
-}
-foreach( $divs as $div ){
-    //
-    if( $div->getAttribute( 'class' ) === 'menudeo' ){
-        $today = $div->childNodes[5]->childNodes[3]->nodeValue;
-        break;
+    $M_es = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+    $M_en = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    $D_es = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+    $D_en = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+
+    function _checkFileExists($url)
+    {
+        $headers = @get_headers($url);
+        if($headers[0] == 'HTTP/1.1 404 Not Found') {
+            return false;
+        }else{
+            return true;
+
+        }
+
     }
 
-}
+ $urlBan = 'https://www.banesco.com/personas/sistema-mercado-cambiario-personas/sistema-de-mercado-cambiari';
+ //_checkFileExists($urlBan);
+    
+ if(_checkFileExists($urlBan)){
+    $urlBan = file_get_contents($urlBan);
+            //creamos nuevo DOMDocument y cargamos la url
+            $dom = new DOMDocument();
+            @$dom->loadHTML($urlBan);
+            
+            //obtenemos todos los div de la url
+            $ps = $dom->getElementsByTagName( 'p' );
+            $divs = $dom->getElementsByTagName( 'table' );
+            
+            //recorremos los divs
+            foreach( $ps as $p ){
+                //
+                if( $p->getAttribute( 'class' ) === 'fecha-valor' ){
+                    $fechaval = $p->nodeValue;
+                    $fechaval =str_replace('Fecha Valor: ', '', $fechaval);
+                    $fechaval =str_replace(' de ', ' ', $fechaval);
+
+                    $fechaval02 = ucwords($fechaval);
+                    $fechaval02 = str_replace($D_es,"",$fechaval02);
+                     $fechaval02 = str_replace($M_es,$M_en,$fechaval02);
+                    // $fechaval02 = strftime('%d-%m-%Y', strtotime($fechaval02));
+                     $fechaval02 = date('d-m-Y', strtotime($fechaval02));
+                        break;
+                }
+            }
+            foreach( $divs as $div ){
+                //
+                if( $div->getAttribute( 'class' ) === 'menudeo' ){
+                    $today = $div->childNodes[5]->childNodes[3]->nodeValue;
+                    break;
+                }
+    
+            }
+
+ }
+
 
  $today = (string)$today;
  $today = str_replace(',','.',$today);
@@ -41,35 +71,47 @@ foreach( $divs as $div ){
 
  //   setlocale(LC_TIME,"es_ES");
 
+ $urlbcv = 'https://www.bcv.org.ve/tasas-informativas-sistema-bancario';
+ //_checkFileExists($urlBan);
+    
+ if(_checkFileExists($urlbcv)){
+            $urlbcv = file_get_contents($urlbcv);
 
-    $urlbcv = file_get_contents('http://www.bcv.org.ve/');
-    $title = 0;
-    $x = 0;
-    
-   //creamos nuevo DOMDocument y cargamos la url
-   $dom = new DOMDocument();
-   @$dom->loadHTML($urlbcv);
-    
-   //obtenemos todos los div de la url
-   $divs = $dom->getElementsByTagName( 'div' );
-    
-   //recorremos los divs
-   foreach( $divs as $div ){
-       //si encentramos la clase mc-title nos quedamos con el titulo
-       if( $div->getAttribute( 'class' ) === 'col-sm-6 col-xs-6 centrado' ){
-         $x = $x + 1;
-         if($x == 5){
-            $next = $div->nodeValue;
-         }
-       }
-       if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
-           $fechabcv = $div->childNodes[1]->nodeValue;
-           break;
-       }
+            $title = 0;
+            $x = 0;
+            
+        //creamos nuevo DOMDocument y cargamos la url
+        $dom = new DOMDocument();
+        @$dom->loadHTML($urlbcv);
+            
+        //obtenemos todos los div de la url
+        $divs = $dom->getElementsByTagName( 'div' );
+            
+        //recorremos los divs
+        foreach( $divs as $div ){
+            //si encentramos la clase mc-title nos quedamos con el titulo
+            if( $div->getAttribute( 'class' ) === 'col-sm-6 col-xs-6 centrado' ){
+                $x = $x + 1;
+                if($x == 5){
+                    $next = $div->nodeValue;
+                }
+            }
+            if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
+                $fechabcv = $div->childNodes[1]->nodeValue;
+
+                $fechabcv = str_replace('  ',' ',$fechabcv);
    
-   }
+                $fechabcv02 = ucwords($fechabcv);
+                $fechabcv02 = str_replace($D_es,"",$fechabcv02);
+                 $fechabcv02 = str_replace($M_es,$M_en,$fechabcv02);
+                 $fechabcv02 = date('d-m-Y', strtotime($fechabcv02));
+                break;
+            }
+        
+        }
+    }
 
-   $fechabcv = str_replace('  ',' ',$fechabcv);
+
    $next = (string)$next;
    $next = str_replace(',','.',$next);
    $next = (floatval($next));
@@ -79,21 +121,11 @@ foreach( $divs as $div ){
 // $next = 28;
 
 
-     $M_es = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-     $M_en = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-     $D_es = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
-     $D_en = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
-     setlocale(LC_TIME,"es_ES");
-     $fechaval02 = ucwords($fechaval);
-     $fechaval02 = str_replace($D_es,"",$fechaval02);
-      $fechaval02 = str_replace($M_es,$M_en,$fechaval02);
-     // $fechaval02 = strftime('%d-%m-%Y', strtotime($fechaval02));
-      $fechaval02 = date('d-m-Y', strtotime($fechaval02));
 
-      $fechabcv02 = ucwords($fechabcv);
-      $fechabcv02 = str_replace($D_es,"",$fechabcv02);
-       $fechabcv02 = str_replace($M_es,$M_en,$fechabcv02);
-       $fechabcv02 = date('d-m-Y', strtotime($fechabcv02));
+     setlocale(LC_TIME,"es_ES");
+
+
+
 
        date_default_timezone_set('America/Caracas');
        $fechaActual = date("d-m-Y");
