@@ -39,7 +39,7 @@ foreach( $divs as $div ){
  //   setlocale(LC_TIME,"es_ES");
 
 
-    $urlbcv = file_get_contents('https://www.bcv.org.ve/');
+    $urlbcv = file_get_contents('http://www.bcv.org.ve/');
     $title = 0;
     $x = 0;
     
