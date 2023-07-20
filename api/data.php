@@ -36,9 +36,9 @@ foreach( $divs as $div ){
  $today = (floatval($today));
  $today = round($today,2);
 
-    setlocale(LC_TIME,"es_ES");
+ //   setlocale(LC_TIME,"es_ES");
 
-
+/*
     $url = file_get_contents('https://www.bcv.org.ve/');
     $title = 0;
     $x = 0;
@@ -71,6 +71,9 @@ foreach( $divs as $div ){
    $next = str_replace(',','.',$next);
    $next = (floatval($next));
    $next = round($next,2);
+*/
+$fechabcv = 'Jueves, 20 Julio 2023';
+$next = 28;
 
 
      $M_es = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
