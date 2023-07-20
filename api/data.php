@@ -37,8 +37,10 @@ foreach( $divs as $div ){
  $today = round($today,2);
 
     setlocale(LC_TIME,"es_ES");
+    $fechabcv = $fechaval;
+    $next = $today;
 
-
+/*
     $url = file_get_contents('https://www.bcv.org.ve/');
     $title = 0;
     $x = 0;
@@ -65,7 +67,7 @@ foreach( $divs as $div ){
       }
    
    }
-
+*/
    $fechabcv = str_replace('  ',' ',$fechabcv);
    $next = (string)$next;
    $next = str_replace(',','.',$next);
