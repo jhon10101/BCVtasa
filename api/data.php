@@ -23,7 +23,7 @@
 
     }
 
- $urlBan = 'https://www.banesco.com/personas/sistema-mercado-cambiario-personas/sistema-de-mercado-cambiari';
+ $urlBan = 'https://www.banesco.com/personas/sistema-mercado-cambiario-personas/sistema-de-mercado-cambiario';
  //_checkFileExists($urlBan);
     
  if(_checkFileExists($urlBan)){
@@ -123,10 +123,6 @@
 
 
      setlocale(LC_TIME,"es_ES");
-
-
-
-
        date_default_timezone_set('America/Caracas');
        $fechaActual = date("d-m-Y");
 
