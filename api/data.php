@@ -38,14 +38,14 @@ foreach( $divs as $div ){
 
  //   setlocale(LC_TIME,"es_ES");
 
-/*
-    $url = file_get_contents('https://www.bcv.org.ve/');
+
+    $urlbcv = file_get_contents('https://www.bcv.org.ve/');
     $title = 0;
     $x = 0;
     
    //creamos nuevo DOMDocument y cargamos la url
    $dom = new DOMDocument();
-   @$dom->loadHTML($url);
+   @$dom->loadHTML($urlbcv);
     
    //obtenemos todos los div de la url
    $divs = $dom->getElementsByTagName( 'div' );
@@ -59,19 +59,19 @@ foreach( $divs as $div ){
             $next = $div->nodeValue;
          }
        }
-       if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
-           $fechabcv = $div->childNodes[1]->nodeValue;
-           break;
-      }
+      // if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
+      //     $fechabcv = $div->childNodes[1]->nodeValue;
+      //     break;
+    //  }
    
    }
 
-   $fechabcv = str_replace('  ',' ',$fechabcv);
+ //  $fechabcv = str_replace('  ',' ',$fechabcv);
    $next = (string)$next;
    $next = str_replace(',','.',$next);
    $next = (floatval($next));
    $next = round($next,2);
-*/
+
 $fechabcv = 'Jueves, 20 Julio 2023';
 $next = 28;
 
