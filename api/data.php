@@ -59,21 +59,21 @@ foreach( $divs as $div ){
             $next = $div->nodeValue;
          }
        }
-      // if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
-      //     $fechabcv = $div->childNodes[1]->nodeValue;
-      //     break;
-    //  }
+       if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
+           $fechabcv = $div->childNodes[1]->nodeValue;
+           break;
+       }
    
    }
 
- //  $fechabcv = str_replace('  ',' ',$fechabcv);
+   $fechabcv = str_replace('  ',' ',$fechabcv);
    $next = (string)$next;
    $next = str_replace(',','.',$next);
    $next = (floatval($next));
    $next = round($next,2);
 
-$fechabcv = 'Jueves, 20 Julio 2023';
-$next = 28;
+// $fechabcv = 'Jueves, 20 Julio 2023';
+// $next = 28;
 
 
      $M_es = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
