@@ -39,13 +39,13 @@ foreach( $divs as $div ){
     setlocale(LC_TIME,"es_ES");
 
 
-    $url = file_get_contents('https://www.bcv.org.ve/');
+    $url2 = file_get_contents('https://www.bcv.org.ve');
     $title = 0;
     $x = 0;
     
    //creamos nuevo DOMDocument y cargamos la url
    $dom = new DOMDocument();
-   @$dom->loadHTML($url);
+   @$dom->loadHTML($url2);
     
    //obtenemos todos los div de la url
    $divs = $dom->getElementsByTagName( 'div' );

@@ -1,2 +1,6 @@
 RewriteEngine On    # Turn on the rewriting engine
-RewriteRule ^index$ index.php [NC,L]
+# RewriteRule ^index$ index.php [NC,L]
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
