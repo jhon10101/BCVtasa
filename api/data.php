@@ -1,8 +1,11 @@
 <?php
-
+$today = 0;
+$next = 0;
+$fechaval = '0';
+$fechabcv = '0';
 
  $url = file_get_contents('https://www.banesco.com/personas/sistema-mercado-cambiario-personas/sistema-de-mercado-cambiario');
- $today = 0;
+ 
  
 //creamos nuevo DOMDocument y cargamos la url
 $dom = new DOMDocument();
