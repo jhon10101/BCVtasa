@@ -17,6 +17,8 @@ $D_en = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
 
 
 $db = new firebaseRDB($databaseURL);
+
+/*
 $id = '-N_uc8mrSUG05GC1HN8I';
 $retrieve = $db->retrieve("sources/$id");
 // $datas = json_decode($retrieve, 1);
@@ -28,16 +30,17 @@ $next = $apiResult['nextvalue'];
 $fechaval02 = $apiResult['date'];
 $fechabcv02 = $apiResult['nextdate'];
 
-setlocale(LC_TIME,"es_ES");
-date_default_timezone_set('America/Caracas');
-$fechaActual = date("d-m-Y");
+
 
 $fechabcv = date('l, d F Y', strtotime($fechabcv02));
 $fechabcv = str_replace($D_en,$D_es,$fechabcv);
 $fechabcv = str_replace($M_en,$M_es,$fechabcv);
 
+*/
+setlocale(LC_TIME,"es_ES");
+date_default_timezone_set('America/Caracas');
+$fechaActual = date("d-m-Y");
 
-/*
     function _checkFileExists($url)
     {
         $headers = @get_headers($url);
@@ -83,18 +86,24 @@ $fechabcv = str_replace($M_en,$M_es,$fechabcv);
                 //
                 if( $div->getAttribute( 'class' ) === 'menudeo' ){
                     $today = $div->childNodes[5]->childNodes[3]->nodeValue;
+
+                    $today = (string)$today;
+                    $today = str_replace(',','.',$today);
+                    $today = (floatval($today));
+                    $today = round($today,2);
+                   
                     break;
                 }
     
             }
+            $id = '-N_ucSGO8v918mZreEk1';
+            $update = $db->update("sources", $id, [
+                "value"     => $today,
+                "date"      => $fechaval02,
+            ]);
 
  }
 
-
- $today = (string)$today;
- $today = str_replace(',','.',$today);
- $today = (floatval($today));
- $today = round($today,2);
 
  //   setlocale(LC_TIME,"es_ES");
 
@@ -121,6 +130,11 @@ $fechabcv = str_replace($M_en,$M_es,$fechabcv);
                 $x = $x + 1;
                 if($x == 5){
                     $next = $div->nodeValue;
+
+                    $next = (string)$next;
+                    $next = str_replace(',','.',$next);
+                    $next = (floatval($next));
+                    $next = round($next,2);
                 }
             }
             if( $div->getAttribute( 'class' ) === 'pull-right dinpro center' ){
@@ -136,27 +150,38 @@ $fechabcv = str_replace($M_en,$M_es,$fechabcv);
             }
         
         }
+        $id = '-N_uc8mrSUG05GC1HN8I';
+        if ($fechaActual == $fechaval02) {
+            $update = $db->update("sources", $id, [
+                "value"         => $next,
+                "date"          => $fechabcv02,
+                "nextvalue"     => $next,
+                "nextdate"      => $fechabcv02,
+            ]);
+        }else {
+            $update = $db->update("sources", $id, [
+                "nextvalue"     => $next,
+                "nextdate"      => $fechabcv02,
+            ]);
+        }
+
     }
 
 
-   $next = (string)$next;
-   $next = str_replace(',','.',$next);
-   $next = (floatval($next));
-   $next = round($next,2);
 
 // $fechabcv = 'Jueves, 20 Julio 2023';
 // $next = 28;
 
-*/
+
 
 
 
    //  echo strftime('%d-%m-%Y', strtotime($fechabcv));
     // echo strftime('%F', strtotime("10 September 2000"));
-
+/*
     $json = array("USDToday"=>$today,"DateToday"=>$fechaval,"DateToday2"=>$fechaval02,"USDNext"=>$next,"DateNext"=>$fechabcv,"DateNext2"=>$fechabcv02,"DateNow"=>$fechaActual);
     $json_data = json_encode($json);
     echo $json_data;
-    
+*/    
 
  ?>
