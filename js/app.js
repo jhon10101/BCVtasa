@@ -132,13 +132,13 @@ $(function() {
         moneda = moneda.replace(/\s+/g, '');
 
        if (moneda == "BolivarBs.") {
-            document.getElementsByClassName("currency1")[0].innerHTML = "Dolar ($)";
+            document.getElementsByClassName("currency1")[0].innerHTML = "Dolar $";
             document.getElementsByClassName("currency2")[0].innerHTML = "Bolivar Bs.";
             document.getElementsByClassName("currency1")[1].innerHTML = "Dolar";
             document.getElementsByClassName("currency2")[1].innerHTML = "Bolivar";
        } else {
             document.getElementsByClassName("currency1")[0].innerHTML = "Bolivar Bs.";
-            document.getElementsByClassName("currency2")[0].innerHTML = "Dolar ($)";
+            document.getElementsByClassName("currency2")[0].innerHTML = "Dolar $";
             document.getElementsByClassName("currency1")[1].innerHTML = "Bolivar";
             document.getElementsByClassName("currency2")[1].innerHTML = "Dolar";
        }
