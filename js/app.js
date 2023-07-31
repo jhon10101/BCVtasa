@@ -72,14 +72,15 @@ $(function() {
 
     function updateTasa() {
         $("#proximo").hide();
-        let category = 0;
+      //  let category = 0;
+        let source = 'bcv';
         $('#valor-vigente').html(0);
         $('#valor-next').html(0);
         $('#fecha-next').html("");
 
  //{"Source":"BCV","USD":"29.88","Date":"21-07-2023","DateFormat":"Viernes, 21 Julio 2023","USDNext":29.09,"DateNext":"25-07-2023","DateFormatNext":"Martes, 25 Julio 2023","DateNow":"24-07-2023","Status":200}
  
-        $.post('api/data.php', {category}, function (response) {
+        $.post('api/data.php', {source}, function (response) {
             let tasks = JSON.parse(response);
            
                 usdToday = parseFloat(tasks.USD); // Tasa vigente
