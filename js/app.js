@@ -139,7 +139,7 @@ $(function() {
 
         
 
-       if (moneda == "Bolivar") {
+       if (moneda == "BolivarBs.") {
             total = conversion / usdToday;
        }else{
             total = conversion * usdToday;    
@@ -158,14 +158,14 @@ $(function() {
         var moneda = document.getElementsByClassName("currency1")[0].innerHTML;
         moneda = moneda.replace(/\s+/g, '');
 
-       if (moneda == "Bolivar") {
-            document.getElementsByClassName("currency1")[0].innerHTML = "Dolar";
-            document.getElementsByClassName("currency2")[0].innerHTML = "Bolivar";
+        if (moneda == "BolivarBs.") {
+            document.getElementsByClassName("currency1")[0].innerHTML = "Dolar $";
+            document.getElementsByClassName("currency2")[0].innerHTML = "Bolivar Bs.";
             document.getElementsByClassName("currency1")[1].innerHTML = "Dolar";
             document.getElementsByClassName("currency2")[1].innerHTML = "Bolivar";
        } else {
-            document.getElementsByClassName("currency1")[0].innerHTML = "Bolivar";
-            document.getElementsByClassName("currency2")[0].innerHTML = "Dolar";
+            document.getElementsByClassName("currency1")[0].innerHTML = "Bolivar Bs.";
+            document.getElementsByClassName("currency2")[0].innerHTML = "Dolar $";
             document.getElementsByClassName("currency1")[1].innerHTML = "Bolivar";
             document.getElementsByClassName("currency2")[1].innerHTML = "Dolar";
        }
