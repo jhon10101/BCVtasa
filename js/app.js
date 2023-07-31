@@ -45,36 +45,43 @@ $(function() {
 
     function updateTasa() {
         $("#proximo").hide();
-        let category = 0;
+      //  let category = 0;
+        let source = 'bcv';
         $('#valor-vigente').html(0);
         $('#valor-next').html(0);
         $('#fecha-next').html("");
 
-
-        $.post('api/data.php', {category}, function (response) {
+ //{"Source":"BCV","USD":"29.88","Date":"21-07-2023","DateFormat":"Viernes, 21 Julio 2023","USDNext":29.09,"DateNext":"25-07-2023","DateFormatNext":"Martes, 25 Julio 2023","DateNow":"24-07-2023","Status":200}
+ 
+        $.post('api/data.php', {source}, function (response) {
             let tasks = JSON.parse(response);
-                usdToday = parseFloat(tasks.USDToday);
-                usdNext = parseFloat(tasks.USDNext);
+           
+                usdToday = parseFloat(tasks.USD); // Tasa vigente
+                usdNext = parseFloat(tasks.USDNext); // Tasa siguiente
 
-                var dateToday = (tasks.DateToday);
-                var dateNext = (tasks.DateNext);
-            
+                var dateToday = (tasks.DateFormat); // fecha con formato vigente
+                var dateNext = (tasks.DateFormatNext); // fecha con formato Siguiente
+
+                var dateNext2 = (tasks.DateNext); // fecha Siguiente
+                var date = (tasks.Date); // fecha con vigente
+                var dateNow = (tasks.Date); // fecha actual
+            //  $('#fecha-vigente').html(dateToday);
                 $('#fecha-next').html(dateNext);
                 $("#proximo").hide();
                 $("#vigente").addClass("col-12");
                 $("#vigente").removeClass("col-6");
+             //  document.querySelector('#proximo').style.display = 'none';
 
-
-               if ((tasks.DateToday2)==(tasks.DateNext2)) {
+               if ((date)==(dateNext2)) {
                     $("#proximo").hide();
-
+                    //   console.log(usdToday);
                } else {
-                    if ((tasks.DateNow)==(tasks.DateNext2)) {
+                    if ((dateNow)==(dateNext2)) {
                       $("#proximo").hide();
                         usdToday = usdNext;
-
+                     //   console.log(usdToday);
                     } else {
-                        if ((tasks.DateNext2) != "0") {
+                        if ((dateNext2) != "0") {
                             $("#proximo").show();
                             $("#vigente").addClass("col-6");
                             $("#vigente").removeClass("col-12");      
