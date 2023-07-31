@@ -57,14 +57,14 @@
                                 <div class="col-md-6 col-12 bg-dark text-light">
                                         <div class="row align-items-center text-center">
                                             <div class="col-4 px-6 h4 currency1">
-                                                    Dolar
+                                                    Dolar $
                                             </div>
                                             <div class="col-4">
                                                 <a class="btn btn-lg btn-outline-warning btn-floating m-1 col-12 p-1 BtnExchange" data-toggle="tooltip" data-placement="top" data-original-title="Cambiar Moneda" role="button"
                                                 ><i class="fa fa-exchange" aria-hidden="true"></i></a>
                                             </div>
                                             <div class="col-4 px-6 h4 currency2">
-                                                    Bolivar
+                                                    Bolivar Bs.
                                             </div>
                                         </div>
                                     <form id="search" class="d-flex px-5 justify-content-center">
