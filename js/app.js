@@ -67,8 +67,7 @@ $(function() {
 
     function updateTasa() {
         $("#proximo").hide();
-      //  let category = 0;
-        let source = 'bcv';
+
         $('#valor-vigente').html(0);
         $('#valor-next').html(0);
         $('#fecha-next').html("");
