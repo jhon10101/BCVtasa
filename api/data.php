@@ -8,10 +8,9 @@ $queryString = http_build_query([
   ]);
   
     if ("BCV" == $source){
-      //  $ch = curl_init(sprintf('%s?%s', 'https://apirestcalculator-production.up.railway.app/v1/sources/bcv.php', $queryString));
-        $ch = curl_init(sprintf('%s?%s', 'localhost/PHP/ApiRestCalculator/v1/sources/bcv.php', $queryString));
+        $ch = curl_init(sprintf('%s?%s', 'https://apirestcalculator-production.up.railway.app/v1/sources/bcv.php', $queryString));
     } else {
-        $ch = curl_init(sprintf('%s?%s', 'localhost/PHP/ApiRestCalculator/v1/sources/paralelo.php', $queryString));
+        $ch = curl_init(sprintf('%s?%s', 'https://apirestcalculator-production.up.railway.app/v1/sources/paralelo.php', $queryString));
     }
 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
