@@ -8,28 +8,7 @@ $(function() {
         document.getElementById("montoText").addEventListener("input", myFunction);
          usdToday ="1";
          document.getElementById("montoText").focus();
-         /*
-         const target = document.querySelector("input.target");
 
-            target.addEventListener("onchange", (event) => {
-                event.preventDefault();
-
-                let paste = (event.clipboardData || window.clipboardData).getData("text");
-                paste = paste.toUpperCase();
-                const selection = window.getSelection();
-                if (!selection.rangeCount) return;
-                selection.deleteFromDocument();
-                selection.getRangeAt(0).insertNode(document.createTextNode(paste));
-                selection.collapseToEnd();
-                console.log(paste);
-            });
-           
-            if(navigator.clipboard){
-                console.log("paste");
-              }else{
-                //No soporta la API, tenemos que usar viejos métodos
-              }
-         */
     };
 
     $(document).on('click', '.exchange-source', function () {
