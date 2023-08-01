@@ -1,6 +1,9 @@
 $(function() {
 
     window.onload = function() {
+         source = 'BCV';
+         $('#sourceTasa').html(source);
+         
         updateTasa();
         document.getElementById("montoText").addEventListener("input", myFunction);
          usdToday ="1";
@@ -28,6 +31,27 @@ $(function() {
               }
          */
     };
+
+    $(document).on('click', '.exchange-source', function () {
+        let element = $(this)[0]; 
+        source = $(element).attr('value');
+        $('#sourceTasa').html(source);
+        if (source == "Paralelo"){
+            $('#source-paralelo').html(source);
+            $("#source-paralelo").show();
+            $("#valor-vigente").addClass("text-success");
+            $("#valor-vigente").removeClass("text-warning");
+        }else{
+            $("#source-paralelo").hide();
+            $("#valor-vigente").addClass("text-warning");
+            $("#valor-vigente").removeClass("text-success");
+        }
+        //console.log(source);
+         updateTasa();
+     });
+
+
+
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
         clipPromise.then(function(clipText){
@@ -73,7 +97,7 @@ $(function() {
     function updateTasa() {
         $("#proximo").hide();
       //  let category = 0;
-        let source = 'bcv';
+        
         $('#valor-vigente').html(0);
         $('#valor-next').html(0);
         $('#fecha-next').html("");
@@ -153,6 +177,7 @@ $(function() {
     $(document).on('click', '.updateTasaBCV', function () {
         updateTasa();  
     });
+
 
     $(document).on('click', '.BtnExchange', function () {
         var moneda = document.getElementsByClassName("currency1")[0].innerHTML;
