@@ -53,11 +53,11 @@
                                                     <div class="d-flex justify-content-center">
                                                     <div class="row px-1 pb-1">
                                                         <div class="col-md-4 col-9 pt-1 bg-dark rounded"  role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                                                            <div class="m-3"><i class="fa fa-calculator fa-2x" aria-hidden="true"></i><span class="m-1 text-warning h2 text-start"><span id="sourceTasa"></span> dolar</span></div>
+                                                            <div class="m-3"><i class="fa fa-calculator fa-shake fa-2x mx-3" aria-hidden="true"></i><span class="m-1 text-warning h2 text-start"><span id="sourceTasa"></span> dolar</span></div>
                                                         </div>
                                                         <div id="" class="col-md-1 col-3">
                                                                 <a class="btn btn-lg text-warning btn-floating m-1 col-3 p-2" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"
-                                                                        ><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></a>
+                                                                        ><i class="fa fa-refresh" aria-hidden="true"></i></a>
                                                         </div>
 
                                                                 <div id="vigente" class="col-md-4 col-6 px-1 pt-2 text-center updateTasaBCV">
