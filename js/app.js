@@ -1,11 +1,33 @@
 $(function() {
 
     window.onload = function() {
+        source = 'BCV';
+        $('#sourceTasa').html(source);
+        
+       updateTasa();
+       document.getElementById("montoText").addEventListener("input", myFunction);
+        usdToday ="1";
+        document.getElementById("montoText").focus();
+
+   };
+
+   $(document).on('click', '.exchange-source', function () {
+       let element = $(this)[0]; 
+       source = $(element).attr('value');
+       $('#sourceTasa').html(source);
+       if (source == "Paralelo"){
+           $('#source-paralelo').html(source);
+           $("#source-paralelo").show();
+           $("#valor-vigente").addClass("text-success");
+           $("#valor-vigente").removeClass("text-warning");
+       }else{
+           $("#source-paralelo").hide();
+           $("#valor-vigente").addClass("text-warning");
+           $("#valor-vigente").removeClass("text-success");
+       }
+       
         updateTasa();
-        document.getElementById("montoText").addEventListener("input", myFunction);
-         usdToday ="1";
-         document.getElementById("montoText").focus();
-    };
+    });
 
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
