@@ -111,6 +111,7 @@ $(function() {
                }
                $('#valor-vigente').html(usdToday);
                $('#valor-next').html(usdNext);
+               myFunction();
         });
 
     }
