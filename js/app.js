@@ -26,7 +26,10 @@ $(function() {
             $("#valor-vigente").removeClass("text-success");
         }
         //console.log(source);
-         updateTasa();
+
+        updateTasa();
+
+
      });
 
 
@@ -120,6 +123,7 @@ $(function() {
                }
                $('#valor-vigente').html(usdToday);
                $('#valor-next').html(usdNext);
+               myFunction();
         });
 
     }
