@@ -117,7 +117,7 @@ $(function() {
                         if ((dateNext2) != "0") {
                             $("#proximo").show();
                             $("#vigente").addClass("col-6");
-                            $("#vigente").removeClass("col-12");      
+                            $("#vigente").removeClass("col-12");    
                         }
                     }
                }
