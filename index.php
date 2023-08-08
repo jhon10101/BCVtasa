@@ -52,22 +52,22 @@
                                                     
                                                     <div class="d-flex justify-content-center">
                                                     <div class="row px-1 pb-1">
-                                                        <div class="col-md-4 col-9 pt-1 bg-dark rounded"  role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                                        <div class="col-md-9 col-9 pt-1 bg-dark rounded"  role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                                                                 <div class="m-3"><i class="fa fa-calculator fa-shake fa-2x mx-3" aria-hidden="true"></i><span class="m-1 text-warning h2 text-start"><span id="sourceTasa"></span> dolar</span></div>
                                                         </div>
-                                                        <div id="" class="col-md-1 col-3">
-                                                                <a class="btn btn-lg text-warning btn-floating m-1 col-3 p-2" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"
-                                                                        ><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                                        <div id="" class="col-md-3 col-3 text-center">
+                                                                <a class="btn btn-lg text-warning btn-floating m-1 p-2" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"
+                                                                ><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>
                                                         </div>
 
-                                                                <div id="vigente" class="col-md-4 col-6 px-1 pt-2 text-center updateTasaBCV">
+                                                                <div id="vigente" class="col-6 px-1 pt-2 text-center updateTasaBCV">
                                                                     <h4><div>Vigente:</div>
                                                                     <span class="m-1 p-3">USD<i class="fa fa-usd" aria-hidden="true"></i></span></h4><span id="valor-vigente" class="h1 text-center text-warning fw-bold fs-1">0</span>
                                                                     <br>
                                                                         <span id="source-paralelo" class="px-1 text-light fs-3"></span>
                                                                 </div>
                                                             
-                                                                <div id="proximo" class="col-md-3 col-6 px-1 pt-1 text-center text-success updateTasaBCV">
+                                                                <div id="proximo" class="col-6 px-1 pt-1 text-center text-success updateTasaBCV">
                                                                     <div>Proximo:</div>
                                                                     <span class="m-1 px-3">USD</span><br><span id="valor-next" class="h4 m-1 px-3 text-light">0</span>
                                                                     <br>
