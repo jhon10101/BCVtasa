@@ -69,7 +69,7 @@
                                                             
                                                                 <div id="proximo" class="col-6 px-1 pt-1 text-center text-success updateTasaBCV">
                                                                     <div>Proximo:</div>
-                                                                    <span class="m-1 px-3">USD</span><br><span id="valor-next" class="h4 m-1 px-3 text-light">0</span>
+                                                                    <span class="m-1 px-3">USD$</span><br><span id="valor-next" class="h4 m-1 px-3 text-light">0</span>
                                                                     <br>
                                                                         <span id="fecha-next" class="px-1"></span>
                                                                 </div>
