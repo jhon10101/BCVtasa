@@ -63,8 +63,7 @@
                                                                 <div id="vigente" class="col-6 px-1 pt-2 text-center updateTasaBCV">
                                                                     <h4><div>Vigente:</div>
                                                                     <span class="m-1 p-3">USD<i class="fa fa-usd" aria-hidden="true"></i></span></h4><span id="valor-vigente" class="h1 text-center text-warning fw-bold fs-1">0</span>
-                                                                    <br>
-                                                                        <span id="source-paralelo" class="px-1 text-light fs-3"></span>
+                                                                        <div id="source-paralelo" class="px-1 text-light fs-3"></div>
                                                                 </div>
                                                             
                                                                 <div id="proximo" class="col-6 px-1 pt-1 text-center text-success updateTasaBCV">
