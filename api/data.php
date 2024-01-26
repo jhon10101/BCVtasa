@@ -8,9 +8,9 @@ $queryString = http_build_query([
   ]);
   
     if ("BCV" == $source){
-        $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/bcv.php', $queryString));
+        $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/bcv.php', $queryString));
     } else {
-        $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/paralelo.php', $queryString));
+        $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/paralelo.php', $queryString));
     }
 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
