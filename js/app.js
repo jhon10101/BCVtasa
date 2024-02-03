@@ -50,7 +50,14 @@ $(function() {
             nextDate = tasks.NextDate; // Fecha siguiente actualizacion
            // console.info(datePlaca);
         });
-
+        x = 0;
+        document.getElementById("placaId").innerHTML = "";
+        for (var i = 0; i < 5; i++) {
+            x = x + 1;
+            var fechax = x;
+            fechax = fechax * 10;
+            document.getElementById(fechax).innerHTML = "";
+        }
         source = sourceTemp;
         updateTasa();
      });
