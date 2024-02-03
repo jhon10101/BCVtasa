@@ -38,7 +38,7 @@ $(function() {
 
      $(document).on('click', '.calendar-source', function () {
         var sourceTemp = source;
-        console.log(sourceTemp);
+        //console.log(sourceTemp);
         let element = $(this)[0]; 
         source = $(element).attr('value');
         //console.log(enDate);
