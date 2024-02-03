@@ -9,6 +9,9 @@ $(function() {
          usdToday ="1";
          document.getElementById("montoText").focus();
 
+         var datePlaca = 0; // Fecha Placa 1
+         nextDate = 0; // Fecha siguiente actualizacion
+
     };
 
     $(document).on('click', '.exchange-source', function () {
@@ -32,7 +35,67 @@ $(function() {
 
      });
 
+     $(document).on('click', '.calendar-source', function () {
+        let element = $(this)[0]; 
+        source = $(element).attr('value');
 
+        //console.log(source);
+
+        source = "PDVSA";
+        $.post('api/data.php', {source}, function (response) {
+            let tasks = JSON.parse(response);
+           
+            datePlaca = tasks.DatePlaca; // Fecha Placa 1
+            nextDate = tasks.NextDate; // Fecha siguiente actualizacion
+           // console.info(datePlaca);
+
+        });
+
+
+     });
+
+     $(document).on('click', '.placas', function () {
+
+
+        let element = $(this)[0]; 
+        source = $(element).attr('value');
+        var sourceID = $(element).attr('id');
+
+        $('#placaId').html(source);
+           // var fecha = new Date($('#10').text());
+          var fecha = new Date(datePlaca);
+            //fecha = fecha.toLocaleDateString('es-ES');
+           // console.info(fecha);
+
+            var x = 0;
+            var y = 0;
+            day = parseInt(sourceID);
+            var dias = 0 + day; // Número de días a agregar
+            var dias1 = 5; // Número de días a agregar
+           // console.info(dias);
+           // console.info(dias1);
+            for (var i = 0; i < 5; i++) {
+                    x = x + 1;
+
+                    fecha.setDate(fecha.getDate() + dias);
+                 //   console.info(fecha);
+                // fecha = fecha.toDateString('es-ES');
+                var fecha1 = new Intl.DateTimeFormat("es", {
+                    weekday: "short",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }).format(new Date(fecha));  
+                
+                // $('#Fecha2').html(fecha);
+                var fechax = x;
+                var fechax = fechax * 10;
+                document.getElementById(fechax).innerHTML = fecha1;
+                dias = dias1;
+            }
+              fecha = 0;
+         
+     });
 
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
@@ -45,9 +108,9 @@ $(function() {
           }
 
         });
-        
-        
+ 
     }
+
     $(".pegar").click(function(){
         readClipText();
 
@@ -125,6 +188,7 @@ $(function() {
                $('#valor-next').html(usdNext);
                myFunction();
         });
+
 
     }
 

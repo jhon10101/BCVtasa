@@ -34,10 +34,75 @@
                                     <span class="align-middle fw-bold">BCV</span>
                               </div>
                               <div value="Paralelo" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 exchange-source">
-                              <img src="https://exchangemonitor.net/img/ve/monitor-dolar.webp" alt="BCV" width="20%" height="20%" class="float-start">
+                              <img src="https://exchangemonitor.net/img/ve/monitor-dolar.webp" alt="Paralelo" width="20%" height="20%" class="float-start">
                                     <span class="align-middle fw-bold">Paralelo</span>
                               </div>
+                              <div value="PDVSA" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 calendar-source" data-bs-toggle="offcanvas" href="#offcanvasPDVSA" role="button" aria-controls="offcanvasExample">
+                              <img src="https://scontent.fmrd1-2.fna.fbcdn.net/v/t39.30808-6/367689620_692737339562261_2063924742121951528_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=K-rafC0Mt3oAX9TMebG&_nc_ht=scontent.fmrd1-2.fna&oh=00_AfDZIWyLQRELLefZpHIfO8PNavpNGWnpjpbfZkkDIpXC1g&oe=65C0DF26" alt="PDVSA" width="20%" height="20%" class="float-start">
+                                    <span class="align-middle fw-bold">PDVSA</span>
+                              </div>
                             </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-start bg-primary text-warning" tabindex="-1" id="offcanvasPDVSA" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title h1" id="offcanvasExampleLabel">PDVSA</h5>
+    <button type="button" class="btn-close text-reset h1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body h2  text-light">
+    <div class="mb-2">
+      Calendario Gasolina
+    </div>
+    <div class="text-center">
+      Terminal de Placa
+    </div>
+        <div class="bg-primary mb-1 text-center"> <!-- container -->
+            <div class="d-flex justify-content-center ">
+                <div class="col-md-12 col-12 text-light">
+                        <div id="" class="container">
+                            <div class="justify-content-center mb-2">
+                              <div id="0" value="1 - 2" class="col-5 my-1 p-0 px-2 btn btn-warning btn-lg text-primary fs-2 placas">
+                                    <span class="align-middle fw-bold">1 - 2</span>
+                              </div>
+                              <div id="1" value="3 - 4" class="col-5 my-1 p-0 px-2 btn btn-warning btn-lg text-primary fs-2 placas">
+                                    <span class="align-middle fw-bold">3 - 4</span>
+                              </div>
+                              <div id="2" value="5 - 6" class="col-5 my-1 p-0 px-2 btn btn-warning btn-lg text-primary fs-2 placas">
+                                    <span class="align-middle fw-bold">5 - 6</span>
+                              </div>
+                              <div id="3" value="7 - 8" class="col-5 my-1 p-0 px-2 btn btn-warning btn-lg text-primary fs-2 placas">
+                                    <span class="align-middle fw-bold">7 - 8</span>
+                              </div>
+                              <div id="4" value="9 - 0" class="col-5 my-1 p-0 px-2 btn btn-warning btn-lg text-primary fs-2 placas">
+                                    <span class="align-middle fw-bold">9 - 0</span>
+                              </div>
+                            </div>
+                            <!-- Fechas -->
+                            <div value="90" class=" bg-dark col-12 my-1 p-0 px-2  fs-2 text-warning">
+                                    <span class="align-middle fw-bold"></span>
+                                    <div class="col-12 align-middle fw-bold">Placa</div>
+                                    <div id="placaId" class="col-12 align-middle fw-bold"></div>
+                            </div>
+                            <div value="90" class="col-12 my-2 p-0 px-2  fs-1  fw-bold placas">
+                                    <span id="10" class="align-middle"></span>
+                            </div>
+                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                                    <span id="20" class="align-middle"></span>
+                            </div>
+                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                                    <span id="30" class="align-middle"></span>
+                            </div>
+                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                                    <span id="40" class="align-middle"></span>
+                            </div>
+                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                                    <span id="50" class="align-middle"></span>
+                            </div>
+                            <!-- Fin Fechas -->
                         </div>
                     </div>
             </div>
