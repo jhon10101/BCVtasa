@@ -59,10 +59,10 @@ $(function() {
         var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
-        source = $(element).attr('value');
+        placaIds = $(element).attr('value');
         var sourceID = $(element).attr('id');
 
-        $('#placaId').html(source);
+        $('#placaId').html(placaIds);
 
           var fecha = new Date(datePlaca);
 
