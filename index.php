@@ -82,7 +82,7 @@
                               </div>
                             </div>
                             <!-- Fechas -->
-                            <div value="90" class=" bg-dark col-12 my-1 p-0 px-2  fs-2 text-warning">
+                            <div class=" bg-dark col-12 my-1 p-0 px-2  fs-2 text-warning">
                                     <span class="align-middle fw-bold"></span>
                                     <div class="col-12 align-middle fw-bold">Placa</div>
                                     <div id="placaId" class="col-12 align-middle fw-bold"></div>
