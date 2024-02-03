@@ -8,6 +8,7 @@ $(function() {
        document.getElementById("montoText").addEventListener("input", myFunction);
         usdToday ="1";
         document.getElementById("montoText").focus();
+        datePlaca = 0;
 
    };
 
@@ -41,7 +42,6 @@ $(function() {
            
             datePlaca = tasks.DatePlaca; // Fecha Placa 1
             nextDate = tasks.NextDate; // Fecha siguiente actualizacion
-           // console.info(datePlaca);
 
         });
 
@@ -49,7 +49,8 @@ $(function() {
      });
 
      $(document).on('click', '.placas', function () {
-
+        const dateF = new Date();
+        var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
         source = $(element).attr('value');
@@ -58,16 +59,14 @@ $(function() {
         $('#placaId').html(source);
            // var fecha = new Date($('#10').text());
           var fecha = new Date(datePlaca);
-            //fecha = fecha.toLocaleDateString('es-ES');
-           // console.info(fecha);
+
 
             var x = 0;
             var y = 0;
             day = parseInt(sourceID);
             var dias = 0 + day; // Número de días a agregar
             var dias1 = 5; // Número de días a agregar
-           // console.info(dias);
-           // console.info(dias1);
+
             for (var i = 0; i < 5; i++) {
                     x = x + 1;
 
@@ -82,15 +81,24 @@ $(function() {
                 }).format(new Date(fecha));  
                 
                 // $('#Fecha2').html(fecha);
+
+                var datetoday = fecha.toLocaleDateString();
+                
                 var fechax = x;
-                var fechax = fechax * 10;
-                document.getElementById(fechax).innerHTML = fecha1;
+                fechax = fechax * 10;
+                document.getElementById(fechax).innerHTML = "";
+                var enDate1 = new Date(enDate);
+                var datetoday = new Date(datetoday);
+                    if (datetoday >= enDate1){               
+                        document.getElementById(fechax).innerHTML = fecha1;
+                    }else{
+                        x = x - 1;
+                        i = i - 1;
+                    } 
                 dias = dias1;
             }
               fecha = 0;
-         
      });
-
 
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
