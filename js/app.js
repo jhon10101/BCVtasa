@@ -31,21 +31,19 @@ $(function() {
     });
 
     $(document).on('click', '.calendar-source', function () {
-        let element = $(this)[0]; 
-        source = $(element).attr('value');
+            var sourceTemp = source;
 
-        //console.log(source);
+            let element = $(this)[0]; 
+            source = $(element).attr('value');
 
-        source = "PDVSA";
-        $.post('api/data.php', {source}, function (response) {
-            let tasks = JSON.parse(response);
-           
-            datePlaca = tasks.DatePlaca; // Fecha Placa 1
-            nextDate = tasks.NextDate; // Fecha siguiente actualizacion
-
-        });
-
-
+            $.post('api/data.php', {source}, function (response) {
+                let tasks = JSON.parse(response);
+                source = sourceTemp;
+                datePlaca = tasks.DatePlaca; // Fecha Placa 1
+                nextDate = tasks.NextDate; // Fecha siguiente actualizacion
+            });
+            source = sourceTemp;
+            updateTasa();
      });
 
      $(document).on('click', '.placas', function () {
