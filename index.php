@@ -87,19 +87,19 @@
                                     <div class="col-12 align-middle fw-bold">Placa</div>
                                     <div id="placaId" class="col-12 align-middle fw-bold"></div>
                             </div>
-                            <div value="90" class="col-12 my-2 p-0 px-2  fs-1  fw-bold placas">
+                            <div class="col-12 my-2 p-0 px-2  fs-1  fw-bold">
                                     <span id="10" class="align-middle"></span>
                             </div>
-                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                            <div class="col-12 my-2 p-0 px-2  fs-2">
                                     <span id="20" class="align-middle"></span>
                             </div>
-                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                            <div class="col-12 my-2 p-0 px-2  fs-2">
                                     <span id="30" class="align-middle"></span>
                             </div>
-                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                            <div class="col-12 my-2 p-0 px-2  fs-2">
                                     <span id="40" class="align-middle"></span>
                             </div>
-                            <div value="90" class="col-12 my-2 p-0 px-2  fs-2 placas">
+                            <div class="col-12 my-2 p-0 px-2  fs-2">
                                     <span id="50" class="align-middle"></span>
                             </div>
                             <!-- Fin Fechas -->
