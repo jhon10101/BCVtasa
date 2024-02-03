@@ -42,6 +42,14 @@ $(function() {
                 datePlaca = tasks.DatePlaca; // Fecha Placa 1
                 nextDate = tasks.NextDate; // Fecha siguiente actualizacion
             });
+            x = 0;
+            document.getElementById("placaId").innerHTML = "";
+            for (var i = 0; i < 5; i++) {
+                x = x + 1;
+                var fechax = x;
+                fechax = fechax * 10;
+                document.getElementById(fechax).innerHTML = "";
+            }
             source = sourceTemp;
             updateTasa();
      });
@@ -55,9 +63,8 @@ $(function() {
         var sourceID = $(element).attr('id');
 
         $('#placaId').html(source);
-           // var fecha = new Date($('#10').text());
-          var fecha = new Date(datePlaca);
 
+          var fecha = new Date(datePlaca);
 
             var x = 0;
             var y = 0;
@@ -67,18 +74,14 @@ $(function() {
 
             for (var i = 0; i < 5; i++) {
                     x = x + 1;
-
                     fecha.setDate(fecha.getDate() + dias);
-                 //   console.info(fecha);
-                // fecha = fecha.toDateString('es-ES');
+
                 var fecha1 = new Intl.DateTimeFormat("es", {
                     weekday: "short",
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric"
                 }).format(new Date(fecha));  
-                
-                // $('#Fecha2').html(fecha);
 
                 var datetoday = fecha.toLocaleDateString();
                 
@@ -101,8 +104,7 @@ $(function() {
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
         clipPromise.then(function(clipText){
-           // document.getElementById("montoText").addEventListener("input", myFunction);
-          //  document.getElementById("montoText").focus();
+
           if (parseFloat(clipText)) {
             document.getElementById("montoText").value = clipText;
             myFunction();         
@@ -117,7 +119,7 @@ $(function() {
     
     var clipboard = new ClipboardJS('.copiado');
     clipboard.on('success', function(e) {
-            // console.info(e.text);
+
             let valTemp = document.getElementById("valorTotal").innerHTML;
             $('#valorTotal').html("Copiado!");
             $("#valorTotal").addClass("text-success");
@@ -141,8 +143,6 @@ $(function() {
         $('#valor-next').html(0);
         $('#fecha-next').html("");
 
- //{"Source":"BCV","USD":"29.88","Date":"21-07-2023","DateFormat":"Viernes, 21 Julio 2023","USDNext":29.09,"DateNext":"25-07-2023","DateFormatNext":"Martes, 25 Julio 2023","DateNow":"24-07-2023","Status":200}
- 
         $.post('api/data.php', {source}, function (response) {
             let tasks = JSON.parse(response);
            
@@ -155,21 +155,18 @@ $(function() {
                 var dateNext2 = (tasks.DateNext); // fecha Siguiente
                 var date = (tasks.Date); // fecha con vigente
                 var dateNow = (tasks.Date); // fecha actual
-            //  $('#fecha-vigente').html(dateToday);
+
                 $('#fecha-next').html(dateNext);
                 $("#proximo").hide();
                 $("#vigente").addClass("col-12");
                 $("#vigente").removeClass("col-6");
-             //  document.querySelector('#proximo').style.display = 'none';
 
                if ((date)==(dateNext2)) {
                     $("#proximo").hide();
-                    //   console.log(usdToday);
                } else {
                     if ((dateNow)==(dateNext2)) {
                       $("#proximo").hide();
                         usdToday = usdNext;
-                     //   console.log(usdToday);
                     } else {
                         if ((dateNext2) != "0") {
                             $("#proximo").show();
@@ -199,9 +196,6 @@ $(function() {
 
         moneda = document.getElementsByClassName("currency1")[0].innerHTML;
         moneda = moneda.replace(/\s+/g, '');
-       // console.log(conversion);
-
-        
 
        if (moneda == "BolivarBs.") {
             total = conversion / usdToday;
@@ -209,7 +203,6 @@ $(function() {
             total = conversion * usdToday;    
        }
        total = round(total);
-       // total = total.toFixed(2);
 
         $('#valorTotal').html(total);
     }
@@ -241,7 +234,7 @@ $(function() {
     $(document).on('click', '.BtnDelete', function () {               
 
         PrevioText = document.getElementById("montoText").value;
-        // console.log(PrevioText.length);
+
         if ((PrevioText.length) > 0) {
             if ((PrevioText.length) == 1) {
                 myFunction();
