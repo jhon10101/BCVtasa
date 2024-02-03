@@ -2,6 +2,7 @@ $(function() {
 
     window.onload = function() {
          source = 'BCV';
+         
          $('#sourceTasa').html(source);
          
         updateTasa();
@@ -36,22 +37,22 @@ $(function() {
      });
 
      $(document).on('click', '.calendar-source', function () {
+        var sourceTemp = source;
+        console.log(sourceTemp);
         let element = $(this)[0]; 
         source = $(element).attr('value');
-
         //console.log(enDate);
 
-        source = "PDVSA";
         $.post('api/data.php', {source}, function (response) {
             let tasks = JSON.parse(response);
-           
+            source = sourceTemp;
             datePlaca = tasks.DatePlaca; // Fecha Placa 1
             nextDate = tasks.NextDate; // Fecha siguiente actualizacion
            // console.info(datePlaca);
-
         });
 
-
+        source = sourceTemp;
+        updateTasa();
      });
 
      $(document).on('click', '.placas', function () {
@@ -59,10 +60,10 @@ $(function() {
         var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
-        source = $(element).attr('value');
+        placaElement = $(element).attr('value');
         var sourceID = $(element).attr('id');
 
-        $('#placaId').html(source);
+        $('#placaId').html(placaElement);
            // var fecha = new Date($('#10').text());
           var fecha = new Date(datePlaca);
 
