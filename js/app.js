@@ -39,7 +39,7 @@ $(function() {
         let element = $(this)[0]; 
         source = $(element).attr('value');
 
-        //console.log(source);
+        //console.log(enDate);
 
         source = "PDVSA";
         $.post('api/data.php', {source}, function (response) {
@@ -55,7 +55,8 @@ $(function() {
      });
 
      $(document).on('click', '.placas', function () {
-
+        const dateF = new Date();
+        var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
         source = $(element).attr('value');
@@ -64,6 +65,7 @@ $(function() {
         $('#placaId').html(source);
            // var fecha = new Date($('#10').text());
           var fecha = new Date(datePlaca);
+
             //fecha = fecha.toLocaleDateString('es-ES');
            // console.info(fecha);
 
@@ -88,9 +90,26 @@ $(function() {
                 }).format(new Date(fecha));  
                 
                 // $('#Fecha2').html(fecha);
+
+                var datetoday = fecha.toLocaleDateString();
+                
                 var fechax = x;
-                var fechax = fechax * 10;
-                document.getElementById(fechax).innerHTML = fecha1;
+                fechax = fechax * 10;
+                document.getElementById(fechax).innerHTML = "";
+                //console.info(enDate);
+               // datetoday = datetoday.toString();
+               // enDate1 = enDate.toString();
+                //console.info(datetoday);  
+                var enDate1 = new Date(enDate);
+                var datetoday = new Date(datetoday);
+                if (datetoday >= enDate1){    
+                   // console.info(datetoday);            
+                    document.getElementById(fechax).innerHTML = fecha1;
+                }else{
+                    x = x - 1;
+                    i = i - 1;
+                }
+                
                 dias = dias1;
             }
               fecha = 0;
