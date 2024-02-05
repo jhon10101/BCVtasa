@@ -38,7 +38,7 @@
                                     <span class="align-middle fw-bold">Paralelo</span>
                               </div>
                               <div value="PDVSA" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 calendar-source" data-bs-toggle="offcanvas" href="#offcanvasPDVSA" role="button" aria-controls="offcanvasExample">
-                              <img src="https://scontent.fmrd1-2.fna.fbcdn.net/v/t39.30808-6/367689620_692737339562261_2063924742121951528_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=K-rafC0Mt3oAX9TMebG&_nc_ht=scontent.fmrd1-2.fna&oh=00_AfDZIWyLQRELLefZpHIfO8PNavpNGWnpjpbfZkkDIpXC1g&oe=65C0DF26" alt="PDVSA" width="20%" height="20%" class="float-start">
+                              <img src="https://logodownload.org/wp-content/uploads/2019/03/pdvsa-logo-44.png" alt="PDVSA" width="20%" height="20%" class="float-start">
                                     <span class="align-middle fw-bold">PDVSA</span>
                               </div>
                             </div>
