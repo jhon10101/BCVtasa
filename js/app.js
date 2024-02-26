@@ -11,6 +11,7 @@ $(function() {
          document.getElementById("montoText").focus();
 
          var datePlaca = 0; // Fecha Placa 1
+         var dateActual = 0; // Fecha Actual
          nextDate = 0; // Fecha siguiente actualizacion
 
     };
