@@ -9,6 +9,7 @@ $(function() {
         usdToday ="1";
         document.getElementById("montoText").focus();
         datePlaca = 0;
+        dateActual = 0; // Fecha Actual
 
    };
 
