@@ -41,6 +41,7 @@ $(function() {
                 source = sourceTemp;
                 datePlaca = tasks.DatePlaca; // Fecha Placa 1
                 nextDate = tasks.NextDate; // Fecha siguiente actualizacion
+                dateActual = tasks.Date; // Fecha Actual
             });
             x = 0;
             document.getElementById("placaId").innerHTML = "";
@@ -65,6 +66,7 @@ $(function() {
         $('#placaId').html(placaIds);
 
           var fecha = new Date(datePlaca);
+          var fechaActual = new Date(dateActual);
 
             var x = 0;
             var y = 0;
@@ -84,13 +86,15 @@ $(function() {
                 }).format(new Date(fecha));  
 
                 var datetoday = fecha.toLocaleDateString();
+                var dateHoy = fechaActual.toLocaleDateString();
                 
                 var fechax = x;
                 fechax = fechax * 10;
                 document.getElementById(fechax).innerHTML = "";
-                var enDate1 = new Date(enDate);
+
                 var datetoday = new Date(datetoday);
-                    if (datetoday >= enDate1){               
+                var dateHoy = new Date(dateHoy);
+                if (datetoday >= dateHoy){                
                         document.getElementById(fechax).innerHTML = fecha1;
                     }else{
                         x = x - 1;
