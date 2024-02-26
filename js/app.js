@@ -41,6 +41,7 @@ $(function() {
                 source = sourceTemp;
                 datePlaca = tasks.DatePlaca; // Fecha Placa 1
                 nextDate = tasks.NextDate; // Fecha siguiente actualizacion
+                dateActual = tasks.Date; // Fecha Actual
             });
             x = 0;
             document.getElementById("placaId").innerHTML = "";
