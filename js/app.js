@@ -32,28 +32,27 @@ $(function() {
     });
 
     $(document).on('click', '.calendar-source', function () {
-            var sourceTemp = source;
+        var sourceTemp = source;
+        let element = $(this)[0]; 
+        source = $(element).attr('value');
 
-            let element = $(this)[0]; 
-            source = $(element).attr('value');
-
-            $.post('api/data.php', {source}, function (response) {
-                let tasks = JSON.parse(response);
-                source = sourceTemp;
-                datePlaca = tasks.DatePlaca; // Fecha Placa 1
-                nextDate = tasks.NextDate; // Fecha siguiente actualizacion
-                dateActual = tasks.Date; // Fecha Actual
-            });
-            x = 0;
-            document.getElementById("placaId").innerHTML = "";
-            for (var i = 0; i < 5; i++) {
-                x = x + 1;
-                var fechax = x;
-                fechax = fechax * 10;
-                document.getElementById(fechax).innerHTML = "";
-            }
+        $.post('api/data.php', {source}, function (response) {
+            let tasks = JSON.parse(response);
             source = sourceTemp;
-            updateTasa();
+            datePlaca = tasks.DatePlaca; // Fecha Placa 1
+            nextDate = tasks.NextDate; // Fecha siguiente actualizacion
+            dateActual = tasks.Date; // Fecha Actual
+        });
+        x = 0;
+        document.getElementById("placaId").innerHTML = "";
+        for (var i = 0; i < 5; i++) {
+            x = x + 1;
+            var fechax = x;
+            fechax = fechax * 10;
+            document.getElementById(fechax).innerHTML = "";
+        }
+        source = sourceTemp;
+        updateTasa();
      });
 
      $(document).on('click', '.placas', function () {
@@ -61,11 +60,10 @@ $(function() {
         var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
-        placaIds = $(element).attr('value');
+        placaElement = $(element).attr('value');
         var sourceID = $(element).attr('id');
 
-        $('#placaId').html(placaIds);
-
+        $('#placaId').html(placaElement);
           var fecha = new Date(datePlaca);
           var fechaActual = new Date(dateActual);
 
@@ -78,13 +76,13 @@ $(function() {
             for (var i = 0; i < 5; i++) {
                     x = x + 1;
                     fecha.setDate(fecha.getDate() + dias);
-
                 var fecha1 = new Intl.DateTimeFormat("es", {
                     weekday: "short",
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric"
                 }).format(new Date(fecha));  
+
 
                 var datetoday = fecha.toLocaleDateString();
                 var dateHoy = fechaActual.toLocaleDateString();
@@ -95,12 +93,12 @@ $(function() {
 
                 var datetoday = new Date(datetoday);
                 var dateHoy = new Date(dateHoy);
-                if (datetoday >= dateHoy){                
-                        document.getElementById(fechax).innerHTML = fecha1;
-                    }else{
-                        x = x - 1;
-                        i = i - 1;
-                    } 
+                if (datetoday >= dateHoy){             
+                    document.getElementById(fechax).innerHTML = fecha1;
+                }else{
+                    x = x - 1;
+                    i = i - 1;
+                }  
                 dias = dias1;
             }
               fecha = 0;
