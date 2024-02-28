@@ -7,7 +7,7 @@ $queryString = http_build_query([
   
   if ("BCV" == $source){
         $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/bcv.php', $queryString));
-    } elseif ("PDVSA" == $source) {
+    } elseif ("PDVSA" === $source) {
         $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/pdvsa.php', $queryString));
     } else {
       $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/paralelo.php', $queryString));

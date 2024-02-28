@@ -2,16 +2,32 @@ $(function() {
 
     window.onload = function() {
         source = 'BCV';
+        
         $('#sourceTasa').html(source);
         
        updateTasa();
        document.getElementById("montoText").addEventListener("input", myFunction);
         usdToday ="1";
         document.getElementById("montoText").focus();
-        datePlaca = 0;
+
+        datePlaca = 0; // Fecha Placa 1
         dateActual = 0; // Fecha Actual
+        nextDate = 0; // Fecha siguiente actualizacion
+        updateCalendar();
 
    };
+   function updateCalendar() {
+        var sourceTemp = source;
+        var source = "PDVSA";
+        $.post('api/data.php', {source}, function (response) {
+            tasks = JSON.parse(response);
+            source = sourceTemp;
+            datePlaca = tasks.DatePlaca; // Fecha Placa 1
+            nextDate = tasks.NextDate; // Fecha siguiente actualizacion
+            dateActual = tasks.Date; // Fecha Actual
+        });
+        source = sourceTemp;
+   }
 
    $(document).on('click', '.exchange-source', function () {
        let element = $(this)[0]; 
@@ -35,14 +51,9 @@ $(function() {
         var sourceTemp = source;
         let element = $(this)[0]; 
         source = $(element).attr('value');
+      //  console.log(source);
+        updateCalendar();
 
-        $.post('api/data.php', {source}, function (response) {
-            let tasks = JSON.parse(response);
-            source = sourceTemp;
-            datePlaca = tasks.DatePlaca; // Fecha Placa 1
-            nextDate = tasks.NextDate; // Fecha siguiente actualizacion
-            dateActual = tasks.Date; // Fecha Actual
-        });
         x = 0;
         document.getElementById("placaId").innerHTML = "";
         for (var i = 0; i < 5; i++) {
@@ -56,16 +67,19 @@ $(function() {
      });
 
      $(document).on('click', '.placas', function () {
+
         const dateF = new Date();
-        var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
+       // var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
         placaElement = $(element).attr('value');
         var sourceID = $(element).attr('id');
 
         $('#placaId').html(placaElement);
-          var fecha = new Date(datePlaca);
-          var fechaActual = new Date(dateActual);
+          fecha = new Date(datePlaca);
+          fechaActual = new Date(dateActual);
+          console.log(fecha);
+          console.log(fechaActual);
 
             var x = 0;
             var y = 0;
