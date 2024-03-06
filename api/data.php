@@ -6,11 +6,11 @@ $queryString = http_build_query([
   ]);
   
   if ("BCV" == $source){
-        $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/bcv.php', $queryString));
+        $ch = curl_init(sprintf('%s?%s', 'https://aggregate-dot-jhonny91.koyeb.app/v1/sources/bcv.php', $queryString));
     } elseif ("PDVSA" === $source) {
-        $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/pdvsa.php', $queryString));
+        $ch = curl_init(sprintf('%s?%s', 'https://aggregate-dot-jhonny91.koyeb.app/v1/sources/pdvsa.php', $queryString));
     } else {
-      $ch = curl_init(sprintf('%s?%s', 'https://prime-edita-jhon10101.koyeb.app/v1/sources/paralelo.php', $queryString));
+      $ch = curl_init(sprintf('%s?%s', 'https://aggregate-dot-jhonny91.koyeb.app/v1/sources/paralelo.php', $queryString));
   }
 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
