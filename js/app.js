@@ -39,19 +39,11 @@ $(function() {
 
      $(document).on('click', '.calendar-source', function () {
         var sourceTemp = source;
-        //console.log(sourceTemp);
         let element = $(this)[0]; 
         source = $(element).attr('value');
-        //console.log(enDate);
-
-        $.post('api/data.php', {source}, function (response) {
-            let tasks = JSON.parse(response);
-            source = sourceTemp;
-            datePlaca = tasks.DatePlaca; // Fecha Placa 1
-            nextDate = tasks.NextDate; // Fecha siguiente actualizacion
-            dateActual = tasks.Date; // Fecha Actual
-           // console.info(datePlaca);
-        });
+      //  console.log(source);
+        updateCalendar();
+        $('#fechasCalendar').html("");
         x = 0;
         document.getElementById("placaId").innerHTML = "";
         for (var i = 0; i < 5; i++) {
@@ -65,41 +57,44 @@ $(function() {
      });
 
      $(document).on('click', '.placas', function () {
+
         const dateF = new Date();
-        var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
+       // var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
 
         let element = $(this)[0]; 
         placaElement = $(element).attr('value');
         var sourceID = $(element).attr('id');
 
         $('#placaId').html(placaElement);
-           // var fecha = new Date($('#10').text());
-          var fecha = new Date(datePlaca);
-          var fechaActual = new Date(dateActual);
-            //fecha = fecha.toLocaleDateString('es-ES');
-           // console.info(fecha);
+        $('#fechasCalendar').html("");
+        $.post('api/calendar.php', {sourceID,datePlaca,dateActual}, function (response) {
+            $('#fechasCalendar').html(response);
+           // console.log(datePlaca);
+
+        });
+
+        /*
+          fecha = new Date(datePlaca);
+          fechaActual = new Date(dateActual);
+          console.log(fecha);
+          console.log(fechaActual);
 
             var x = 0;
             var y = 0;
             day = parseInt(sourceID);
             var dias = 0 + day; // Número de días a agregar
             var dias1 = 5; // Número de días a agregar
-           // console.info(dias);
-           // console.info(dias1);
+
             for (var i = 0; i < 5; i++) {
                     x = x + 1;
-
                     fecha.setDate(fecha.getDate() + dias);
-                 //   console.info(fecha);
-                // fecha = fecha.toDateString('es-ES');
                 var fecha1 = new Intl.DateTimeFormat("es", {
                     weekday: "short",
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric"
                 }).format(new Date(fecha));  
-                
-                // $('#Fecha2').html(fecha);
+
 
                 var datetoday = fecha.toLocaleDateString();
                 var dateHoy = fechaActual.toLocaleDateString();
@@ -107,26 +102,21 @@ $(function() {
                 var fechax = x;
                 fechax = fechax * 10;
                 document.getElementById(fechax).innerHTML = "";
-                //console.info(enDate);
-               // datetoday = datetoday.toString();
-               // enDate1 = enDate.toString();
-                //console.info(datetoday);  
-                //var enDate1 = new Date(enDate);
+
                 var datetoday = new Date(datetoday);
                 var dateHoy = new Date(dateHoy);
-                if (datetoday >= dateHoy){    
-                    //console.info(dateHoy);            
+                if (datetoday >= dateHoy){             
                     document.getElementById(fechax).innerHTML = fecha1;
                 }else{
                     x = x - 1;
                     i = i - 1;
-                }
-                
+                }  
                 dias = dias1;
             }
               fecha = 0;
-         
+        */
      });
+
 
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
