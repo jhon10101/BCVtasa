@@ -48,84 +48,39 @@ $(function() {
     });
 
     $(document).on('click', '.calendar-source', function () {
-        var sourceTemp = source;
-        let element = $(this)[0]; 
-        source = $(element).attr('value');
-      //  console.log(source);
-        updateCalendar();
-        $('#fechasCalendar').html("");
-        x = 0;
-        document.getElementById("placaId").innerHTML = "";
-        for (var i = 0; i < 5; i++) {
-            x = x + 1;
-            var fechax = x;
-            fechax = fechax * 10;
-            document.getElementById(fechax).innerHTML = "";
-        }
-        source = sourceTemp;
-        updateTasa();
-     });
+            var sourceTemp = source;
+            let element = $(this)[0]; 
+            source = $(element).attr('value');
 
-     $(document).on('click', '.placas', function () {
-
-        const dateF = new Date();
-       // var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
-
-        let element = $(this)[0]; 
-        placaElement = $(element).attr('value');
-        var sourceID = $(element).attr('id');
-
-        $('#placaId').html(placaElement);
-        $('#fechasCalendar').html("");
-        $.post('api/calendar.php', {sourceID,datePlaca,dateActual}, function (response) {
-            $('#fechasCalendar').html(response);
-           // console.log(datePlaca);
-
-        });
-
-        /*
-          fecha = new Date(datePlaca);
-          fechaActual = new Date(dateActual);
-          console.log(fecha);
-          console.log(fechaActual);
-
-            var x = 0;
-            var y = 0;
-            day = parseInt(sourceID);
-            var dias = 0 + day; // Número de días a agregar
-            var dias1 = 5; // Número de días a agregar
-
+            updateCalendar();
+            $('#fechasCalendar').html("");
+            x = 0;
+            document.getElementById("placaId").innerHTML = "";
             for (var i = 0; i < 5; i++) {
-                    x = x + 1;
-                    fecha.setDate(fecha.getDate() + dias);
-                var fecha1 = new Intl.DateTimeFormat("es", {
-                    weekday: "short",
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric"
-                }).format(new Date(fecha));  
-
-
-                var datetoday = fecha.toLocaleDateString();
-                var dateHoy = fechaActual.toLocaleDateString();
-                
+                x = x + 1;
                 var fechax = x;
                 fechax = fechax * 10;
                 document.getElementById(fechax).innerHTML = "";
-
-                var datetoday = new Date(datetoday);
-                var dateHoy = new Date(dateHoy);
-                if (datetoday >= dateHoy){             
-                    document.getElementById(fechax).innerHTML = fecha1;
-                }else{
-                    x = x - 1;
-                    i = i - 1;
-                }  
-                dias = dias1;
             }
-              fecha = 0;
-        */
-     });
+            source = sourceTemp;
+            updateTasa();
+        });
+
+    $(document).on('click', '.placas', function () {
+
+
+            let element = $(this)[0]; 
+            placaElement = $(element).attr('value');
+            var sourceID = $(element).attr('id');
+
+            $('#placaId').html(placaElement);
+            $('#fechasCalendar').html("");
+
+            $.post('api/calendar.php', {sourceID,datePlaca,dateActual}, function (response) {
+                $('#fechasCalendar').html(response);
+            });
+
+    });
 
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
