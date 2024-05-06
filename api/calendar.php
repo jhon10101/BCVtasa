@@ -8,9 +8,10 @@ $days = $_POST["sourceID"];
 //$days = 2;
 //$num = 5;
 $day = 'P'.$days.'D';
-$fecha = "02-05-2024";
-$fechaHoy = "06-05-2024";
-$formatoFecha = "d-m-Y";
+$fecha = $_POST["datePlaca"];
+$fechaHoy = $_POST["dateActual"];
+
+$formatoFecha = "m-d-Y";
 $fechaObj = DateTime::createFromFormat($formatoFecha, $fecha);
 $fechaHoy = DateTime::createFromFormat($formatoFecha, $fechaHoy);
 $fechaObj->add(new DateInterval($day));
