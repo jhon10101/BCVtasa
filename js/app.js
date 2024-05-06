@@ -76,10 +76,10 @@ $(function() {
         var sourceID = $(element).attr('id');
 
         $('#placaId').html(placaElement);
-
-        $.post('api/calendar.php', {sourceID}, function (response) {
+        $('#fechasCalendar').html("");
+        $.post('api/calendar.php', {sourceID,datePlaca,dateActual}, function (response) {
             $('#fechasCalendar').html(response);
-            console.log(response);
+           // console.log(datePlaca);
 
         });
 
