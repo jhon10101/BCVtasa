@@ -53,7 +53,7 @@ $(function() {
         source = $(element).attr('value');
       //  console.log(source);
         updateCalendar();
-
+        $('#fechasCalendar').html("");
         x = 0;
         document.getElementById("placaId").innerHTML = "";
         for (var i = 0; i < 5; i++) {
