@@ -1,47 +1,42 @@
 <?php
 
-// Definir variables
-$x = 0;
-$y = 0;
-$dias = 0;
-$dias1 = 5;
+//$D_es = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+$D_es = array("Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom");
+$D_en = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
-// Obtener el día de la fuente
-$day = (int) $_GET["sourceID"];
-
-// Bucle para recorrer los días
-for ($i = 0; $i < 5; $i++) {
-  // Incrementar el contador
-  $x++;
-
-  // Sumar días a la fecha
-  $fecha = date_create("today");
-  date_add($fecha, date_interval_create_from_date_string("$dias days"));
-
-  // Formatear la fecha
-  $fecha1 = date_format($fecha, "D d/m/Y");
-
-  // Convertir la fecha a formato local
-  $datetoday = date_format($fecha, "Y-m-d");
-  $dateHoy = date_format(date_create("today"), "Y-m-d");
-
-  // Calcular el identificador del elemento
-  $fechax = $x * 10;
-
-  // Si la fecha actual es mayor o igual a la fecha del bucle, mostrar la fecha formateada
-  if ($datetoday >= $dateHoy) {
-    echo "<p id=\"$fechax\">$fecha1</p>";
-  } else {
-    // Si no, restar un día al contador y al índice del bucle
-    $x--;
-    $i--;
-  }
-
-  // Restablecer el valor de los días
-  $dias = $dias1;
+$days = $_POST["sourceID"];
+//$days = 2;
+//$num = 5;
+$day = 'P'.$days.'D';
+$fecha = "02-05-2024";
+$fechaHoy = "06-05-2024";
+$formatoFecha = "d-m-Y";
+$fechaObj = DateTime::createFromFormat($formatoFecha, $fecha);
+$fechaHoy = DateTime::createFromFormat($formatoFecha, $fechaHoy);
+$fechaObj->add(new DateInterval($day));
+if ($fechaObj < $fechaHoy) {
+  $num = 5;
+  $day = 'P'.$num.'D';
+  $fechaObj->add(new DateInterval($day));
 }
+//$fecha1 = date_format($fechaObj, "D d/m/Y");
+//$fecha = date('l, d F Y', strtotime($fecha1));
+$fecha = date_format($fechaObj, "l d/m/Y");
+$fecha1 = str_replace($GLOBALS['D_en'],$GLOBALS['D_es'],$fecha);
 
-// Restablecer la fecha
-$fecha = null;
+echo '<div class="col-12 my-2 p-0 px-2  fs-1  fw-bold">
+<span  class="align-middle">'.$fecha1.'</span>
+</div>';
+
+for ($i = 0; $i < 5; $i++) {
+    $num = 5;
+    $day = 'P'.$num.'D';
+    $fechaObj->add(new DateInterval($day));
+    $fecha = date_format($fechaObj, "l d/m/Y");
+    $fecha1 = str_replace($GLOBALS['D_en'],$GLOBALS['D_es'],$fecha);
+    echo '<div class="col-12 my-2 p-0 px-2  fs-2">
+    <span  class="align-middle">'.$fecha1.'</span>
+    </div>';
+}
 
 ?>

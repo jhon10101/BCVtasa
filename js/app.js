@@ -76,6 +76,14 @@ $(function() {
         var sourceID = $(element).attr('id');
 
         $('#placaId').html(placaElement);
+
+        $.post('api/calendar.php', {sourceID}, function (response) {
+            $('#fechasCalendar').html(response);
+            console.log(response);
+
+        });
+
+        /*
           fecha = new Date(datePlaca);
           fechaActual = new Date(dateActual);
           console.log(fecha);
@@ -116,6 +124,7 @@ $(function() {
                 dias = dias1;
             }
               fecha = 0;
+        */
      });
 
     function readClipText(){
