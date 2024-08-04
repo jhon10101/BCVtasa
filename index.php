@@ -29,12 +29,12 @@
                 <div class="col-md-12 col-12 text-light">
                         <div id="" class="container">
                             <div class="justify-content-center">
-                              <div value="BCV" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 exchange-source">
-                                <img src="https://exchangemonitor.net/img/ve/nacional/bcv.webp" alt="BCV" width="20%" height="20%" class="float-start">
+                            <div value="BCV" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 exchange-source">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Banco_Central_de_Venezuela_logo.svg/150px-Banco_Central_de_Venezuela_logo.svg.png" alt="BCV" width="20%" height="20%" class="float-start">
                                     <span class="align-middle fw-bold">BCV</span>
                               </div>
                               <div value="Paralelo" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 exchange-source">
-                              <img src="https://exchangemonitor.net/img/ve/monitor-dolar.webp" alt="Paralelo" width="20%" height="20%" class="float-start">
+                              <img src="https://pbs.twimg.com/profile_images/1111629538646216705/kLOBbRXR_400x400.jpg" alt="Paralelo" width="20%" height="20%" class="float-start">
                                     <span class="align-middle fw-bold">Paralelo</span>
                               </div>
                               <div value="PDVSA" class="col-12 my-3 p-3 px-5 btn btn-warning btn-lg text-primary fs-1 calendar-source" data-bs-toggle="offcanvas" href="#offcanvasPDVSA" role="button" aria-controls="offcanvasExample">
