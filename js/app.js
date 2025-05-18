@@ -494,10 +494,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (conversionMode === 'usd_to_bs') {
             conversionMode = 'bs_to_usd';
             fromCurrencyLabel.textContent = 'Bolívar Bs.'; // O moneda local
-            toCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa'; // Dolar $, Euro €, etc.
+            // toCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa'; // Dolar $, Euro €, etc.
+            toCurrencyLabel.textContent = "Dolar "+currentRatesData.rate1.currency;
         } else {
             conversionMode = 'usd_to_bs';
-            fromCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa';
+            // fromCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa';
+            fromCurrencyLabel.textContent = "Dolar "+currentRatesData.rate1.currency;
             toCurrencyLabel.textContent = 'Bolívar Bs.';
         }
         updateDisplayAndCalc();
@@ -527,7 +529,9 @@ document.addEventListener('DOMContentLoaded', function() {
         //console.log(conversionMode);
          if (currentRatesData && currentRatesData.rate1) {
              if (conversionMode === 'usd_to_bs') {
-                 mainInputCurrencySymbol = currentRatesData.rate1.currency ? currentRatesData.rate1.currency.slice(0, -1) : '$';
+                // mainInputCurrencySymbol = currentRatesData.rate1.currency ? currentRatesData.rate1.currency.slice(0, -1) : '$';
+                 mainInputCurrencySymbol = currentRatesData.rate1.currency; // dejo el simbolo USD$
+                // console.log(currentRatesData.rate1.currency);
              } else {
                  mainInputCurrencySymbol = 'Bs.';
              }
@@ -578,7 +582,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else { // bs_to_usd: De Bolívares a Divisa
             result = amount / activeRateValue;
             // La salida es la Divisa. Obtenemos el símbolo de rate1.currency sin el último carácter.
-            outputCurrencySymbol = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : '$'; // Default a '$'
+            // outputCurrencySymbol = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : '$'; // Default a '$'
+            outputCurrencySymbol = currentRatesData.rate1.currency; // dejo el simbolo USD$
         }
 
         // Formatear el resultado de la conversión
@@ -657,12 +662,14 @@ document.addEventListener('DOMContentLoaded', function() {
             updateRateDisplay(initialRates);
             appTitleSource.textContent = initialRates.sourceName;
             if (initialRates.rate1) { // Chequeo adicional
-               fromCurrencyLabel.textContent = initialRates.rate1.currency ? initialRates.rate1.currency.slice(0,-1) : 'Divisa';
+               // fromCurrencyLabel.textContent = initialRates.rate1.currency ? initialRates.rate1.currency.slice(0,-1) : 'Divisa';
+               fromCurrencyLabel.textContent = "Dolar "+initialRates.rate1.currency;
             }
        }
         appTitleSource.textContent = initialRates.sourceName;
         // Asegurar que las etiquetas de moneda de conversión iniciales sean correctas
-        fromCurrencyLabel.textContent = initialRates.rate1 ? initialRates.rate1.currency.slice(0,-1) : 'Divisa';
+        // fromCurrencyLabel.textContent = initialRates.rate1 ? initialRates.rate1.currency.slice(0,-1) : 'Divisa';
+        fromCurrencyLabel.textContent = "Dolar "+initialRates.rate1.currency;
         updateDisplayAndCalc(); // Para mostrar 0.00 inicialmente
 
 

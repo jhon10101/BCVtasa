@@ -57,7 +57,7 @@
         </div>
 
         <div class="conversion-direction">
-            <span id="fromCurrencyLabel">Dolar $</span>
+            <span id="fromCurrencyLabel">Dolar USD$</span>
             <button id="swap-currency" class="swap-button">⇄</button>
             <span id="toCurrencyLabel">Bolívar Bs.</span>
         </div>
