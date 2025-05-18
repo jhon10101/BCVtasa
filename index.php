@@ -31,8 +31,8 @@
                 BCV
             </button>
             <button class="menu-button" data-source="Paralelo">
-                <img src="https://pbs.twimg.com/profile_images/1111629538646216705/kLOBbRXR_400x400.jpg" alt="Paralelo Logo" class="menu-icon-img">
-                Paralelo
+                <img src="https://monitordolarvenezuela.com/img/logos/promedio.webp" alt="Paralelo Logo" class="menu-icon-img">
+                Paralelo / Promedio
             </button>
             <button class="menu-button" data-source="PDVSA">
                 <img src="https://logodownload.org/wp-content/uploads/2019/03/pdvsa-logo-44.png" alt="PDVSA Logo" class="menu-icon-img">
