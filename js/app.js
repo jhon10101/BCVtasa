@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
             activeRateValue = parseFloat(currentRatesData.rate1.value);
             rateBox1.classList.add('active-rate');
             rateBox2.classList.remove('active-rate');
-            updaterates();
+            //updaterates();
             updateCalculation();
         }
     });
@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
             activeRateValue = parseFloat(currentRatesData.rate2.value);
             rateBox2.classList.add('active-rate');
             rateBox1.classList.remove('active-rate');
-            updaterates();
+            //updaterates();
             updateCalculation();
         }
     });
