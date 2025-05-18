@@ -21,7 +21,7 @@
     <button type="button" class="btn-close text-reset h1" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body h2  text-light">
-  <div class="mb-4">
+    <div class="mb-4">
       Cambia el tipo de tasa disponible:
     </div>
         <div class="bg-primary"> <!-- container -->
@@ -105,14 +105,14 @@
                                                     
                                                     <div class="d-flex justify-content-center">
                                                     <div class="row px-1 pb-1">
-                                                        <div class="col-md-9 col-9 pt-1 bg-dark rounded"  role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                                                                <div class="m-3"><i class="fa fa-calculator fa-shake fa-2x mx-3" aria-hidden="true"></i><span class="m-1 text-warning h2 text-start"><span id="sourceTasa"></span> dolar</span></div>
-                                                        </div>
-                                                        <div id="" class="col-md-3 col-3 text-center">
-                                                                <a class="btn btn-lg text-warning btn-floating m-1 p-2" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"
-                                                                ><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>
-                                                        </div>
 
+                                                        <div class="col-md-9 col-9 pt-1 bg-dark rounded"  role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                                                            <div class="m-3"><i class="fa fa-calculator fa-shake fa-2x mx-3" aria-hidden="true"></i><span class="m-1 text-warning h2 text-start"><span id="sourceTasa"></span> dolar</span></div>
+                                                        </div>
+                                                        <div id="" class="col-md-3 col-3">
+                                                                <a class="btn btn-lg text-warning btn-floating m-1 col-3 p-2" role="button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"
+                                                                        ><i class="fa fa-bars fa-2x" aria-hidden="true"></i></a>
+                                                        </div>
                                                                 <div id="vigente" class="col-6 px-1 pt-2 text-center updateTasaBCV">
                                                                     <h4><div>Vigente:</div>
                                                                     <span class="m-1 p-3">USD<i class="fa fa-usd" aria-hidden="true"></i></span></h4><span id="valor-vigente" class="h1 text-center text-warning fw-bold fs-1">0</span>
@@ -121,7 +121,7 @@
                                                             
                                                                 <div id="proximo" class="col-6 px-1 pt-1 text-center text-success updateTasaBCV">
                                                                     <div>Proximo:</div>
-                                                                    <span class="m-1 px-3">USD</span><br><span id="valor-next" class="h4 m-1 px-3 text-light">0</span>
+                                                                    <span class="m-1 px-3">USD$</span><br><span id="valor-next" class="h4 m-1 px-3 text-light">0</span>
                                                                     <br>
                                                                         <span id="fecha-next" class="px-1"></span>
                                                                 </div>
@@ -177,7 +177,7 @@
                                             <i class="fa-1x">Limpiar</i></button>
 
                                             <!-- delete -->
-                                            <button type="button" value="delete" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 p-2 BtnDelete">
+                                            <button type="button" value="delete" class="btn btn-lg btn-outline-warning btn-floating m-1 col-3 p-2 BtnDelete">
                                                     <i class="fa-solid fa-delete-left fa-1x"></i></button>
 
                                             <!-- 1 -->
@@ -216,9 +216,9 @@
                                             <button type="button" value="9" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
                                                     <i class="fa-sharp fa-light fa-9 fa-2x"></i></button>
 
-                                            <!-- Disabled -->
-                                            <button disabled type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 pegar">
-                                                    <i class="fa fa-2x"></i><div></div></button>
+                                            <!-- Pegar -->
+                                            <button type="button" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 py-0 pegar">
+                                                    <i class="fa-thin fa-paste fa"></i><div>Pegar</div></button>
 
                                             <!-- 0 -->
                                             <button type="button" value="0" class="btn btn-lg btn-outline-warning btn-floating m-0 col-3 px-3 Btncalculator">
@@ -247,7 +247,7 @@
 
 </body>
         <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"></script>
         <script src="js/app.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

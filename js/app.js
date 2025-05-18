@@ -48,69 +48,121 @@ $(function() {
     });
 
     $(document).on('click', '.calendar-source', function () {
-            var sourceTemp = source;
-            let element = $(this)[0]; 
-            source = $(element).attr('value');
+        var sourceTemp = source;
+        let element = $(this)[0]; 
+        source = $(element).attr('value');
+      //  console.log(source);
+        updateCalendar();
+        $('#fechasCalendar').html("");
+        x = 0;
+        document.getElementById("placaId").innerHTML = "";
+        for (var i = 0; i < 5; i++) {
+            x = x + 1;
+            var fechax = x;
+            fechax = fechax * 10;
+            document.getElementById(fechax).innerHTML = "";
+        }
+        source = sourceTemp;
+        updateTasa();
+     });
 
-            updateCalendar();
-            $('#fechasCalendar').html("");
-            x = 0;
-            document.getElementById("placaId").innerHTML = "";
+     $(document).on('click', '.placas', function () {
+
+        const dateF = new Date();
+       // var enDate = new Intl.DateTimeFormat("en-US").format(dateF);
+
+        let element = $(this)[0]; 
+        placaElement = $(element).attr('value');
+        var sourceID = $(element).attr('id');
+
+        $('#placaId').html(placaElement);
+        $('#fechasCalendar').html("");
+        $.post('api/calendar.php', {sourceID,datePlaca,dateActual}, function (response) {
+            $('#fechasCalendar').html(response);
+           // console.log(datePlaca);
+
+        });
+
+        /*
+          fecha = new Date(datePlaca);
+          fechaActual = new Date(dateActual);
+          console.log(fecha);
+          console.log(fechaActual);
+
+            var x = 0;
+            var y = 0;
+            day = parseInt(sourceID);
+            var dias = 0 + day; // Número de días a agregar
+            var dias1 = 5; // Número de días a agregar
+
             for (var i = 0; i < 5; i++) {
-                x = x + 1;
+                    x = x + 1;
+                    fecha.setDate(fecha.getDate() + dias);
+                var fecha1 = new Intl.DateTimeFormat("es", {
+                    weekday: "short",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric"
+                }).format(new Date(fecha));  
+
+
+                var datetoday = fecha.toLocaleDateString();
+                var dateHoy = fechaActual.toLocaleDateString();
+                
                 var fechax = x;
                 fechax = fechax * 10;
                 document.getElementById(fechax).innerHTML = "";
+
+                var datetoday = new Date(datetoday);
+                var dateHoy = new Date(dateHoy);
+                if (datetoday >= dateHoy){             
+                    document.getElementById(fechax).innerHTML = fecha1;
+                }else{
+                    x = x - 1;
+                    i = i - 1;
+                }  
+                dias = dias1;
             }
-            source = sourceTemp;
-            updateTasa();
-        });
-
-    $(document).on('click', '.placas', function () {
-
-
-            let element = $(this)[0]; 
-            placaElement = $(element).attr('value');
-            var sourceID = $(element).attr('id');
-
-            $('#placaId').html(placaElement);
-            $('#fechasCalendar').html("");
-
-            $.post('api/calendar.php', {sourceID,datePlaca,dateActual}, function (response) {
-                $('#fechasCalendar').html(response);
-            });
-
-    });
+              fecha = 0;
+        */
+     });
 
     function readClipText(){
         var clipPromise = navigator.clipboard.readText();
         clipPromise.then(function(clipText){
-
+           // document.getElementById("montoText").addEventListener("input", myFunction);
+          //  document.getElementById("montoText").focus();
           if (parseFloat(clipText)) {
             document.getElementById("montoText").value = clipText;
             myFunction();         
           }
 
         });
+ 
     }
 
     $(".pegar").click(function(){
         readClipText();
+
+      //  myFunction();
     });
     
     var clipboard = new ClipboardJS('.copiado');
     clipboard.on('success', function(e) {
+     //  console.info('Action:', e.action);
+     //  console.info('Text:', e.text);
+     //  console.info('Trigger:', e.trigger);
+         console.info(e.text);
+        let valTemp = document.getElementById("valorTotal").innerHTML;
+        $('#valorTotal').html("Copiado!");
+        $("#valorTotal").addClass("text-success");
 
-            let valTemp = document.getElementById("valorTotal").innerHTML;
-            $('#valorTotal').html("Copiado!");
-            $("#valorTotal").addClass("text-success");
-
-            e.clearSelection();
-            setTimeout(function(){
-                document.getElementById("valorTotal").innerHTML = valTemp;
-                $("#valorTotal").removeClass("text-success");
-            }, 1200)
-     });
+        e.clearSelection();
+        setTimeout(function(){
+            document.getElementById("valorTotal").innerHTML = valTemp;
+            $("#valorTotal").removeClass("text-success");
+        }, 1200)
+   });
 
     function round(num) {
         var m = Number((Math.abs(num) * 100).toPrecision(15));
@@ -119,11 +171,14 @@ $(function() {
 
     function updateTasa() {
         $("#proximo").hide();
-
+      //  let category = 0;
+        
         $('#valor-vigente').html(0);
         $('#valor-next').html(0);
         $('#fecha-next').html("");
 
+ //{"Source":"BCV","USD":"29.88","Date":"21-07-2023","DateFormat":"Viernes, 21 Julio 2023","USDNext":29.09,"DateNext":"25-07-2023","DateFormatNext":"Martes, 25 Julio 2023","DateNow":"24-07-2023","Status":200}
+ 
         $.post('api/data.php', {source}, function (response) {
             let tasks = JSON.parse(response);
            
@@ -136,23 +191,26 @@ $(function() {
                 var dateNext2 = (tasks.DateNext); // fecha Siguiente
                 var date = (tasks.Date); // fecha con vigente
                 var dateNow = (tasks.Date); // fecha actual
-
+            //  $('#fecha-vigente').html(dateToday);
                 $('#fecha-next').html(dateNext);
                 $("#proximo").hide();
                 $("#vigente").addClass("col-12");
                 $("#vigente").removeClass("col-6");
+             //  document.querySelector('#proximo').style.display = 'none';
 
                if ((date)==(dateNext2)) {
                     $("#proximo").hide();
+                    //   console.log(usdToday);
                } else {
                     if ((dateNow)==(dateNext2)) {
                       $("#proximo").hide();
                         usdToday = usdNext;
+                     //   console.log(usdToday);
                     } else {
                         if ((dateNext2) != "0") {
                             $("#proximo").show();
                             $("#vigente").addClass("col-6");
-                            $("#vigente").removeClass("col-12");      
+                            $("#vigente").removeClass("col-12");    
                         }
                     }
                }
@@ -160,6 +218,7 @@ $(function() {
                $('#valor-next').html(usdNext);
                myFunction();
         });
+
 
     }
 
@@ -177,6 +236,9 @@ $(function() {
 
         moneda = document.getElementsByClassName("currency1")[0].innerHTML;
         moneda = moneda.replace(/\s+/g, '');
+       // console.log(conversion);
+
+        
 
        if (moneda == "BolivarBs.") {
             total = conversion / usdToday;
@@ -184,6 +246,7 @@ $(function() {
             total = conversion * usdToday;    
        }
        total = round(total);
+       // total = total.toFixed(2);
 
         $('#valorTotal').html(total);
     }
@@ -192,11 +255,12 @@ $(function() {
         updateTasa();  
     });
 
+
     $(document).on('click', '.BtnExchange', function () {
         var moneda = document.getElementsByClassName("currency1")[0].innerHTML;
         moneda = moneda.replace(/\s+/g, '');
 
-       if (moneda == "BolivarBs.") {
+        if (moneda == "BolivarBs.") {
             document.getElementsByClassName("currency1")[0].innerHTML = "Dolar $";
             document.getElementsByClassName("currency2")[0].innerHTML = "Bolivar Bs.";
             document.getElementsByClassName("currency1")[1].innerHTML = "Dolar";
@@ -215,7 +279,7 @@ $(function() {
     $(document).on('click', '.BtnDelete', function () {               
 
         PrevioText = document.getElementById("montoText").value;
-
+        // console.log(PrevioText.length);
         if ((PrevioText.length) > 0) {
             if ((PrevioText.length) == 1) {
                 myFunction();
