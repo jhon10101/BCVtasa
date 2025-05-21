@@ -31,6 +31,7 @@ $queryString = http_build_query([
   ]);
   
     if ("BCV" == $source){
+    if ("BCV" == $source){
             $ch = curl_init(sprintf('%s?%s', 'https://forward-deena-jhonny91.koyeb.app/v1/sources/bcv.php', $queryString));
 
             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -145,8 +146,10 @@ $queryString = http_build_query([
        // Verificar si la solicitud cURL fue exitosa
        if (($http_code !== 200) || ($ch === false)) {
           //  $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/paralelo.php', $queryString));
+          //  $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/paralelo.php', $queryString));
            // echo "Error al ejecutar cURL: " . curl_error($ch);
         }
+    }
     }
 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
