@@ -1,0 +1,482 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333; /* Fondo oscuro general */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea al inicio para ver el menú si es largo */
+    min-height: 100vh;
+    margin: 0;
+    /* padding: 20px;  Padding para que no pegue a los bordes */
+    box-sizing: border-box;
+    position: relative; /* Para el posicionamiento del menú */
+}
+
+.calculator-container {
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    position: relative; /* Para que el menú se posicione relativo a esto si fuera necesario */
+    z-index: 10; /* Asegura que la calculadora esté sobre el fondo del menú (si el menú fuera full-screen) */
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 15px;
+}
+
+.logo-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.icon-calculator {
+    margin-right: 8px;
+    display: inline-block;
+    content: '💰';
+    text-align: center;
+}
+
+#app-title-source {
+    margin-right: 5px; /* Espacio entre BCV/Paralelo y "dolar" */
+}
+
+
+.menu-icon {
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+/* Estilos para el Menú Desplegable */
+.dropdown-menu {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* O absolute, dependiendo del efecto deseado */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 20, 0.95); /* Fondo oscuro semi-transparente */
+    z-index: 1000; /* Por encima de todo */
+    padding: 40px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centra los botones verticalmente */
+}
+
+.dropdown-menu.show {
+    display: flex; /* Mostrarlo */
+}
+
+.dropdown-menu h4 {
+    font-size: 1.8em;
+    color: #f0ad4e; /* Amarillo/Naranja */
+    margin-bottom: 10px;
+    text-align: center;
+}
+.dropdown-menu .menu-subtitle {
+    font-size: 1em;
+    color: #ccc;
+    margin-bottom: 30px;
+    text-align: center;
+    max-width: 250px;
+}
+
+.menu-button {
+    background-color: #f0ad4e; /* Amarillo/Naranja como en la imagen */
+    color: #1e1e1e; /* Texto oscuro para contraste */
+    border: none;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espacio entre el icono y el texto */
+}
+.menu-icon-img {
+    width: 30px; /* Ajusta el tamaño según tus imágenes */
+    height: 30px;
+}
+
+.menu-button:hover {
+    background-color: #eea236;
+}
+
+/* Para el botón de cierre "X" que se podría añadir al menú */
+.close-menu-button {
+    position: absolute;
+    top: 20px;
+    right: 30px; /* Ajustar si es necesario */
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2em;
+    font-weight: bold; /* Hacer la X más visible */
+    cursor: pointer;
+}
+
+
+.rates-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.rate-box {
+    background-color: #2a2a2a;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    flex: 1;
+    min-height: 100px; /* Para mantener altura consistente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.rate-box.active-rate {
+    border-color: #f0ad4e;
+    box-shadow: 0 5px 8px #f0ad4e;
+}
+
+.rate-box p {
+    margin: 3px 0;
+}
+#rate-label-1, #rate-label-2 { /* Para etiquetas como "Vigente", "Paralelo" */
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.rate-box .currency-label {
+    font-size: 0.9em;
+    color: #aaa;
+}
+
+.rate-box .rate-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #f0ad4e;
+}
+
+.rate-box .rate-date {
+    font-size: 0.75em;
+    color: #ffffff;
+}
+
+.conversion-direction {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: #2a2a2a;
+    /* padding: 10px; */
+    border-radius: 8px;
+}
+
+.conversion-direction span {
+    font-size: 1.1em;
+    font-weight: bold;
+    flex: 1;
+    text-align: center;
+}
+#fromCurrencyLabel {
+    text-align: left;
+    padding-left: 10px;
+}
+#toCurrencyLabel {
+    text-align: right;
+    padding-right: 10px;
+}
+
+
+.swap-button {
+    background-color: #444;
+    color: #f0ad4e;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 8px 45px;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.swap-button:hover {
+    background-color: #555;
+}
+
+
+.display-area {
+    background-color: #111;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.main-display-input {
+    width: calc(100% - 20px);
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 2.2em;
+    text-align: right;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.main-display-input::placeholder {
+    color: #555;
+}
+
+.calculation-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5em;
+    color: #ffc107;
+    padding: 0 10px;
+}
+.calculation-result .arrow-display {
+    color: #f0ad4e;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+.copy-button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+.copy-button:hover {
+    color: #fff;
+}
+
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.keypad button {
+    background-color: #3a3a3a;
+    border: 1px solid #2a2a2a;
+    color: #fff;
+    font-size: 1.6em;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.keypad button:hover {
+    background-color: #4a4a4a;
+}
+
+.keypad button:active {
+    background-color: #5a5a5a;
+}
+
+.control-button {
+    color: #f0ad4e !important;
+}
+
+/* Estilos para el Menú Desplegable */
+.dropdown-menu {
+    display: none; /* Clave: Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 20, 0.95);
+    z-index: 1000;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    flex-direction: column; /* Estas se aplican cuando display es flex */
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-menu.show {
+    display: flex; /* Se muestra cuando tiene la clase .show */
+}
+
+/* Estilos para el botón de cierre "X" del menú */
+.close-menu-button {
+    position: absolute;
+    top: 25px; /* Ajusta para mejor alineación vertical */
+    right: 35px; /* Ajusta para mejor alineación horizontal */
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.5em; /* Un poco más grande para ser más fácil de clickear */
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1; /* Puede ayudar a alinear mejor el caracter 'X' */
+    padding: 5px; /* Área de click un poco más grande */
+    z-index: 1001; /* Asegura que esté sobre otros elementos del menú si fuera necesario */
+}
+
+#clear {
+    grid-column: span 2; /* Hace que el botón Limpiar ocupe 2 columnas */
+}
+
+/* Estilos para el Modal PDVSA */
+.pdvsa-modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro semi-transparente */
+    display: flex; /* Usar flexbox para centrar el contenido */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Asegurarse de que esté por encima de todo, incluyendo el menú principal */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque opcional */
+}
+
+.pdvsa-modal-content {
+    background-color: #1e1e1e; /* Fondo oscuro del modal */
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 350px; /* Ancho máximo del modal */
+    width: 90%; /* Ancho responsivo */
+    text-align: center;
+    position: relative; /* Para posicionar el botón de cierre */
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* Botón de cierre 'X' del modal */
+.close-modal-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+    z-index: 2001; /* Por encima del contenido del modal */
+}
+
+.close-modal-button:hover {
+    color: #f0ad4e; /* Color naranja al pasar el ratón */
+}
+
+/* Títulos del modal */
+.pdvsa-modal-title {
+    font-size: 1.8em;
+    color: #f0ad4e; /* Color naranja */
+    margin-bottom: 5px;
+}
+
+.pdvsa-modal-subtitle {
+    font-size: 1em;
+    color: #ccc;
+    margin-bottom: 25px;
+}
+
+/* Contenedor de los botones de placa */
+.plate-buttons-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas por defecto */
+    gap: 12px; /* Espacio entre botones */
+    margin-bottom: 25px;
+}
+
+/* Estilo de los botones de placa */
+.plate-button {
+    background-color: #f0ad4e; /* Fondo naranja */
+    color: #1e1e1e; /* Texto oscuro */
+    border: none;
+    border-radius: 8px;
+    padding: 15px 10px;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.plate-button:hover {
+    background-color: #eea236; /* Naranja más oscuro al pasar el ratón */
+}
+
+/* Estilo para el botón 9-0 que ocupa una fila completa */
+.plate-button.single-button {
+    grid-column: span 2; /* Ocupa las 2 columnas */
+    /* Si quieres que sea más estrecho y centrado, puedes añadir: */
+    /* width: 50%; */
+    /* margin: 0 auto; */
+}
+
+/* Sección de Placa seleccionada */
+.placa-info {
+    background-color: #444; /* Fondo gris oscuro */
+    padding: 1px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    text-align: center;
+    display: none; /* Oculto por defecto */
+}
+
+.placa-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.selected-placa {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #f0ad4e; /* Color naranja para el número de placa */
+}
+
+/* Lista de fechas calculadas */
+.pdvsa-dates-list {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #fff;
+    line-height: 1.7;
+    display: none; /* Oculto por defecto */
+}
+
+.pdvsa-dates-list p {
+    margin: 6px 0; /* Espacio entre las fechas */
+    padding: 0;
+}
+
+#input-amount-display {
+    display: none; /* Oculta completamente el span donde se mostraba el input formateado */
+}
