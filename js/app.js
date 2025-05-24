@@ -27,6 +27,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const pasteButton = document.getElementById('paste');
     const copyResultButton = document.getElementById('copy-result');
 
+    
+        const themeToggleButton = document.getElementById('theme-toggle'); // Obtener el nuevo botón
+
+            // --- Lógica del Tema Claro/Oscuro ---
+    const currentTheme = localStorage.getItem('theme'); // Obtener el tema guardado
+    if (currentTheme) {
+        document.body.classList.add(currentTheme); // Aplicar el tema guardado
+        // Actualizar el icono del botón según el tema actual
+        if (currentTheme === 'light-theme') {
+            themeToggleButton.textContent = '☀️'; // Si es claro, muestra sol
+        } else {
+            themeToggleButton.textContent = '🌙'; // Si es oscuro, muestra luna
+        }
+    } else {
+        // Si no hay tema guardado, se asume el tema oscuro por defecto (tu CSS actual)
+        localStorage.setItem('theme', ''); // Guarda vacío o 'dark-theme' explícitamente
+        themeToggleButton.textContent = '🌙';
+    }
+
+
+    if (themeToggleButton) {
+        themeToggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme'); // Alternar la clase 'light-theme'
+            let theme = 'dark-theme'; // Tema por defecto (el actual si no tiene light-theme)
+            if (document.body.classList.contains('light-theme')) {
+                theme = 'light-theme';
+                themeToggleButton.textContent = '☀️'; // Cambiar icono a sol
+            } else {
+                theme = 'dark-theme';
+                themeToggleButton.textContent = '🌙'; // Cambiar icono a luna
+            }
+            localStorage.setItem('theme', theme); // Guardar la preferencia
+        });
+    }
+
+
+
         // --- Nuevos elementos del Modal PDVSA ---
         const pdvsaModal = document.getElementById('pdvsaModal');
         const closePdvsaModalButton = document.getElementById('closePdvsaModal');
