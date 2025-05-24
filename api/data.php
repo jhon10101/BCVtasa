@@ -24,12 +24,13 @@ if ($data !== null && isset($data['source'])) {
     // Ejemplo (adapta esto a tu lógica real):
 }
 //$source = "BCV" ;
-//$plateOffset = 3;
+//$plateOffset = 2;
 //$source =  "PDVSA";
 $queryString = http_build_query([
     'access_key' => 'bdc0ad587af413b335abe28b50cd561a',
   ]);
   
+    if ("BCV" == $source){
     if ("BCV" == $source){
             $ch = curl_init(sprintf('%s?%s', 'https://forward-deena-jhonny91.koyeb.app/v1/sources/bcv.php', $queryString));
 
@@ -79,16 +80,26 @@ $queryString = http_build_query([
                     } else {
                         // Los datos base se obtuvieron y decodificaron correctamente, proceder con el cálculo de fechas
                         $datePlacaString = $external_data['DatePlaca']; // Fecha base en formato "mm-dd-yyyy"
-            
+                        $dateString = $external_data['Date']; // Fecha actual en formato "mm-dd-yyyy"
                         // 2. Calcular la fecha base para la placa seleccionada
                         // Usar DateTime::createFromFormat es más seguro para parsear fechas con formatos específicos
-                        $datePlaca = DateTime::createFromFormat('m-d-Y', $datePlacaString);
+                        
+                        $formatoFecha = "m-d-Y";
+                        $datePlaca = DateTime::createFromFormat($formatoFecha, $datePlacaString);
+                        $fechaHoy = DateTime::createFromFormat($formatoFecha, $dateString);
+
+
             
                         if ($datePlaca) {
                             // Clonar la fecha y añadir el offset de días según la placa
                             $placaBaseDate = clone $datePlaca;
+                            $todayDate = clone $fechaHoy;
                             $placaBaseDate->modify("+$plateOffset days"); // Añadir el offset recibido desde JS
-            
+                            $numDays = 5;
+                            if ($placaBaseDate < $todayDate) {
+                                $placaBaseDate->modify("+$numDays days");
+                            }
+                            
                             // 3. Calcular las 6 fechas siguientes con intervalos de 5 días
                             $calculatedDates = [];
                             $currentDate = clone $placaBaseDate; // Empezar desde la fecha base de la placa
@@ -135,8 +146,10 @@ $queryString = http_build_query([
        // Verificar si la solicitud cURL fue exitosa
        if (($http_code !== 200) || ($ch === false)) {
           //  $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/paralelo.php', $queryString));
+          //  $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/paralelo.php', $queryString));
            // echo "Error al ejecutar cURL: " . curl_error($ch);
         }
+    }
     }
 
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
