@@ -20,6 +20,7 @@
             <div class="logo-title">
                 <span class="icon-calculator"></span> <span id="app-title-source">BCV</span> dolar
             </div>
+             <button id="theme-toggle" class="theme-toggle-button">🌙</button>
             <div class="menu-icon" id="menu-toggle-button">☰</div>
         </header>
 
