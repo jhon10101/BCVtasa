@@ -480,3 +480,273 @@ body {
 #input-amount-display {
     display: none; /* Oculta completamente el span donde se mostraba el input formateado */
 }
+
+
+:root {
+    /* Variables para el tema oscuro (por defecto) */
+    --body-bg: #333;
+    --calculator-bg: #1e1e1e;
+    --text-color: #fff;
+    --header-border-color: #444;
+    --rate-box-bg: #2a2a2a;
+    --rate-box-border-active: #f0ad4e;
+    --rate-box-shadow-active: rgba(240, 173, 78, 0.5); /* Sombra con algo de transparencia */
+    --currency-label-color: #aaa;
+    --rate-value-color: #f0ad4e;
+    --rate-date-color: #ffffff;
+    --conversion-direction-bg: #2a2a2a;
+    --swap-button-bg: #444;
+    --swap-button-border: #555;
+    --display-area-bg: #111;
+    --placeholder-color: #555;
+    --result-text-color: #ffc107;
+    --copy-button-color: #aaa;
+    --keypad-button-bg: #3a3a3a;
+    --keypad-button-border: #2a2a2a;
+    --keypad-button-hover-bg: #4a4a4a;
+    --keypad-button-active-bg: #5a5a5a;
+    --control-button-color: #f0ad4e;
+    --dropdown-menu-bg: rgba(20, 20, 20, 0.95);
+    --dropdown-title-color: #f0ad4e;
+    --dropdown-subtitle-color: #ccc;
+    --menu-button-bg: #f0ad4e;
+    --menu-button-text: #1e1e1e;
+    --menu-button-hover-bg: #eea236;
+    --close-button-color: #fff;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.85);
+    --modal-content-bg: #1e1e1e;
+    --modal-title-color: #f0ad4e;
+    --modal-subtitle-color: #ccc;
+    --plate-button-bg: #f0ad4e;
+    --plate-button-text: #1e1e1e;
+    --plate-button-hover-bg: #eea236;
+    --placa-info-bg: #444;
+    --selected-placa-color: #f0ad4e;
+}
+
+/* Tema Claro */
+body.light-theme {
+    /* Fondo claro general */
+    --body-bg: #f0f2f5;
+    --calculator-bg: #fff;
+    --text-color: #333;
+    --header-border-color: #ddd;
+    --rate-box-bg: #eee;
+    --rate-box-border-active: #28a745; /* Verde para el tema claro */
+    --rate-box-shadow-active: rgba(40, 167, 69, 0.3);
+    --currency-label-color: #666;
+    --rate-value-color: #007bff; /* Azul para el tema claro */
+    --rate-date-color: #555;
+    --conversion-direction-bg: #eee;
+    --swap-button-bg: #bbb;
+    --swap-button-border: #ccc;
+    --display-area-bg: #f8f9fa;
+    --placeholder-color: #999;
+    --result-text-color: #666;
+    --copy-button-color: #666;
+    --keypad-button-bg: #e0e0e0;
+    --keypad-button-border: #d0d0d0;
+    --keypad-button-hover-bg: #d0d0d0;
+    --keypad-button-active-bg: #c0c0c0;
+    --control-button-color: #007bff; /* Azul para botones de control */
+    --dropdown-menu-bg: rgba(255, 255, 255, 0.95);
+    --dropdown-title-color: #007bff;
+    --dropdown-subtitle-color: #555;
+    --menu-button-bg: #007bff;
+    --menu-button-text: #fff;
+    --menu-button-hover-bg: #0056b3;
+    --close-button-color: #333;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+    --modal-content-bg: #fff;
+    --modal-title-color: #007bff;
+    --modal-subtitle-color: #666;
+    --plate-button-bg: #007bff;
+    --plate-button-text: #fff;
+    --plate-button-hover-bg: #0056b3;
+    --placa-info-bg: #ccc;
+    --selected-placa-color: #007bff;
+}
+
+/* Aplica las variables a los elementos */
+body {
+
+    background-color: var(--body-bg); /* Usa la variable */
+    color: var(--text-color); /* Usa la variable */
+
+}
+
+.calculator-container {
+    background-color: var(--calculator-bg); /* Usa la variable */
+}
+
+.app-header {
+    border-bottom: 1px solid var(--header-border-color); /* Usa la variable */
+    /* ... otros estilos ... */
+}
+
+.theme-toggle-button {
+    background: none;
+    border: none;
+    color: var(--text-color); /* Usa la variable */
+    font-size: 1.8em;
+    cursor: pointer;
+    margin-left: auto; /* Empuja el botón a la derecha */
+    margin-right: 10px; /* Espacio entre el botón y el icono del menú */
+}
+.theme-toggle-button:hover {
+    opacity: 0.8;
+}
+
+/* ... (El resto de tus estilos, pero actualizando para usar las variables) ... */
+
+/* Ejemplos de cómo usar las variables en tus reglas existentes: */
+.rate-box {
+    background-color: var(--rate-box-bg);
+    border: 2px solid transparent;
+    /* ... otros estilos ... */
+}
+
+.rate-box.active-rate {
+    border-color: var(--rate-box-border-active);
+    box-shadow: 0 0 8px var(--rate-box-shadow-active);
+}
+
+.rate-box .currency-label {
+    color: var(--currency-label-color);
+}
+
+.rate-box .rate-value {
+    color: var(--rate-value-color);
+}
+
+.rate-box .rate-date {
+    color: var(--rate-date-color);
+}
+
+.conversion-direction {
+    background-color: var(--conversion-direction-bg);
+}
+
+.swap-button {
+    background-color: var(--swap-button-bg);
+    border: 1px solid var(--swap-button-border);
+    color: var(--text-color); /* Usa la variable */
+}
+.swap-button:hover {
+    background-color: var(--swap-button-hover-bg); /* Puedes definir una variable para hover */
+}
+
+.display-area {
+    background-color: var(--display-area-bg);
+}
+
+.main-display-input {
+    color: var(--text-color);
+}
+
+.main-display-input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.calculation-result {
+    color: var(--result-text-color);
+}
+
+.calculation-result .arrow-display {
+    color: var(--rate-value-color); /* Podría ser otra variable si quieres que cambie con el tema claro/oscuro */
+}
+
+.copy-button {
+    color: var(--copy-button-color);
+}
+.copy-button:hover {
+    color: var(--text-color);
+}
+
+.keypad button {
+    background-color: var(--keypad-button-bg);
+    border: 1px solid var(--keypad-button-border);
+    color: var(--text-color);
+}
+
+.keypad button:hover {
+    background-color: var(--keypad-button-hover-bg);
+}
+
+.keypad button:active {
+    background-color: var(--keypad-button-active-bg);
+}
+
+.control-button {
+    color: var(--control-button-color) !important;
+}
+
+/* Estilos para el Menú Desplegable */
+.dropdown-menu {
+    background-color: var(--dropdown-menu-bg);
+}
+
+.dropdown-menu h4 {
+    color: var(--dropdown-title-color);
+}
+.dropdown-menu .menu-subtitle {
+    color: var(--dropdown-subtitle-color);
+}
+
+.menu-button {
+    background-color: var(--menu-button-bg);
+    color: var(--menu-button-text);
+}
+.menu-button:hover {
+    background-color: var(--menu-button-hover-bg);
+}
+
+.close-menu-button {
+    color: var(--close-button-color);
+}
+
+/* Estilos para el Modal PDVSA */
+.pdvsa-modal-overlay {
+    background-color: var(--modal-overlay-bg);
+}
+
+.pdvsa-modal-content {
+    background-color: var(--modal-content-bg);
+    color: var(--text-color);
+}
+
+.close-modal-button {
+    color: var(--close-button-color);
+}
+.close-modal-button:hover {
+    color: var(--rate-value-color); /* Naranja en oscuro, azul en claro */
+}
+
+.pdvsa-modal-title {
+    color: var(--modal-title-color);
+}
+
+.pdvsa-modal-subtitle {
+    color: var(--modal-subtitle-color);
+}
+
+.plate-button {
+    background-color: var(--plate-button-bg);
+    color: var(--plate-button-text);
+}
+
+.plate-button:hover {
+    background-color: var(--plate-button-hover-bg);
+}
+
+.placa-info {
+    background-color: var(--placa-info-bg);
+}
+
+.placa-label {
+    color: var(--text-color);
+}
+
+.selected-placa {
+    color: var(--selected-placa-color);
+}
