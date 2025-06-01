@@ -31,7 +31,7 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Banco_Central_de_Venezuela_logo.svg/150px-Banco_Central_de_Venezuela_logo.svg.png" alt="BCV Logo" class="menu-icon-img">
                 BCV
             </button>
-            <button class="menu-button" data-source="Paralelo">
+            <button class="menu-button" data-source="Paralelo" style="display: none;">
                 <img src="https://monitordolarvenezuela.com/img/logos/promedio.webp" alt="Paralelo Logo" class="menu-icon-img">
                 Paralelo / Promedio
             </button>
