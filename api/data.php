@@ -23,7 +23,7 @@ if ($data !== null && isset($data['source'])) {
 
     // Ejemplo (adapta esto a tu lógica real):
 }
-//$source = "BCV" ;
+//$source = "BCVEuro" ;
 //$plateOffset = 3;
 //$source =  "PDVSA";
 $queryString = http_build_query([
@@ -40,6 +40,37 @@ $queryString = http_build_query([
                 $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/bcv.php', $queryString));
                 // echo "Error al ejecutar cURL: " . curl_error($ch);
             }
+
+    } elseif ("BCVEuro" == $source) { // <-- NUEVA LÓGICA PARA EURO
+
+            $ch = curl_init(sprintf('%s?%s', 'https://forward-deena-jhonny91.koyeb.app/v1/sources/bcveuro.php', $queryString));
+
+            $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            // Verificar si la solicitud cURL fue exitosa
+            if (($http_code !== 200) || ($ch === false)) {
+              //  $ch = curl_init(sprintf('%s?%s', 'https://apibcv.azurewebsites.net/v1/sources/bcveuro.php', $queryString));
+                // echo "Error al ejecutar cURL: " . curl_error($ch);
+            }
+            // Aquí puedes intentar obtener datos de una API real si existe,
+            // o usar los datos de ejemplo que proporcionaste.
+            // Por simplicidad y para mostrar la funcionalidad, usaremos tus datos de ejemplo.
+            /*
+            $response_data = [
+                "Source" => "BCVEuro",
+                "EURO" => 111.90, // Asegúrate de que los valores sean floats
+                "Date" => "05-06-2025",
+                "DateFormat" => "Jueves, 05 Junio 2025",
+                "EURONext" => 112.93, // Este valor puede ser null o no existir para "no próximo"
+                "DateNext" => "06-06-2025",
+                "DateFormatNext" => "Viernes, 06 Junio 2025",
+                "DateNow" => "05-06-2025",
+                "Status" => 200
+            ];
+            echo json_encode($response_data);
+            die; // Detener la ejecución del script aquí para enviar solo esta respuesta
+            */
+
         }elseif ($source === 'PDVSA' && $plateOffset !== null) {
                 // Es una petición para el calendario de placa de PDVSA
             

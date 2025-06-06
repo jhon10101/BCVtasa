@@ -209,6 +209,64 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    async function fetchBCVEuroRates() {
+        
+       // source = 'BCV';
+       
+
+
+            source = 'BCVEuro'; // O el valor que corresponda (Paralelo, PDVSA)
+
+            const dataToSend = {
+                source: source // Creamos un objeto JavaScript con la clave 'source' y su valor
+            };
+            
+            const options = {
+                method: 'POST', // Especificamos el método HTTP como POST
+                headers: {
+                    'Content-Type': 'application/json' // Indicamos que el contenido del cuerpo es JSON
+                    // Puedes añadir otras cabeceras si son necesarias, por ejemplo, para autenticación
+                },
+                body: JSON.stringify(dataToSend) // Convertimos el objeto JavaScript a una cadena JSON para enviarla en el cuerpo
+            };
+            
+            // Realizamos la petición fetch con la URL y el objeto de opciones
+            const response = await fetch('api/data.php' , options);
+            //console.log(response);
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+            const apiData = await response.json();
+            //const apiData = JSON.parse(response);
+            //console.log(apiData);
+
+       
+        if (apiData && apiData.Status === 200) {
+            return {
+                sourceName: apiData.Source,
+                rate1: {
+                    label: "Vigente",
+                    currency: "EUR€",
+                    value: apiData.EURO,
+                    date: apiData.DateFormat
+                },
+                rate2: {
+                    label: "Próximo",
+                    currency: "EUR€",
+                    value: apiData.EURONext,
+                    date: apiData.DateFormatNext
+                } 
+            };
+        } else {
+            console.error("Error o formato inesperado en datos de API BCV:", apiData);
+            return {
+                sourceName: "BCVEuro",
+                rate1: { label: "Vigente", currency: "EUR€", value: 0, date: "Error al cargar" },
+                rate2: { label: "Próximo", currency: "EUR€", value: 0, date: "Error al cargar" }
+            };
+        }
+    }
+
     async function fetchParaleloRates() {
         // Simulación de la obtención del JSON que proporcionaste para Paralelo.
         // En una aplicación real, aquí harías:
@@ -341,11 +399,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 // No hacer nada más con las tasas en la pantalla principal para PDVSA
             } else {
                 // Si es BCV o Paralelo, actualiza el título y la pantalla de tasas principal
-                appTitleSource.textContent = currentRateSource;
+                
                 let ratesData;
                 if (currentRateSource === 'BCV') {
+                    appTitleSource.textContent = "Dolar BCV";
                     ratesData = await fetchBCVRates();
+                } else if (currentRateSource === 'BCVEuro') {
+                    appTitleSource.textContent = "Euro BCV";
+                    ratesData = await fetchBCVEuroRates();
                 } else if (currentRateSource === 'Paralelo') {
+                    appTitleSource.textContent = "Dolar Paralelo";
                     ratesData = await fetchParaleloRates();
                 }
 
@@ -466,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         // Condición principal: Ocultar/Centrar solo si es BCV Y (las fechas son iguales O falta data de rate2 o su valor es cero)
-        if (currentRateSource === 'BCV' && (datesAreSame || rate2DataMissingOrZero)) {
+        if ((currentRateSource === 'BCV' || currentRateSource === 'BCVEuro')  && (datesAreSame || rate2DataMissingOrZero)) {
             // Si es BCV y las condiciones se cumplen, ocultamos rateBox2 y centramos rateBox1
             rateBox2.style.display = 'none';
             ratesSection.style.justifyContent = 'center';
@@ -497,11 +560,27 @@ document.addEventListener('DOMContentLoaded', function() {
             rateBox2.classList.remove('active-rate');
             activeRateValue = parseFloat(data.rate1.value);
         }
-
+                //////////////
+                   // console.log(currentRatesData.rate1.currency);
+                    if ("USD$" == currentRatesData.rate1.currency){
+                            currencylabel = "Dolar ";
+                    }else{
+                            currencylabel = "Euro ";
+                    }
+                    if (conversionMode === 'usd_to_bs') {
+                        fromCurrencyLabel.textContent = currencylabel+currentRatesData.rate1.currency;
+                        toCurrencyLabel.textContent = 'Bolívar Bs.';
+                    } else {
+                        // fromCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa';
+                        fromCurrencyLabel.textContent = 'Bolívar Bs.'; // O moneda local
+                        toCurrencyLabel.textContent = currencylabel+currentRatesData.rate1.currency;
+                    }
+                ////////////////
         // Nota: Los event listeners para click en rateBox1 y rateBox2 seguirán funcionando
         // independientemente de si están visibles u ocultos (aunque solo se podrán clickear si están visibles).
 
         updateCalculation(); // Recalcular con la tasa activa (que ya está actualizada)
+        updateDisplayAndCalc();
     }
 
     // Event listeners para seleccionar tasa individual
@@ -528,15 +607,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- LÓGICA DE LA CALCULADORA (similar a la anterior) ---
     swapButton.addEventListener('click', () => {
+        if ("USD$" == currentRatesData.rate1.currency){
+                currencylabel = "Dolar ";
+        }else{
+                currencylabel = "Euro ";
+        }
         if (conversionMode === 'usd_to_bs') {
             conversionMode = 'bs_to_usd';
             fromCurrencyLabel.textContent = 'Bolívar Bs.'; // O moneda local
             // toCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa'; // Dolar $, Euro €, etc.
-            toCurrencyLabel.textContent = "Dolar "+currentRatesData.rate1.currency;
+            toCurrencyLabel.textContent = currencylabel+currentRatesData.rate1.currency;
         } else {
             conversionMode = 'usd_to_bs';
             // fromCurrencyLabel.textContent = currentRatesData.rate1 ? currentRatesData.rate1.currency.slice(0, -1) : 'Divisa';
-            fromCurrencyLabel.textContent = "Dolar "+currentRatesData.rate1.currency;
+            fromCurrencyLabel.textContent = currencylabel+currentRatesData.rate1.currency;
             toCurrencyLabel.textContent = 'Bolívar Bs.';
         }
         updateDisplayAndCalc();
@@ -564,22 +648,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Determinar el símbolo de la moneda para la caja de texto principal
         let mainInputCurrencySymbol = '';
         //console.log(conversionMode);
+
          if (currentRatesData && currentRatesData.rate1) {
              if (conversionMode === 'usd_to_bs') {
                 // mainInputCurrencySymbol = currentRatesData.rate1.currency ? currentRatesData.rate1.currency.slice(0, -1) : '$';
                  mainInputCurrencySymbol = currentRatesData.rate1.currency; // dejo el simbolo USD$
-                // console.log(currentRatesData.rate1.currency);
+                
              } else {
                  mainInputCurrencySymbol = 'Bs.';
              }
          } else {
-              mainInputCurrencySymbol = (conversionMode === 'usd_to_bs') ? '$' : 'Bs.';
+              mainInputCurrencySymbol = (conversionMode === 'usd_to_bs') ? (currentRatesData.rate1.currency.slice(3, 4)) : 'Bs.';
          }
 
         // Actualizar la caja de texto principal (main-display) con el valor actual y el símbolo
         // Asegurarse de manejar el caso de entrada vacía o "0"
         if (currentInput === "" || currentInput === "0") {
             mainDisplay.value = "0 " + mainInputCurrencySymbol;
+           // console.log(mainDisplay.value);
         } else {
              // Añadir el símbolo con un espacio al final del valor digitado
              mainDisplay.value = currentInput + " " + mainInputCurrencySymbol;
@@ -600,12 +686,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentInput === "" || currentInput === "." || currentInput === ",") {
              amount = 0;
         }
-
-
+        //console.log(currentRatesData.rate1.currency.slice(3, 4));
         // Manejar el caso de resultado 0 o tasa no válida
         if (isNaN(amount) || !activeRateValue || activeRateValue === 0) {
             // Mostrar "0.00 Bs." o "0.00 $" dependiendo del modo si el resultado es 0 o inválido
-             const defaultSymbol = (conversionMode === 'usd_to_bs') ? 'Bs.' : '$';
+             const defaultSymbol = (conversionMode === 'usd_to_bs') ? 'Bs.' : (currentRatesData.rate1.currency.slice(3, 4));
             convertedAmountDisplay.textContent = `0,00 ${defaultSymbol}`;
             return;
         }
@@ -697,13 +782,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const initialRates = await fetchBCVRates();
         if (initialRates) { // Chequeo adicional
             updateRateDisplay(initialRates);
-            appTitleSource.textContent = initialRates.sourceName;
+           // appTitleSource.textContent = initialRates.sourceName;
+            appTitleSource.textContent = "Dolar BCV";
             if (initialRates.rate1) { // Chequeo adicional
                // fromCurrencyLabel.textContent = initialRates.rate1.currency ? initialRates.rate1.currency.slice(0,-1) : 'Divisa';
                fromCurrencyLabel.textContent = "Dolar "+initialRates.rate1.currency;
             }
        }
-        appTitleSource.textContent = initialRates.sourceName;
+        appTitleSource.textContent = "Dolar BCV";
+        //appTitleSource.textContent = initialRates.sourceName;
         // Asegurar que las etiquetas de moneda de conversión iniciales sean correctas
         // fromCurrencyLabel.textContent = initialRates.rate1 ? initialRates.rate1.currency.slice(0,-1) : 'Divisa';
         fromCurrencyLabel.textContent = "Dolar "+initialRates.rate1.currency;
@@ -728,6 +815,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (titleSource === 'BCV') {
                 
                 ratesData = await fetchBCVRates();
+            
+            } else if (titleSource === 'BCVEuro') {
+                
+                ratesData = await fetchBCVEuroRates();
+            
             } else if (titleSource === 'Paralelo') {
                 
                 ratesData = await fetchParaleloRates();
@@ -800,7 +892,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   //  rateBox2.classList.remove('active-rate');
                     activeRateValue = parseFloat(data.rate1.value);
                 }
-        
+
                 // Nota: Los event listeners para click en rateBox1 y rateBox2 seguirán funcionando
                 // independientemente de si están visibles u ocultos (aunque solo se podrán clickear si están visibles).
         
