@@ -18,7 +18,7 @@
     <div class="calculator-container">
         <header class="app-header">
             <div class="logo-title">
-                <span class="icon-calculator"></span> <span id="app-title-source">BCV</span> dolar
+                <span class="icon-calculator"></span> <span id="app-title-source">BCV</span>
             </div>
              <button id="theme-toggle" class="theme-toggle-button">🌙</button>
             <div class="menu-icon" id="menu-toggle-button">☰</div>
@@ -29,7 +29,11 @@
             <p class="menu-subtitle">Cambia el tipo de tasa disponible:</p>
             <button class="menu-button" data-source="BCV">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Banco_Central_de_Venezuela_logo.svg/150px-Banco_Central_de_Venezuela_logo.svg.png" alt="BCV Logo" class="menu-icon-img">
-                BCV
+                Dolar BCV
+            </button>
+            <button class="menu-button" data-source="BCVEuro">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Banco_Central_de_Venezuela_logo.svg/150px-Banco_Central_de_Venezuela_logo.svg.png" alt="BCV Logo" class="menu-icon-img">
+                Euro BCV
             </button>
             <button class="menu-button" data-source="Paralelo" style="display: none;">
                 <img src="https://monitordolarvenezuela.com/img/logos/promedio.webp" alt="Paralelo Logo" class="menu-icon-img">
