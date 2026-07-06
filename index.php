@@ -35,6 +35,10 @@
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/02/Banco_Central_de_Venezuela_logo.svg" alt="BCV Logo" class="menu-icon-img">
                 Euro BCV
             </button>
+            <button class="menu-button" data-source="PagoMovil">
+                <img src="https://imgur.com/CMl1FHu.png" alt="Pago Movil Logo" class="menu-icon-img">
+                Pago Móvil
+            </button>
             <button class="menu-button" data-source="PDVSA">
                 <img src="https://logodownload.org/wp-content/uploads/2019/03/pdvsa-logo-44.png" alt="PDVSA Logo" class="menu-icon-img">
                 PDVSA
