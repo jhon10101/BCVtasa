@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentInput = cleanedText;
                 updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
             }
-            if (copiedValue && !isNaN(parseFloat(cleanedText))) {
+            if (copiedValue && !isNaN(parseFloat(copiedValue))) {
                 currentInput = copiedValue;
                 updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla {
                 
