@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let conversionMode = 'usd_to_bs';
     let currentRatesData = {};
     let isCommissionMode = false; // <-- NUEVO: Estado para el modo comisión
+    let copiedValue = null; // Para almacenar el valor copiado
 
     // --- Lógica del modo Comisión ---
 
@@ -509,9 +510,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullText = originalText;
         const lastSpaceIndex = fullText.lastIndexOf(' ');
         let textToCopy = (lastSpaceIndex !== -1) ? fullText.substring(0, lastSpaceIndex) : fullText;
-        textToCopy = textToCopy.replace(/\./g, '').replace('.', ',');
-        navigator.clipboard.writeText(textToCopy)
+        let textToCopy2 = (lastSpaceIndex !== -1) ? fullText.substring(0, lastSpaceIndex) : fullText;
+        textToCopy = textToCopy.replace(/\./g, '').replace(',', '.');
+        textToCopy2 = textToCopy2.replace(/\./g, '').replace('.', ',');
+        navigator.clipboard.writeText(textToCopy2)
             .then(() => {
+                copiedValue = textToCopy;
+                pasteButton.disabled = false;
                 convertedAmountDisplay.textContent = "Copiando";
                 setTimeout(() => {
                     convertedAmountDisplay.textContent = originalText;
@@ -526,6 +531,15 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
+    pasteButton.addEventListener('click', () => {
+        if (copiedValue !== null) {
+            currentInput = copiedValue;
+            updateDisplayAndCalc();
+            copiedValue = null;
+            pasteButton.disabled = true;
+        }
+    });
+
     // --- INICIALIZACIÓN ---
     async function initializeApp() {
         pdvsaModal.style.display = 'none';
@@ -537,6 +551,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateRateDisplay(initialRates); // Carga la UI normal
         }
         updateDisplayAndCalc();
+        pasteButton.disabled = true; // Ensure paste button is disabled on init
     }
 
     initializeApp();

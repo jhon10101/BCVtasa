@@ -93,7 +93,7 @@
             <button class="number-button">8</button>
             <button class="number-button">9</button>
 
-            <button disabled class="control-button" id="paste"></button>
+            <button disabled class="control-button" id="paste" ><i class="fa fa-clipboard"></i></button>
             <button class="number-button">0</button>
             <button class="number-button" id="decimal">.</button>
         </div>
