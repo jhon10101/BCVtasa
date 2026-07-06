@@ -532,7 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
         textToCopy2 = textToCopy2.replace(/\./g, '').replace('.', ',');
         navigator.clipboard.writeText(textToCopy2)
             .then(() => {
-                copiedValue = textToCopy2;
+                copiedValue = textToCopy;
                 // pasteButton.disabled = false; // Ya no es necesario, el botón siempre estará activo
                 convertedAmountDisplay.textContent = "Copiando";
                 setTimeout(() => {
@@ -553,15 +553,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const text = await navigator.clipboard.readText();
             // Limpia el texto: quita espacios, letras (excepto , y .) y luego reemplaza la coma por punto.
             const cleanedText = text.trim().replace(/[^0-9,.]/g, '').replace(',', '.');
-            if (cleanedText && !isNaN(parseFloat(cleanedText))) {
-                currentInput = cleanedText;
-                updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
-            };
-            if (copiedValue && !isNaN(parseFloat(copiedValue))) {
+            if (copiedValue) {
                 currentInput = copiedValue;
                 updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla {
-                
             }; 
+            if (cleanedText && !isNaN(parseFloat(cleanedText))) {
+           //     currentInput = cleanedText;
+           //     updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
+            };
+
         } catch (err) {
             console.error('Error al pegar desde el portapapeles:', err);
         }
