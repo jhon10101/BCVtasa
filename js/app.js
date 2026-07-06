@@ -550,20 +550,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     pasteButton.addEventListener('click', async () => {
         try {
+            // Intenta leer del portapapeles del sistema (puede fallar en algunos WebViews de Android)
             const text = await navigator.clipboard.readText();
-            // Limpia el texto: quita espacios, letras (excepto , y .) y luego reemplaza la coma por punto.
             const cleanedText = text.trim().replace(/[^0-9,.]/g, '').replace(',', '.');
-            if (copiedValue) {
-                currentInput = copiedValue;
-                updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla {
-            }; 
-            if (cleanedText && !isNaN(parseFloat(cleanedText))) {
-           //     currentInput = cleanedText;
-           //     updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
-            };
 
+            if (cleanedText && !isNaN(parseFloat(cleanedText))) {
+                currentInput = cleanedText;
+                updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
+                return; // Si tiene éxito, termina la función aquí.
+            }
         } catch (err) {
             console.error('Error al pegar desde el portapapeles:', err);
+            // Si falla la API moderna (común en Android), usamos el valor copiado internamente como respaldo.
+            if (copiedValue) {
+                currentInput = copiedValue;
+                updateDisplayAndCalc();
+            }
         }
     });
 
