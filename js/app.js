@@ -418,13 +418,28 @@ document.addEventListener('DOMContentLoaded', function() {
     numberButtons.forEach(button => {
         button.addEventListener('click', () => {
             const number = button.textContent;
-            if (number === '.' && currentInput.includes('.')) return;
-            if (currentInput === "0" && number !== '.') {
-                currentInput = number;
-            } else if (number === '.' && currentInput === "0") {
-                currentInput = "0.";
+
+            if (number === '.') {
+                if (!currentInput.includes('.')) {
+                    currentInput += '.';
+                }
+                // Si ya hay un punto, no hacer nada.
+                updateDisplayAndCalc();
+                return;
+            }
+
+            if (currentInput.includes('.')) {
+                const parts = currentInput.split('.');
+                if (parts[1].length < 2) {
+                    currentInput += number; // Añadir si hay 0 o 1 decimal
+                } else if (parts[1].length === 2 && parts[1].endsWith('0')) {
+                    // Si hay 2 decimales y el último es 0, reemplazarlo
+                    currentInput = currentInput.slice(0, -1) + number;
+                }
+                // Si ya hay 2 decimales y el último no es 0, no hacer nada.
             } else {
-                if (currentInput.length < 15) currentInput += number;
+                // Lógica para la parte entera
+                currentInput = (currentInput === "0") ? number : currentInput + number;
             }
             updateDisplayAndCalc();
         });
@@ -435,13 +450,15 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isCommissionMode && conversionMode === 'usd_to_bs' && currentRatesData && currentRatesData.rate1) {
             mainInputCurrencySymbol = currentRatesData.rate1.currency;
         }
-        mainDisplay.value = currentInput + " " + mainInputCurrencySymbol;
+        // Aseguramos que currentInput sea un número válido antes de formatear
+        const numericValue = parseFloat(currentInput) || 0;
+        mainDisplay.value = numericValue.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + mainInputCurrencySymbol;
         inputAmountDisplay.textContent = '';
         updateCalculation();
     }
 
     function updateCalculation() {
-        const amount = parseFloat(currentInput.replace(',', '.')) || 0;
+        const amount = parseFloat(currentInput) || 0;
 
         if (isCommissionMode) {
             let commission = 0;
@@ -516,7 +533,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navigator.clipboard.writeText(textToCopy2)
             .then(() => {
                 copiedValue = textToCopy;
-                pasteButton.disabled = false;
+                // pasteButton.disabled = false; // Ya no es necesario, el botón siempre estará activo
                 convertedAmountDisplay.textContent = "Copiando";
                 setTimeout(() => {
                     convertedAmountDisplay.textContent = originalText;
@@ -531,12 +548,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-    pasteButton.addEventListener('click', () => {
-        if (copiedValue !== null) {
-            currentInput = copiedValue;
-            updateDisplayAndCalc();
-            copiedValue = null;
-            pasteButton.disabled = true;
+    pasteButton.addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            // Limpia el texto: quita espacios, letras (excepto , y .) y luego reemplaza la coma por punto.
+            const cleanedText = text.trim().replace(/[^0-9,.]/g, '').replace(',', '.');
+            if (cleanedText && !isNaN(parseFloat(cleanedText))) {
+                currentInput = cleanedText;
+                updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
+            }
+        } catch (err) {
+            console.error('Error al pegar desde el portapapeles:', err);
         }
     });
 
@@ -551,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateRateDisplay(initialRates); // Carga la UI normal
         }
         updateDisplayAndCalc();
-        pasteButton.disabled = true; // Ensure paste button is disabled on init
+        // pasteButton.disabled = true; // Ya no es necesario
     }
 
     initializeApp();
