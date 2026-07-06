@@ -557,6 +557,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentInput = cleanedText;
                 updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla
             }
+            if (copiedValue && !isNaN(parseFloat(cleanedText))) {
+                currentInput = copiedValue;
+                updateDisplayAndCalc(); // Llama a la función para refrescar la pantalla {
+                
+            } 
         } catch (err) {
             console.error('Error al pegar desde el portapapeles:', err);
         }
