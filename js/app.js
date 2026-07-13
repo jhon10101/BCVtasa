@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
     numberButtons.forEach(button => {
         button.addEventListener('click', () => {
             const number = button.textContent;
-
+            
             if (number === '.') {
                 if (!currentInput.includes('.')) {
                     currentInput += '.';
@@ -447,12 +447,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateDisplayAndCalc() {
         let mainInputCurrencySymbol = 'Bs.';
+        //console.log(currentInput);
         if (!isCommissionMode && conversionMode === 'usd_to_bs' && currentRatesData && currentRatesData.rate1) {
             mainInputCurrencySymbol = currentRatesData.rate1.currency;
         }
         // Aseguramos que currentInput sea un número válido antes de formatear
-        const numericValue = parseFloat(currentInput) || 0;
-        mainDisplay.value = numericValue.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + mainInputCurrencySymbol;
+        //const numericValue = parseFloat(currentInput) || 0;
+        //const numericValue = currentInput || 0;
+                if((currentInput.at(-1) == ".") || (currentInput.slice(-2) == .0)){
+                    const numericValue = currentInput || 0;
+                    numericValue2 = numericValue.replace('.', ',');
+                   // mainDisplay.value = numericValue2 + " " + mainInputCurrencySymbol;
+                } else {
+                    const numericValue = parseFloat(currentInput) || 0; 
+                  //  mainDisplay.value = numericValue.toLocaleString('es-VE', { minimumFractionDigits: 0, maximumFractionDigits: 2 })   + " " + mainInputCurrencySymbol;
+                  numericValue2 = numericValue.toLocaleString('es-VE', { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+                }  
+               
+              
+        mainDisplay.value = numericValue2 + " " + mainInputCurrencySymbol;
+        
         inputAmountDisplay.textContent = '';
         updateCalculation();
     }
@@ -518,7 +532,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     backspaceButton.addEventListener('click', () => {
-        currentInput = (currentInput.length > 1) ? currentInput.slice(0, -1) : "0";
+        currentInput = (currentInput.length > 1) ? currentInput.slice(0, -1) : "0"; 
+        /*
+        if (currentInput.length > 1) {
+            currentInput = currentInput.slice(0, -1);
+            if(currentInput.at(-1) == "."){
+                currentInput = currentInput.slice(0, -1);
+            }
+        } else{ currentInput ="0"};
+        */
+
+
+        //console.log(currentInput);
         updateDisplayAndCalc();
     });
     
@@ -537,14 +562,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 convertedAmountDisplay.textContent = "Copiando";
                 setTimeout(() => {
                     convertedAmountDisplay.textContent = originalText;
-                }, 1500);
+                }, 1300);
             })
             .catch(err => {
                 console.error('Error al copiar:', err);
                 convertedAmountDisplay.textContent = "Error al copiar";
                 setTimeout(() => {
                     convertedAmountDisplay.textContent = originalText;
-                }, 1500);
+                }, 1300);
             });
     });
 
