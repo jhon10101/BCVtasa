@@ -484,8 +484,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     commission = 0;
                 } else {
                     commission = amount * 0.003;
-                    if (commission <= 2.00) { // Aplicar mínimo de comisión
-                        commission = 2.00;
+                    if (commission <= 14.00) { // Aplicar mínimo de comisión
+                        commission = 14.00;
                     }
                 }
                 finalResult = amount + commission;
@@ -495,8 +495,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     const intermediate = amount / 1.003;
                     commission = intermediate * 0.003;
-                    if (commission <= 2.00) { // Aplicar mínimo de comisión
-                        commission = 2.00;
+                    if (commission <= 14.00) { // Aplicar mínimo de comisión
+                        commission = 14.00;
                     }
                 }
                 finalResult = amount - commission;
