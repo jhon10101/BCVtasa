@@ -20,8 +20,11 @@
             <div class="logo-title">
                 <span class="icon-calculator"></span> <span id="app-title-source">BCV</span>
             </div>
-             <button id="theme-toggle" class="theme-toggle-button">🌙</button>
-            <div class="menu-icon" id="menu-toggle-button">☰</div>
+            <div class="header-right-buttons">
+                <button id="historic-modal-toggle" class="calendar-toggle-button" title="Personalizar / Histórico">📅</button>
+                <button id="theme-toggle" class="theme-toggle-button" title="Cambiar tema">🌙</button>
+                <div class="menu-icon" id="menu-toggle-button" title="Menú">☰</div>
+            </div>
         </header>
 
         <div class="dropdown-menu" id="dropdownMenu">
@@ -99,7 +102,7 @@
         </div>
     </div>
 
-    </div> <div class="pdvsa-modal-overlay" id="pdvsaModal">
+    <div class="pdvsa-modal-overlay" id="pdvsaModal">
         <div class="pdvsa-modal-content">
             <button class="close-modal-button" id="closePdvsaModal">&times;</button>
             <h3 class="pdvsa-modal-title">Calendario Gasolina</h3>
@@ -118,6 +121,48 @@
 
             <div class="pdvsa-dates-list" id="datesDisplay">
                 </div>
+        </div>
+    </div>
+
+    <!-- Modal Personalizar / Histórico -->
+    <div class="historic-modal-overlay" id="historicModal">
+        <div class="historic-modal-content">
+            <button class="close-modal-button" id="closeHistoricModal" aria-label="Cerrar modal">&times;</button>
+            <h3 class="historic-modal-title">Personalizar</h3>
+
+            <div class="historic-tab-container">
+                <button type="button" class="historic-tab-btn active" id="tabDolar">Dolar BCV</button>
+                <button type="button" class="historic-tab-btn" id="tabEuro">Euro BCV</button>
+            </div>
+
+            <div class="historic-badge-container">
+                <div class="historic-badge">
+                    <span class="historic-badge-pct">%</span>
+                    <span class="historic-badge-text">HISTORICO</span>
+                </div>
+            </div>
+
+            <div class="historic-card">
+                <div class="historic-field-group">
+                    <p class="historic-label">Fecha Inicio</p>
+                    <div class="historic-date-box" id="startDateBox">
+                        <span class="historic-date-value" id="startDateDisplay"></span>
+                        <input type="date" id="startDateInput" class="historic-native-date-input">
+                    </div>
+                    <p class="historic-rate-value" id="startDateRateDisplay">--</p>
+                </div>
+
+                <div class="historic-field-group">
+                    <p class="historic-label">Fecha Fin</p>
+                    <div class="historic-date-box" id="endDateBox">
+                        <span class="historic-date-value" id="endDateDisplay"></span>
+                        <input type="date" id="endDateInput" class="historic-native-date-input">
+                    </div>
+                    <p class="historic-rate-value" id="endDateRateDisplay">--</p>
+                </div>
+            </div>
+
+            <div class="historic-percentage-display pct-zero" id="historicPercentageDisplay">-- %</div>
         </div>
     </div>
 

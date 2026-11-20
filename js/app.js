@@ -71,6 +71,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const placaDisplay = document.getElementById('placaDisplay'); // Donde se muestra el rango de placa seleccionado
         const datesDisplay = document.getElementById('datesDisplay'); // Donde se muestra la lista de fechas
         const placaInfoSection = document.getElementById('placaInfo'); // La sección que contiene "Placa" y el rango
+
+        // --- Elementos del Modal Personalizar / Histórico ---
+        const historicModalToggle = document.getElementById('historic-modal-toggle');
+        const historicModal = document.getElementById('historicModal');
+        const closeHistoricModalButton = document.getElementById('closeHistoricModal');
+        const tabDolar = document.getElementById('tabDolar');
+        const tabEuro = document.getElementById('tabEuro');
+        const startDateBox = document.getElementById('startDateBox');
+        const startDateInput = document.getElementById('startDateInput');
+        const startDateDisplay = document.getElementById('startDateDisplay');
+        const startDateRateDisplay = document.getElementById('startDateRateDisplay');
+        const endDateBox = document.getElementById('endDateBox');
+        const endDateInput = document.getElementById('endDateInput');
+        const endDateDisplay = document.getElementById('endDateDisplay');
+        const endDateRateDisplay = document.getElementById('endDateRateDisplay');
+        const historicPercentageDisplay = document.getElementById('historicPercentageDisplay');
     
     
 
@@ -159,6 +175,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- SIMULACIÓN DE API Y CONSUMO REAL ---
 
+    let appCurrentDateObj = null; // { iso: 'YYYY-MM-DD', display: 'DD/MM/YYYY' }
+    let historicDatesModifiedByUser = false;
+
+    function getSystemToday() {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        return { iso: `${y}-${m}-${d}`, display: `${d}/${m}/${y}` };
+    }
+
+    function parseApiDate(apiData) {
+        if (!apiData) return null;
+        const rawDate = apiData.DateNow || apiData.Date;
+        if (rawDate && typeof rawDate === 'string') {
+            const parts = rawDate.trim().split(/[-/]/);
+            if (parts.length === 3) {
+                if (parts[0].length === 4) {
+                    const y = parts[0];
+                    const m = parts[1].padStart(2, '0');
+                    const d = parts[2].padStart(2, '0');
+                    return { iso: `${y}-${m}-${d}`, display: `${d}/${m}/${y}` };
+                } else if (parts[2].length === 4) {
+                    const d = parts[0].padStart(2, '0');
+                    const m = parts[1].padStart(2, '0');
+                    const y = parts[2];
+                    return { iso: `${y}-${m}-${d}`, display: `${d}/${m}/${y}` };
+                }
+            }
+        }
+        return null;
+    }
+
+    function getAppToday() {
+        return appCurrentDateObj || getSystemToday();
+    }
+
     async function fetchBCVRates() {
         source = 'BCV';
         const dataToSend = { source: source };
@@ -172,6 +225,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const apiData = await response.json();
 
         if (apiData && apiData.Status === 200) {
+            const parsed = parseApiDate(apiData);
+            if (parsed) appCurrentDateObj = parsed;
             return {
                 sourceName: apiData.Source,
                 rate1: { label: "Vigente", currency: "USD$", value: apiData.USD, date: apiData.DateFormat },
@@ -200,6 +255,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const apiData = await response.json();
 
         if (apiData && apiData.Status === 200) {
+            const parsed = parseApiDate(apiData);
+            if (parsed) appCurrentDateObj = parsed;
             return {
                 sourceName: apiData.Source,
                 rate1: { label: "Vigente", currency: "EUR€", value: apiData.EURO, date: apiData.DateFormat },
@@ -228,6 +285,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const apiData = await response.json();
 
         if (apiData && apiData.Status === 200) {
+            const parsed = parseApiDate(apiData);
+            if (parsed) appCurrentDateObj = parsed;
             return {
                 sourceName: apiData.Source,
                 rate1: { label: "Paralelo", currency: "USD$", value: apiData.USD, date: apiData.DateFormat },
@@ -324,6 +383,365 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // --- MANEJO DEL MODAL PERSONALIZAR / HISTÓRICO ---
+    let currentHistoricSource = 'BCV'; // 'BCV' (Dolar) o 'BCVEuro' (Euro)
+    // Límites de fecha dinámicos; se actualizan con la primera respuesta de la API
+    let globalHistoricMinDate = '1900-01-01';
+    let globalHistoricMaxDate = '2100-12-31';
+    let historicRates = {
+        start: null,
+        end: null
+    };
+
+    function parseDateToIso(dateStr) {
+        if (!dateStr) return null;
+        const clean = String(dateStr).trim().replace(/[/.]/g, '-');
+        const parts = clean.split('-');
+        if (parts.length === 3) {
+            if (parts[0].length === 4) {
+                // YYYY-MM-DD
+                return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+            } else if (parts[2].length === 4) {
+                // DD-MM-YYYY
+                return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+            }
+        }
+        return null;
+    }
+
+    // Aplica los límites dinámicos de rango a los selectores de fecha
+    function applyDateBounds() {
+        if (!startDateInput || !endDateInput) return;
+
+        // Fecha Inicio:
+        // Mínimo permitido: fecha más antigua global de la API
+        startDateInput.min = globalHistoricMinDate;
+        // Máximo permitido: la fecha final actualmente seleccionada (no puede ser superior a ella)
+        const currentEnd = endDateInput.value || globalHistoricMaxDate;
+        startDateInput.max = currentEnd < globalHistoricMaxDate ? currentEnd : globalHistoricMaxDate;
+
+        // Fecha Fin:
+        // Mínimo permitido: la fecha inicial actualmente seleccionada (no puede ser inferior a ella)
+        const currentStart = startDateInput.value || globalHistoricMinDate;
+        endDateInput.min = currentStart > globalHistoricMinDate ? currentStart : globalHistoricMinDate;
+        // Máximo permitido: fecha más reciente global de la API
+        endDateInput.max = globalHistoricMaxDate;
+    }
+
+    function updateBoundsFromApiResponse(data) {
+        if (!data) return;
+        if (data.MinDateIso) {
+            globalHistoricMinDate = data.MinDateIso;
+        } else if (data.MinDate) {
+            const iso = parseDateToIso(data.MinDate);
+            if (iso) globalHistoricMinDate = iso;
+        }
+        if (data.MaxDateIso) {
+            globalHistoricMaxDate = data.MaxDateIso;
+        } else if (data.MaxDate) {
+            const iso = parseDateToIso(data.MaxDate);
+            if (iso) globalHistoricMaxDate = iso;
+        }
+        applyDateBounds();
+    }
+
+    function formatIsoDateToDisplay(isoDate) {
+        if (!isoDate) return '';
+        const parts = isoDate.split('-');
+        if (parts.length === 3) {
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+        return isoDate;
+    }
+
+    function formatHistoricRate(val) {
+        if (val === null || val === undefined || isNaN(parseFloat(val))) return '--';
+        return parseFloat(val).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Envía UNA sola solicitud POST a api/historic.php con startDate + endDate
+    // y devuelve el objeto completo de la respuesta (o null si hubo error).
+    // ─────────────────────────────────────────────────────────────────────────
+    async function fetchBothDates(startDateStr, endDateStr) {
+        try {
+            const response = await fetch('api/historic.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    startDate: startDateStr,
+                    endDate:   endDateStr
+                })
+            });
+
+            if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+            const data = await response.json();
+
+            if (data && data.Status === 200) {
+                // Actualizar los límites de rango desde DateOld / DateLast
+                updateBoundsFromApiResponse(data);
+                return data;
+            }
+
+            console.warn('api/historic.php devolvió Status !=200:', data);
+        } catch (error) {
+            console.error('Error al consultar api/historic.php:', error);
+        }
+        return null;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Extrae la tasa (USD o EURO) de inicio o fin según la pestaña activa
+    // ─────────────────────────────────────────────────────────────────────────
+    function extractRate(data, position) {
+        // position: 'start' | 'end'
+        if (!data) return null;
+        const isEuro = currentHistoricSource === 'BCVEuro';
+        if (position === 'start') {
+            const val = isEuro
+                ? (data.StartEURO ?? data.startEuro ?? data.StartEuro)
+                : (data.StartUSD  ?? data.startUsd  ?? data.StartUsd);
+            return (val !== undefined && val !== null && !isNaN(parseFloat(val)))
+                ? parseFloat(val) : null;
+        } else {
+            const val = isEuro
+                ? (data.EndEURO ?? data.endEuro ?? data.EndEuro)
+                : (data.EndUSD  ?? data.endUsd  ?? data.EndUsd);
+            return (val !== undefined && val !== null && !isNaN(parseFloat(val)))
+                ? parseFloat(val) : null;
+        }
+    }
+
+    let lastHistoricData = null;
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Muestra icono de carga en las tasas y el porcentaje
+    // ─────────────────────────────────────────────────────────────────────────
+    function showHistoricLoading() {
+        const spinner = '<i class="fa-solid fa-spinner fa-spin"></i>';
+        if (startDateRateDisplay) startDateRateDisplay.innerHTML = spinner;
+        if (endDateRateDisplay) endDateRateDisplay.innerHTML = spinner;
+        if (historicPercentageDisplay) {
+            historicPercentageDisplay.innerHTML = spinner;
+            historicPercentageDisplay.className = 'historic-percentage-display pct-zero';
+        }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Renderiza las tasas y porcentaje a partir de los datos en memoria
+    // según la pestaña seleccionada (Dolar o Euro) sin hacer petición a la API
+    // ─────────────────────────────────────────────────────────────────────────
+    function renderHistoricRatesFromData(data) {
+        if (!data) {
+            if (startDateRateDisplay) startDateRateDisplay.textContent = '--';
+            if (endDateRateDisplay) endDateRateDisplay.textContent = '--';
+            historicRates.start = null;
+            historicRates.end = null;
+            updateHistoricPercentage();
+            return;
+        }
+
+        const rateStart = extractRate(data, 'start');
+        const rateEnd   = extractRate(data, 'end');
+
+        historicRates.start = rateStart;
+        historicRates.end   = rateEnd;
+
+        if (startDateRateDisplay) {
+            startDateRateDisplay.textContent = formatHistoricRate(rateStart);
+        }
+        if (endDateRateDisplay) {
+            endDateRateDisplay.textContent = formatHistoricRate(rateEnd);
+        }
+
+        updateHistoricPercentage();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Carga ambas tasas en un solo llamado y actualiza la UI completa
+    // ─────────────────────────────────────────────────────────────────────────
+    async function loadHistoricRates() {
+        if (!startDateInput?.value || !endDateInput?.value) return;
+
+        showHistoricLoading();
+
+        const data = await fetchBothDates(startDateInput.value, endDateInput.value);
+        lastHistoricData = data;
+
+        renderHistoricRatesFromData(data);
+    }
+
+    function updateHistoricPercentage() {
+        if (!historicPercentageDisplay) return;
+        const startRate = historicRates.start;
+        const endRate = historicRates.end;
+
+        // Si alguna de las tasas no está disponible (null), mostrar estado neutro
+        if (startRate === null || endRate === null || isNaN(startRate) || isNaN(endRate)) {
+            historicPercentageDisplay.textContent = '-- %';
+            historicPercentageDisplay.className = 'historic-percentage-display pct-zero';
+            return;
+        }
+
+        if (startRate === 0 || startRate === endRate) {
+            historicPercentageDisplay.textContent = '0,00 %';
+            historicPercentageDisplay.className = 'historic-percentage-display pct-zero';
+            return;
+        }
+
+        const pctChange = ((endRate - startRate) / startRate) * 100;
+        const absFormatted = Math.abs(pctChange).toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+        if (endRate > startRate) {
+            historicPercentageDisplay.textContent = `+ ${absFormatted} %`;
+            historicPercentageDisplay.className = 'historic-percentage-display pct-positive';
+        } else if (endRate < startRate) {
+            historicPercentageDisplay.textContent = `- ${absFormatted} %`;
+            historicPercentageDisplay.className = 'historic-percentage-display pct-negative';
+        } else {
+            historicPercentageDisplay.textContent = '0,00 %';
+            historicPercentageDisplay.className = 'historic-percentage-display pct-zero';
+        }
+    }
+
+    function openDatePicker(inputElement) {
+        if (!inputElement) return;
+        applyDateBounds(); // Asegurar límites actualizados antes de abrir el calendario
+        if (typeof inputElement.showPicker === 'function') {
+            try {
+                inputElement.showPicker();
+                return;
+            } catch (err) {
+                // Fallback si no está permitido por el contexto
+            }
+        }
+        inputElement.focus();
+        inputElement.click();
+    }
+
+    if (historicModalToggle && historicModal) {
+        historicModalToggle.addEventListener('click', () => {
+            historicModal.style.display = 'flex';
+            
+            // Si el usuario no ha hecho cambios previamente, cargar fecha actual en ambos cuadros
+            if (!historicDatesModifiedByUser) {
+                const today = getAppToday();
+                let defIso = today.iso;
+                if (defIso > globalHistoricMaxDate) defIso = globalHistoricMaxDate;
+                if (defIso < globalHistoricMinDate) defIso = globalHistoricMinDate;
+                const defDisplay = formatIsoDateToDisplay(defIso);
+
+                if (startDateInput && startDateDisplay) {
+                    startDateInput.value = defIso;
+                    startDateDisplay.textContent = defDisplay;
+                }
+                if (endDateInput && endDateDisplay) {
+                    endDateInput.value = defIso;
+                    endDateDisplay.textContent = defDisplay;
+                }
+            }
+            
+            applyDateBounds();
+            loadHistoricRates();
+        });
+    }
+
+    if (closeHistoricModalButton && historicModal) {
+        closeHistoricModalButton.addEventListener('click', () => {
+            historicModal.style.display = 'none';
+        });
+    }
+
+    if (historicModal) {
+        historicModal.addEventListener('click', (e) => {
+            if (e.target === historicModal) {
+                historicModal.style.display = 'none';
+            }
+        });
+    }
+
+    if (startDateBox && startDateInput) {
+        startDateBox.addEventListener('click', () => {
+            openDatePicker(startDateInput);
+        });
+
+        startDateInput.addEventListener('change', async () => {
+            historicDatesModifiedByUser = true;
+            if (startDateInput.value) {
+                // Validación: no permitir fecha menor al mínimo global
+                if (startDateInput.value < globalHistoricMinDate) {
+                    startDateInput.value = globalHistoricMinDate;
+                }
+                // Validación: no permitir fecha inicial superior a la fecha final seleccionada en el momento
+                if (endDateInput.value && startDateInput.value > endDateInput.value) {
+                    startDateInput.value = endDateInput.value;
+                }
+
+                startDateDisplay.textContent = formatIsoDateToDisplay(startDateInput.value);
+                applyDateBounds();
+
+                // Una sola llamada con ambas fechas actualizadas
+                await loadHistoricRates();
+            }
+        });
+    }
+
+    if (endDateBox && endDateInput) {
+        endDateBox.addEventListener('click', () => {
+            openDatePicker(endDateInput);
+        });
+
+        endDateInput.addEventListener('change', async () => {
+            historicDatesModifiedByUser = true;
+            if (endDateInput.value) {
+                // Validación: no permitir fecha mayor al máximo global
+                if (endDateInput.value > globalHistoricMaxDate) {
+                    endDateInput.value = globalHistoricMaxDate;
+                }
+                // Validación: no permitir fecha final inferior a la fecha inicial seleccionada
+                if (startDateInput.value && endDateInput.value < startDateInput.value) {
+                    endDateInput.value = startDateInput.value;
+                }
+
+                endDateDisplay.textContent = formatIsoDateToDisplay(endDateInput.value);
+                applyDateBounds();
+
+                // Una sola llamada con ambas fechas actualizadas
+                await loadHistoricRates();
+            }
+        });
+    }
+
+    if (tabDolar && tabEuro) {
+        tabDolar.addEventListener('click', () => {
+            if (currentHistoricSource === 'BCV') return;
+            tabDolar.classList.add('active');
+            tabEuro.classList.remove('active');
+            currentHistoricSource = 'BCV';
+            
+            // Si ya tenemos los datos en memoria, actualizamos inmediatamente sin petición a la API
+            if (lastHistoricData) {
+                renderHistoricRatesFromData(lastHistoricData);
+            } else {
+                loadHistoricRates();
+            }
+        });
+
+        tabEuro.addEventListener('click', () => {
+            if (currentHistoricSource === 'BCVEuro') return;
+            tabEuro.classList.add('active');
+            tabDolar.classList.remove('active');
+            currentHistoricSource = 'BCVEuro';
+            
+            // Si ya tenemos los datos en memoria, actualizamos inmediatamente sin petición a la API
+            if (lastHistoricData) {
+                renderHistoricRatesFromData(lastHistoricData);
+            } else {
+                loadHistoricRates();
+            }
+        });
+    }
 
     // --- ACTUALIZACIÓN DE TASAS EN LA UI (MODO NORMAL) ---
     function updateRateDisplay(data) {
@@ -597,12 +1015,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- INICIALIZACIÓN ---
     async function initializeApp() {
         pdvsaModal.style.display = 'none';
+        if (historicModal) {
+            historicModal.style.display = 'none';
+            const today = getAppToday();
+            let defIso = today.iso;
+            if (defIso > globalHistoricMaxDate) defIso = globalHistoricMaxDate;
+            if (defIso < globalHistoricMinDate) defIso = globalHistoricMinDate;
+            const defDisplay = formatIsoDateToDisplay(defIso);
+
+            if (startDateInput && startDateDisplay) {
+                startDateInput.value = defIso;
+                startDateDisplay.textContent = defDisplay;
+            }
+            if (endDateInput && endDateDisplay) {
+                endDateInput.value = defIso;
+                endDateDisplay.textContent = defDisplay;
+            }
+            applyDateBounds();
+            updateHistoricPercentage();
+        }
         const initialRates = await fetchBCVRates();
         if (initialRates) {
             appTitleSource.textContent = "Dolar BCV";
             conversionMode = 'usd_to_bs'; // Resetear modo
             exitCommissionMode(); // Asegurarse de no estar en modo comisión
             updateRateDisplay(initialRates); // Carga la UI normal
+
+            // Si se cargó la fecha desde la API y el usuario no la ha modificado, sincronizar
+            if (!historicDatesModifiedByUser) {
+                const today = getAppToday();
+                let defIso = today.iso;
+                if (defIso > globalHistoricMaxDate) defIso = globalHistoricMaxDate;
+                if (defIso < globalHistoricMinDate) defIso = globalHistoricMinDate;
+                const defDisplay = formatIsoDateToDisplay(defIso);
+
+                if (startDateInput && startDateDisplay) {
+                    startDateInput.value = defIso;
+                    startDateDisplay.textContent = defDisplay;
+                }
+                if (endDateInput && endDateDisplay) {
+                    endDateInput.value = defIso;
+                    endDateDisplay.textContent = defDisplay;
+                }
+                applyDateBounds();
+            }
         }
         updateDisplayAndCalc();
         // pasteButton.disabled = true; // Ya no es necesario
