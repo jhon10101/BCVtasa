@@ -896,6 +896,43 @@ body.light-theme .historic-modal-content {
     transition: color 0.2s ease;
 }
 
+/* Botón DIA CALCULADORA */
+.historic-calc-day-container {
+    margin: 0 auto 16px auto;
+    width: 95%;
+    max-width: 290px;
+}
+
+.historic-calc-day-btn {
+    position: relative;
+    width: 100%;
+    background-color: var(--historic-tabs-bg);
+    color: var(--historic-tabs-text);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 1.1em;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.historic-calc-day-btn:hover {
+    background-color: var(--historic-accent-hover);
+    box-shadow: 0 0 10px var(--historic-box-shadow-hover);
+    transform: scale(1.02);
+}
+
+.historic-calc-day-btn:active {
+    transform: scale(0.98);
+}
+
 /* Tabs DIA / CALCULADORA */
 .historic-tab-container {
     display: flex;

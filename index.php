@@ -130,6 +130,13 @@
             <button class="close-modal-button" id="closeHistoricModal" aria-label="Cerrar modal">&times;</button>
             <h3 class="historic-modal-title">Personalizar</h3>
 
+            <div class="historic-calc-day-container">
+                <button type="button" class="historic-calc-day-btn" id="calcDayBtn">
+                    <span id="calcDayBtnText">DIA CALCULADORA</span>
+                    <input type="date" id="calcDayInput" class="historic-native-date-input">
+                </button>
+            </div>
+
             <div class="historic-tab-container">
                 <button type="button" class="historic-tab-btn active" id="tabDolar">Dolar BCV</button>
                 <button type="button" class="historic-tab-btn" id="tabEuro">Euro BCV</button>

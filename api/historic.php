@@ -151,6 +151,7 @@ if ($httpCode === 200 && $response) {
             'DateLast'   => $ext['DateLast'] ?? '',
             'MinDateIso' => $minDateIso,
             'MaxDateIso' => $maxDateIso,
+            'DateFormat' => $ext['DateFormat'] ?? $ext['DateFormatStart'] ?? null,
         ];
 
         echo json_encode($out, JSON_UNESCAPED_UNICODE);

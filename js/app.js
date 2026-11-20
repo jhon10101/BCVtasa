@@ -76,6 +76,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const historicModalToggle = document.getElementById('historic-modal-toggle');
         const historicModal = document.getElementById('historicModal');
         const closeHistoricModalButton = document.getElementById('closeHistoricModal');
+        const calcDayBtn = document.getElementById('calcDayBtn');
+        const calcDayBtnText = document.getElementById('calcDayBtnText');
+        const calcDayInput = document.getElementById('calcDayInput');
         const tabDolar = document.getElementById('tabDolar');
         const tabEuro = document.getElementById('tabEuro');
         const startDateBox = document.getElementById('startDateBox');
@@ -427,6 +430,27 @@ document.addEventListener('DOMContentLoaded', function() {
         endDateInput.min = currentStart > globalHistoricMinDate ? currentStart : globalHistoricMinDate;
         // Máximo permitido: fecha más reciente global de la API
         endDateInput.max = globalHistoricMaxDate;
+
+        // Día Calculadora: habilitado entre la fecha más antigua y la más reciente
+        if (calcDayInput) {
+            calcDayInput.min = globalHistoricMinDate;
+            calcDayInput.max = globalHistoricMaxDate;
+        }
+    }
+
+    function formatDateToSpanishLong(isoDateStr) {
+        if (!isoDateStr) return '';
+        const iso = parseDateToIso(isoDateStr);
+        if (!iso) return isoDateStr;
+        const parts = iso.split('-').map(Number);
+        if (parts.length !== 3) return isoDateStr;
+        const [y, m, d] = parts;
+        const dateObj = new Date(y, m - 1, d);
+        const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        const diaSemana = dias[dateObj.getDay()];
+        const mes = meses[dateObj.getMonth()];
+        return `${diaSemana}, ${d} ${mes} ${y}`;
     }
 
     function updateBoundsFromApiResponse(data) {
@@ -650,6 +674,95 @@ document.addEventListener('DOMContentLoaded', function() {
     if (closeHistoricModalButton && historicModal) {
         closeHistoricModalButton.addEventListener('click', () => {
             historicModal.style.display = 'none';
+        });
+    }
+
+    if (calcDayBtn && calcDayInput) {
+        calcDayBtn.addEventListener('click', (e) => {
+            if (e.target !== calcDayInput) {
+                applyDateBounds();
+                openDatePicker(calcDayInput);
+            }
+        });
+
+        calcDayInput.addEventListener('change', async () => {
+            const selectedDate = calcDayInput.value;
+            if (!selectedDate) return;
+
+            // Asegurar límites permitidos
+            let targetDate = selectedDate;
+            if (targetDate < globalHistoricMinDate) {
+                targetDate = globalHistoricMinDate;
+                calcDayInput.value = targetDate;
+            } else if (targetDate > globalHistoricMaxDate) {
+                targetDate = globalHistoricMaxDate;
+                calcDayInput.value = targetDate;
+            }
+
+            if (calcDayBtnText) {
+                calcDayBtnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Cargando...';
+            }
+
+            try {
+                // Se envía la misma fecha como inicial y final por POST a api/historic.php
+                const data = await fetchBothDates(targetDate, targetDate);
+
+                if (data && data.Status === 200) {
+                    // Se usa la tasa que esté activa en ese momento en la calculadora (Dólar o Euro)
+                    const isEuro = (currentRateSource === 'BCVEuro') || (currentRatesData?.rate1?.currency === 'EUR€');
+                    const rateVal = isEuro
+                        ? (data.StartEURO ?? data.EndEURO ?? data.EURO ?? data.euro)
+                        : (data.StartUSD ?? data.EndUSD ?? data.USD ?? data.usd);
+
+                    if (rateVal !== undefined && rateVal !== null && !isNaN(parseFloat(rateVal))) {
+                        const parsedRate = parseFloat(rateVal);
+
+                        // 1. Cambiar "Vigente:" por "Personalizado:"
+                        rateLabel1.textContent = 'Personalizado:';
+
+                        // 2. Cambiar la tasa en la calculadora
+                        rateValue1.textContent = formatHistoricRate(parsedRate);
+                        rateBox1.dataset.rateValue = parsedRate;
+                        activeRateValue = parsedRate;
+
+                        // 3. Cambiar la fecha por la fecha personalizada
+                        const formattedDateText = data.DateFormat || formatDateToSpanishLong(targetDate);
+                        rateDate1.textContent = formattedDateText;
+
+                        // 4. Asegurarse de que rateBox1 esté activo y rateBox2 oculto (como en la imagen)
+                        rateBox2.style.display = 'none';
+                        const ratesSection = document.querySelector('.rates-section');
+                        if (ratesSection) {
+                            ratesSection.style.justifyContent = 'center';
+                        }
+                        rateBox1.style.width = 'calc(100% - 20px)';
+                        rateBox1.style.margin = '0 auto';
+                        rateBox1.classList.add('active-rate');
+                        rateBox2.classList.remove('active-rate');
+
+                        // 5. Actualizar el objeto currentRatesData para los cálculos
+                        if (!currentRatesData.rate1) {
+                            currentRatesData.rate1 = {};
+                        }
+                        currentRatesData.rate1.value = parsedRate;
+                        currentRatesData.rate1.label = 'Personalizado';
+                        currentRatesData.rate1.date = formattedDateText;
+
+                        // 6. Recalcular y actualizar pantalla de la calculadora
+                        updateCalculation();
+                        updateDisplayAndCalc();
+
+                        // 7. Cerrar el modal
+                        historicModal.style.display = 'none';
+                    }
+                }
+            } catch (err) {
+                console.error("Error al personalizar tasa en calculadora:", err);
+            } finally {
+                if (calcDayBtnText) {
+                    calcDayBtnText.textContent = 'DIA CALCULADORA';
+                }
+            }
         });
     }
 
