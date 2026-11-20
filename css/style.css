@@ -522,6 +522,28 @@ body {
     --placa-info-bg: #444;
     --selected-placa-color: #f0ad4e;
     --pdvsa-dates-list-color: #fff;
+    --historic-modal-bg: #1e1e1e;
+    --historic-card-bg: #383838;
+    --historic-input-bg: #2d2d2d;
+    --historic-accent-color: #f0ad4e;
+    --historic-accent-hover: #eea236;
+    --historic-title-color: #f0ad4e;
+    --historic-label-color: #ffffff;
+    --historic-date-border: #f0ad4e;
+    --historic-date-text: #f0ad4e;
+    --historic-rate-color: #f0ad4e;
+    --historic-pct-zero-color: #ffffff;
+    --historic-pct-pos-color: #28a745;
+    --historic-pct-neg-color: #dc3545;
+    --historic-tabs-bg: #f0ad4e;
+    --historic-tabs-text: #1e1e1e;
+    --historic-tabs-active-bg: rgba(0, 0, 0, 0.22);
+    --historic-tabs-active-text: #1e1e1e;
+    --historic-badge-bg: #000000;
+    --historic-badge-color: #f0ad4e;
+    --historic-badge-border: rgba(240, 173, 78, 0.2);
+    --historic-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    --historic-box-shadow-hover: rgba(240, 173, 78, 0.45);
 }
 
 /* Tema Claro */
@@ -566,6 +588,28 @@ body.light-theme {
     --placa-info-bg: #ccc;
     --selected-placa-color: #007bff;
     --pdvsa-dates-list-color: #007bff;
+    --historic-modal-bg: #ffffff;
+    --historic-card-bg: #f0f2f5;
+    --historic-input-bg: #ffffff;
+    --historic-accent-color: #007bff;
+    --historic-accent-hover: #0056b3;
+    --historic-title-color: #007bff;
+    --historic-label-color: #333333;
+    --historic-date-border: #007bff;
+    --historic-date-text: #007bff;
+    --historic-rate-color: #007bff;
+    --historic-pct-zero-color: #333333;
+    --historic-pct-pos-color: #28a745;
+    --historic-pct-neg-color: #dc3545;
+    --historic-tabs-bg: #007bff;
+    --historic-tabs-text: #ffffff;
+    --historic-tabs-active-bg: #0056b3;
+    --historic-tabs-active-text: #ffffff;
+    --historic-badge-bg: #e7f1ff;
+    --historic-badge-color: #007bff;
+    --historic-badge-border: rgba(0, 123, 255, 0.3);
+    --historic-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    --historic-box-shadow-hover: rgba(0, 123, 255, 0.35);
 }
 
 /* Aplica las variables a los elementos */
@@ -585,17 +629,56 @@ body {
     /* ... otros estilos ... */
 }
 
+.header-right-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.calendar-toggle-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.6em;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.calendar-toggle-button:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+.calendar-toggle-button:active {
+    transform: scale(0.95);
+}
+
 .theme-toggle-button {
     background: none;
     border: none;
     color: var(--text-color); /* Usa la variable */
     font-size: 1.8em;
     cursor: pointer;
-    margin-left: auto; /* Empuja el botón a la derecha */
-    margin-right: 10px; /* Espacio entre el botón y el icono del menú */
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    transition: transform 0.15s ease, opacity 0.2s ease;
 }
 .theme-toggle-button:hover {
     opacity: 0.8;
+    transform: scale(1.1);
+}
+.theme-toggle-button:active {
+    transform: scale(0.95);
 }
 
 /* ... (El resto de tus estilos, pero actualizando para usar las variables) ... */
@@ -754,4 +837,247 @@ body {
 
 .pdvsa-dates-list {
     color: var(--pdvsa-dates-list-color);
+}
+
+/* =========================================
+   Estilos para el Modal Personalizar / Histórico
+   ========================================= */
+.historic-modal-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-overlay-bg);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.historic-modal-content {
+    background-color: var(--historic-modal-bg);
+    padding: 24px 20px 28px 20px;
+    border-radius: 12px;
+    max-width: 350px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    color: var(--text-color);
+    box-shadow: var(--historic-shadow);
+    box-sizing: border-box;
+    animation: historicModalFadeIn 0.2s ease-out;
+    color-scheme: dark;
+}
+
+body.light-theme .historic-modal-content {
+    color-scheme: light;
+}
+
+@keyframes historicModalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.historic-modal-title {
+    font-size: 1.85em;
+    font-weight: 800;
+    color: var(--historic-title-color);
+    margin: 6px 0 16px 0;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+/* Tabs DIA / CALCULADORA */
+.historic-tab-container {
+    display: flex;
+    background-color: var(--historic-tabs-bg);
+    border-radius: 8px;
+    padding: 3px;
+    margin: 0 auto 16px auto;
+    width: 95%;
+    max-width: 290px;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+}
+
+.historic-tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--historic-tabs-text);
+    font-weight: 800;
+    font-size: 1.05em;
+    padding: 7px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    text-align: center;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.historic-tab-btn.active {
+    background-color: var(--historic-tabs-active-bg);
+    color: var(--historic-tabs-active-text);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Badge % HISTORICO */
+.historic-badge-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+.historic-badge {
+    background-color: var(--historic-badge-bg);
+    color: var(--historic-badge-color);
+    padding: 4px 14px;
+    border-radius: 4px;
+    font-size: 1.05em;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 1px;
+    border: 1px solid var(--historic-badge-border);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.historic-badge-pct {
+    font-weight: 900;
+}
+
+/* Tarjeta interna (Gris oscura / adaptada a tema claro) */
+.historic-card {
+    background-color: var(--historic-card-bg);
+    padding: 18px 16px;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.historic-field-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.historic-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--historic-label-color);
+    margin: 0 0 8px 0;
+    transition: color 0.2s ease;
+}
+
+.historic-date-box {
+    position: relative;
+    border: 2px solid var(--historic-date-border);
+    border-radius: 14px;
+    background-color: var(--historic-input-bg);
+    padding: 6px 14px;
+    width: 75%;
+    max-width: 190px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease, background-color 0.2s ease;
+}
+
+.historic-date-box:hover {
+    border-color: var(--historic-accent-hover);
+    box-shadow: 0 0 10px var(--historic-box-shadow-hover);
+    transform: scale(1.02);
+}
+
+.historic-date-value {
+    color: var(--historic-date-text);
+    font-size: 1.25em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.historic-native-date-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 5;
+}
+
+.historic-native-date-input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.historic-rate-value {
+    color: var(--historic-rate-color);
+    font-size: 1.45em;
+    font-weight: bold;
+    margin: 8px 0 0 0;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+/* Resultado Porcentual */
+.historic-percentage-display {
+    font-size: 2.3em;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 22px;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+    transition: color 0.2s ease;
+}
+
+.historic-percentage-display.pct-positive {
+    color: var(--historic-pct-pos-color) !important;
+}
+
+.historic-percentage-display.pct-negative {
+    color: var(--historic-pct-neg-color) !important;
+}
+
+.historic-percentage-display.pct-zero {
+    color: var(--historic-pct-zero-color) !important;
+}
+
+/* Spinner de carga para tasas y porcentaje */
+.historic-rate-value .fa-spinner,
+.historic-percentage-display .fa-spinner {
+    font-size: 0.8em;
+    vertical-align: middle;
+    display: inline-block;
 }
