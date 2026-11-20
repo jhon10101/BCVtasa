@@ -70,7 +70,8 @@ $endFormatted   = normalizeToISO($endDate);
 $access_key = '8a258f4e4b4412eb7930e87473516170';
 
 // URL de la API externa de histórico
-$externalUrl = 'http://localhost/PHP/ApiRestCalculator/v1/sources/bcvhistoric.php';
+// $externalUrl = 'http://localhost/PHP/ApiRestCalculator/v1/sources/bcvhistoric.php';
+$externalUrl = 'https://forward-deena-jhonny91.koyeb.app/v1/sources/bcvhistoric.php';
 
 // Payload: dos fechas + access_key
 $payload = json_encode([
