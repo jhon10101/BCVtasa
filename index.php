@@ -149,6 +149,11 @@
                 <button type="button" class="historic-tab-btn" id="tabEuro">Euro BCV</button>
             </div>
 
+            <div class="historic-period-container">
+                <button type="button" class="historic-period-btn" id="periodSemana">Semana</button>
+                <button type="button" class="historic-period-btn" id="periodMes">Mes</button>
+            </div>
+
             <div class="historic-card">
                 <div class="historic-field-group">
                     <p class="historic-label">Fecha Inicial</p>

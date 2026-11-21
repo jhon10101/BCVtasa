@@ -81,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const calcDayInput = document.getElementById('calcDayInput');
         const tabDolar = document.getElementById('tabDolar');
         const tabEuro = document.getElementById('tabEuro');
+        const periodSemana = document.getElementById('periodSemana');
+        const periodMes = document.getElementById('periodMes');
         const startDateBox = document.getElementById('startDateBox');
         const startDateInput = document.getElementById('startDateInput');
         const startDateDisplay = document.getElementById('startDateDisplay');
@@ -453,6 +455,24 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${diaSemana}, ${d} ${mes} ${y}`;
     }
 
+    function deactivatePeriodButtons() {
+        if (periodSemana) periodSemana.classList.remove('active');
+        if (periodMes) periodMes.classList.remove('active');
+    }
+
+    function getMondayOfWeek(isoDateStr) {
+        if (!isoDateStr) return '';
+        const parts = isoDateStr.split('-').map(Number);
+        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        const day = d.getDay(); // 0: Dom, 1: Lun, 2: Mar, ..., 6: Sáb
+        const diff = (day === 0 ? 6 : day - 1);
+        d.setDate(d.getDate() - diff);
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const dia = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${dia}`;
+    }
+
     function updateBoundsFromApiResponse(data) {
         if (!data) return;
         if (data.MinDateIso) {
@@ -647,6 +667,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (historicModalToggle && historicModal) {
         historicModalToggle.addEventListener('click', () => {
             historicModal.style.display = 'flex';
+            deactivatePeriodButtons();
             
             // Si el usuario no ha hecho cambios previamente, cargar fecha actual en ambos cuadros
             if (!historicDatesModifiedByUser) {
@@ -776,10 +797,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (startDateBox && startDateInput) {
         startDateBox.addEventListener('click', () => {
+            deactivatePeriodButtons();
             openDatePicker(startDateInput);
         });
 
         startDateInput.addEventListener('change', async () => {
+            deactivatePeriodButtons();
             historicDatesModifiedByUser = true;
             if (startDateInput.value) {
                 // Validación: no permitir fecha menor al mínimo global
@@ -802,10 +825,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (endDateBox && endDateInput) {
         endDateBox.addEventListener('click', () => {
+            deactivatePeriodButtons();
             openDatePicker(endDateInput);
         });
 
         endDateInput.addEventListener('change', async () => {
+            deactivatePeriodButtons();
             historicDatesModifiedByUser = true;
             if (endDateInput.value) {
                 // Validación: no permitir fecha mayor al máximo global
@@ -824,6 +849,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 await loadHistoricRates();
             }
         });
+    }
+
+    // --- Manejo de Períodos: Semana, Mes, Año ---
+    async function selectPeriod(periodType) {
+        deactivatePeriodButtons();
+
+        const today = getAppToday();
+        let endIso = today.iso;
+        let startIso = endIso;
+
+        if (periodType === 'semana') {
+            if (periodSemana) periodSemana.classList.add('active');
+            startIso = getMondayOfWeek(endIso);
+        } else if (periodType === 'mes') {
+            if (periodMes) periodMes.classList.add('active');
+            const parts = endIso.split('-');
+            startIso = `${parts[0]}-${parts[1]}-01`;
+        }
+
+        // Respetar límites globales
+        if (startIso < globalHistoricMinDate) startIso = globalHistoricMinDate;
+        if (endIso > globalHistoricMaxDate) endIso = globalHistoricMaxDate;
+        if (startIso > endIso) startIso = endIso;
+
+        historicDatesModifiedByUser = true;
+
+        if (startDateInput && startDateDisplay) {
+            startDateInput.value = startIso;
+            startDateDisplay.textContent = formatIsoDateToDisplay(startIso);
+        }
+        if (endDateInput && endDateDisplay) {
+            endDateInput.value = endIso;
+            endDateDisplay.textContent = formatIsoDateToDisplay(endIso);
+        }
+
+        applyDateBounds();
+        await loadHistoricRates();
+    }
+
+    if (periodSemana) {
+        periodSemana.addEventListener('click', () => selectPeriod('semana'));
+    }
+    if (periodMes) {
+        periodMes.addEventListener('click', () => selectPeriod('mes'));
     }
 
     if (tabDolar && tabEuro) {
@@ -1130,6 +1199,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pdvsaModal.style.display = 'none';
         if (historicModal) {
             historicModal.style.display = 'none';
+            deactivatePeriodButtons();
             const today = getAppToday();
             let defIso = today.iso;
             if (defIso > globalHistoricMaxDate) defIso = globalHistoricMaxDate;
