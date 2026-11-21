@@ -137,11 +137,6 @@
                 </button>
             </div>
 
-            <div class="historic-tab-container">
-                <button type="button" class="historic-tab-btn active" id="tabDolar">Dolar BCV</button>
-                <button type="button" class="historic-tab-btn" id="tabEuro">Euro BCV</button>
-            </div>
-
             <div class="historic-badge-container">
                 <div class="historic-badge">
                     <span class="historic-badge-pct">%</span>
@@ -149,9 +144,14 @@
                 </div>
             </div>
 
+            <div class="historic-tab-container">
+                <button type="button" class="historic-tab-btn active" id="tabDolar">Dolar BCV</button>
+                <button type="button" class="historic-tab-btn" id="tabEuro">Euro BCV</button>
+            </div>
+
             <div class="historic-card">
                 <div class="historic-field-group">
-                    <p class="historic-label">Fecha Inicio</p>
+                    <p class="historic-label">Fecha Inicial</p>
                     <div class="historic-date-box" id="startDateBox">
                         <span class="historic-date-value" id="startDateDisplay"></span>
                         <input type="date" id="startDateInput" class="historic-native-date-input">
@@ -160,7 +160,7 @@
                 </div>
 
                 <div class="historic-field-group">
-                    <p class="historic-label">Fecha Fin</p>
+                    <p class="historic-label">Fecha Final</p>
                     <div class="historic-date-box" id="endDateBox">
                         <span class="historic-date-value" id="endDateDisplay"></span>
                         <input type="date" id="endDateInput" class="historic-native-date-input">
