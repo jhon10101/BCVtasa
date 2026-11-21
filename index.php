@@ -150,6 +150,7 @@
             </div>
 
             <div class="historic-period-container">
+                <button type="button" class="historic-period-btn" id="periodHoy">Hoy</button>
                 <button type="button" class="historic-period-btn" id="periodSemana">Semana</button>
                 <button type="button" class="historic-period-btn" id="periodMes">Mes</button>
             </div>

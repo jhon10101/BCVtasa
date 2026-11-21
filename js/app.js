@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const calcDayInput = document.getElementById('calcDayInput');
         const tabDolar = document.getElementById('tabDolar');
         const tabEuro = document.getElementById('tabEuro');
+        const periodHoy = document.getElementById('periodHoy');
         const periodSemana = document.getElementById('periodSemana');
         const periodMes = document.getElementById('periodMes');
         const startDateBox = document.getElementById('startDateBox');
@@ -456,6 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function deactivatePeriodButtons() {
+        if (periodHoy) periodHoy.classList.remove('active');
         if (periodSemana) periodSemana.classList.remove('active');
         if (periodMes) periodMes.classList.remove('active');
     }
@@ -851,7 +853,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- Manejo de Períodos: Semana, Mes, Año ---
+    // --- Manejo de Períodos: Hoy, Semana, Mes ---
+    let periodRequestId = 0;
+
     async function selectPeriod(periodType) {
         deactivatePeriodButtons();
 
@@ -859,7 +863,10 @@ document.addEventListener('DOMContentLoaded', function() {
         let endIso = today.iso;
         let startIso = endIso;
 
-        if (periodType === 'semana') {
+        if (periodType === 'hoy') {
+            if (periodHoy) periodHoy.classList.add('active');
+            startIso = endIso;
+        } else if (periodType === 'semana') {
             if (periodSemana) periodSemana.classList.add('active');
             startIso = getMondayOfWeek(endIso);
         } else if (periodType === 'mes') {
@@ -873,6 +880,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (endIso > globalHistoricMaxDate) endIso = globalHistoricMaxDate;
         if (startIso > endIso) startIso = endIso;
 
+        // Comprobar si ya están cargadas exactamente estas mismas fechas con datos disponibles
+        const currentStart = startDateInput ? startDateInput.value : '';
+        const currentEnd = endDateInput ? endDateInput.value : '';
+        const alreadyLoaded = (currentStart === startIso && currentEnd === endIso && lastHistoricData !== null);
+
         historicDatesModifiedByUser = true;
 
         if (startDateInput && startDateDisplay) {
@@ -885,9 +897,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         applyDateBounds();
-        await loadHistoricRates();
+
+        if (alreadyLoaded) {
+            // Si la fecha ya está cargada, no se consulta la API: spinner por 3 segundos y se reponen las tasas
+            const thisRequestId = ++periodRequestId;
+            showHistoricLoading();
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            if (thisRequestId === periodRequestId) {
+                renderHistoricRatesFromData(lastHistoricData);
+            }
+        } else {
+            // Si no estaba cargada previamente, consulta normal a la API
+            await loadHistoricRates();
+        }
     }
 
+    if (periodHoy) {
+        periodHoy.addEventListener('click', () => selectPeriod('hoy'));
+    }
     if (periodSemana) {
         periodSemana.addEventListener('click', () => selectPeriod('semana'));
     }
